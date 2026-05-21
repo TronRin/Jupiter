@@ -1,0 +1,42 @@
+global proc savePose()
+{	int $i=0;
+
+	$selection = `ls -sl`;
+	$fromRoot = $selection[0];
+
+	select -r -hi $fromRoot;
+	$fromSkel = `ls -sl -type joint`;
+	$numJoints = size($fromSkel);
+
+	select -cl;
+
+	$poseFile = ( `internalVar -userTmpDir` + "pose2.txt" );
+	$fileId = `fopen $poseFile "w"`;
+	print $fileId;
+	print $poseFile;
+
+	for($i = 0; $i < $numJoints; $i++)
+	{
+		string $jointTrans = $fromSkel[$i] + ".translate";
+		string $jointRot = $fromSkel[$i] + ".rotate";
+		$transInfo = `getAttr $jointTrans`;
+		$rotInfo = `getAttr $jointRot`;
+		
+//		fprint $fileId "\n";
+		fprint $fileId $jointTrans;
+		fprint $fileId "\n";
+		fprint $fileId ($transInfo[0] + " " + $transInfo[1] + " " + $transInfo[2]);
+		fprint $fileId "\n";
+		fprint $fileId $jointRot;
+		fprint $fileId "\n";
+		fprint $fileId ($rotInfo[0] + " " + $rotInfo[1] + " " + $rotInfo[2]);
+		fprint $fileId "\n";
+	}	
+
+//	hideShow -geometry -show;
+
+
+	fclose $fileId;
+	select -cl;		
+}
+

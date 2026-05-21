@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="runtime">
+      <UniqueIdentifier>{692D2264-D50C-A1FF-DE24-2CD64A830761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\ui">
+      <UniqueIdentifier>{3678C9A1-2230-0BEF-8B37-E44A770EA6DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\ui\src">
+      <UniqueIdentifier>{4D61B2DD-392F-A6E3-22C3-160A0E308248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\ui\src\sys">
+      <UniqueIdentifier>{DBFE8747-C7E2-489D-3043-43F01C46331F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\ui\src\sys\d3d">
+      <UniqueIdentifier>{856AEDB6-7164-1609-5AD1-AC19466A7C75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk">
+      <UniqueIdentifier>{67A9880B-D3B2-887C-5C2E-9F7CC836947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\inc">
+      <UniqueIdentifier>{F0971889-5C77-9724-658F-22FBD1EDFD85}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\runtime\ui\src\cuibase_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuibitmapfont.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuibutton_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuicheck_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuidebug.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuidropdownlist_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuifont_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuifontmanager.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiformattedpolystring_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiinterval_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuilinklist.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuilist_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuimessagequeue.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuioption_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuipolystring_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuipolytex.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiprogress_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiredblack.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuirenderstate.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuislider_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuistaticimage_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuistatictext_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuivectorfont.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiwidget_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiwidgetmanager.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuiwindow_impl.h">
+      <Filter>runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cui.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuibase.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuibutton.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuicheck.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuidropdownlist.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuifont.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuiformattedpolystring.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuiinterval.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuilist.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuimessage.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuioption.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuipolystring.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuiprogress.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuislider.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuistaticimage.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuistatictext.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuitypes.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuiwidget.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuiwindow.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltfontmanager.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltwidgetmanager.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\ui\src\cuibase.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuibase_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuibitmapfont.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuibutton.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuibutton_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuicheck.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuicheck_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuidropdownlist.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuidropdownlist_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuifont_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuifontmanager.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiformattedpolystring.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiformattedpolystring_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiinterval.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiinterval_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuilinklist.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuilist.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuilist_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuimessagequeue.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuioption.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuioption_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuipolystring.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuipolystring_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuipolytex.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiprogress.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiprogress_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiredblack.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuirenderstate.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuislider.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuislider_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuistaticimage.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuistaticimage_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuistatictext.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuistatictext_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuivectorfont.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiwidget.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiwidget_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiwidgetmanager.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiwindow.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\cuiwindow_impl.cpp">
+      <Filter>runtime\ui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\ui\src\sys\d3d\cuidebug.cpp">
+      <Filter>runtime\ui\src\sys\d3d</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

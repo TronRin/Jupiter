@@ -1,0 +1,114 @@
+global proc copyChain() 
+
+
+
+{
+
+	string $source[], $dest[], $input[],$isAnimated[];
+
+	int $i, $j, $minTime, $maxTime, $isRot, $isTrans;
+
+	
+
+	$isRot = 0; $isTrans = 0;
+
+	$minTime = `playbackOptions -q -min`;
+
+	$maxTime = `playbackOptions -q -max`;
+
+	$input = `ls -sl`;
+
+	select -hi $input[0];
+
+	$source = `ls -sl`;
+
+	select -hi $input[1];
+
+	$dest = `ls -sl`;
+
+
+
+	if (size($input)==2 && size($source) == size($dest))
+
+	{	
+
+		for ($i = 0; $i < size($source); $i++)
+
+		{
+
+			$isAnimated = `listConnections -s on $source[$i]`;
+
+			for ($j = 0; $j < size($isAnimated); $j++)
+
+			{
+
+				$isTrans = `gmatch $isAnimated[$j] "*translate*"`;
+
+				if ($isTrans != 0) $j = size($isAnimated);
+
+			}
+
+
+
+			for ($j = 0; $j < size($isAnimated); $j++)
+
+			{
+
+				$isRot = `gmatch $isAnimated[$j] "*rotate*"`;
+
+				if ($isRot != 0) $j = size($isAnimated);
+
+			}
+
+
+
+			select -r $source[$i] $dest[$i];
+
+			if ($isTrans==1) {  pointConstraint -weight 1;  print("Translation from " + $source[$i] + " to " + $dest[$i] + "\n"); }
+
+
+
+			if ($isRot==1) { orientConstraint -weight 1;  print("Rotation from " + $source[$i] + " to " + $dest[$i] + "\n");  }
+
+		}
+
+
+
+		select -cl;
+
+		for ($i = 0; $i < size($source); $i++)
+
+		{
+
+			select -tgl $dest[$i];
+
+		}	
+
+		eval("bakeResults -simulation true -t \"" + $minTime + ":" + $maxTime + "\" -sampleBy 1 -disableImplicitControl true -preserveOutsideKeys true -sparseAnimCurveBake false -at tx -at ty -at tz -at rx -at ry -at rz");
+
+		delete -all -cn -sc;
+
+	}
+
+	else
+
+		print("Select the parent of two identical skeletons ('from' then 'to') and try again...");
+
+	clear $source;
+
+	clear $dest;
+
+	select -cl;
+
+}
+
+
+
+
+
+
+
+
+
+
+

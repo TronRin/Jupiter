@@ -1,0 +1,212 @@
+global proc setAnimLength()
+{
+	if(`window -ex SetAnimLengthUI`)
+		deleteUI SetAnimLengthUI;
+
+	if(!`optionVar -ex st_scaleAnimMethod`)
+		optionVar -sv st_scaleAnimMethod "st_scaleFrames";
+
+	float	$maxTime = `playbackOptions -q -max`;
+	float	$curLength = $maxTime /30.0 * 1000.0;
+
+	window
+		-w 100
+		-rtf 1
+		SetAnimLengthUI;
+	columnLayout;
+		text -l "Enter new length";
+		radioCollection st_scaleOption;
+			radioButton 
+				-label "milliseconds" 
+				-onc "getCurrentAnimLength" 
+				st_scaleTime;
+			radioButton 
+				-label "frames" 
+				-onc "getCurrentAnimLength" 
+				st_scaleFrames;
+			radioButton 
+				-label "scale factor" 
+				-onc "getCurrentAnimLength" 
+				st_scaleFactor;
+		setParent ..;	
+		floatField
+			-v 0
+			-w 100
+			-minValue 0
+			//-ec "doSetAnimLength (`intField -q -v newLength`);"
+			newLength;
+		radioCollection -e -sl (`optionVar -q st_scaleAnimMethod`) st_scaleOption;
+		getCurrentAnimLength;
+		button 
+			-w 95
+			-l "Scale"
+			-c "doSetAnimLength (`floatField -q -v newLength`);";
+		button 
+			-w 95
+			-l "Close"
+			-c "deleteUI SetAnimLengthUI";
+	showWindow SetAnimLengthUI;	
+}
+
+global proc getCurrentAnimLength()
+{
+	$sel = `ls -sl`;
+	$curves = `ls -type animCurveTA -type animCurveTL`; 
+	select -r $curves;
+
+	setPlaybackToMinMax;
+	float	$newMaxTime, $maxTime = `playbackOptions -q -max`;
+	string $scaleType = `radioCollection -q -sl st_scaleOption`;
+
+	selectKey -add -k -t ("0:"+ $maxTime +"");
+	if($scaleType == "st_scaleTime")
+	{
+		float	$curLength = $maxTime /30.0 * 1000.0;
+		floatField -e -v $curLength newLength;
+		optionVar -sv st_scaleAnimMethod "st_scaleTime";
+	}
+	else if($scaleType == "st_scaleFrames")
+	{
+		floatField -e -v $maxTime newLength;
+		optionVar -sv st_scaleAnimMethod "st_scaleFrames";
+	}
+	else
+	{
+		floatField -e -v 1 newLength;
+		optionVar -sv st_scaleAnimMethod "st_scaleFactor";
+	}
+	select -r $sel;
+
+}
+global proc doSetAnimLength(float $scale)
+{
+	$sel = `ls -sl`;
+	$curves = `ls -type animCurveTA -type animCurveTL`; 
+	select -r $curves;
+	setPlaybackToMinMax;
+	float	$newMaxTime, $maxTime = `playbackOptions -q -max`;
+	
+	string $scaleType = `radioCollection -q -sl st_scaleOption`;
+	selectKey -add -k -t ("0:"+ $maxTime +"");
+	if($scaleType == "st_scaleTime")
+	{
+		$newMaxTime = $scale/33.33333333;
+		float	$curLength = $maxTime /30.0 * 1000.0;
+
+		$scale = $scale/$curLength;
+	}
+	else if($scaleType == "st_scaleFrames")
+	{
+		$newMaxTime = $scale;
+		
+		$scale = $scale/$maxTime;
+	}
+	else
+	{
+		$newMaxTime = $maxTime * $scale;
+	}
+	scaleKey -iub false -ts $scale -tp 0 -fs $scale -fp 0 -vs 1 -vp 0 -animation keys ;
+	playbackOptions -max $newMaxTime;
+	getCurrentAnimLength;
+	select -r $sel;
+//	bakeResults -sampleBy 1 -preserveOutsideKeys 0 -sparseAnimCurveBake 0;
+}
+
+
+global proc setPlaybackToMinMax()
+//
+// Description:
+//	Sometimes it's useful to set the playback range to be the 
+//	min/max of all the animation in the system.  We define that
+//	to be the first and last keys from all the time-based 
+//	animation curves we can find.
+//	
+{
+	//	Get a list of animCurve in the system. 
+	//	Check only for types created through
+	//	keyframing: time to linear, time to
+	//	angular, and time to unitless (for scale,
+	//	or user created attributes).
+	//
+	string $animTL[] = `ls -type animCurveTL`;
+	string $animTA[] = `ls -type animCurveTA`;
+	string $animTU[] = `ls -type animCurveTU`;
+	string $animTT[] = `ls -type animCurveTT`;
+
+	float $keys[];
+	float $largestKey = -100000.0;
+	float $smallestKey = 100000.0;
+	int   $keyCount = 0;	
+
+	for( $curve in $animTL ) {
+		int $last = `keyframe -q -kc $curve`;
+		if( $last > 0 ) {
+			$last--;
+		}
+
+		$keys = `keyframe -index 0 -index $last -q -tc $curve`;
+		$keyCount += size( $keys );
+		for ( $key in $keys ) {
+			if( $key > $largestKey ) 
+				$largestKey = $key;
+			if( $key < $smallestKey )
+				$smallestKey = $key;
+		}
+	}
+			
+	for( $curve in $animTA ) {
+		int $last = `keyframe -q -kc $curve`;
+		if( $last > 0 ) {
+			$last--;
+		}
+
+		$keys = `keyframe -index 0 -index $last -q -tc $curve`;
+		$keyCount += size( $keys );
+		for ( $key in $keys ) {
+			if( $key > $largestKey ) 
+				$largestKey = $key;
+			if( $key < $smallestKey )
+				$smallestKey = $key;
+		}
+	}
+			
+	for( $curve in $animTU ) {
+		int $last = `keyframe -q -kc $curve`;
+		if( $last > 0 ) {
+			$last--;
+		}
+
+		$keys = `keyframe -index 0 -index $last -q -tc $curve`;
+		$keyCount += size( $keys );
+		for ( $key in $keys ) {
+			if( $key > $largestKey ) 
+				$largestKey = $key;
+			if( $key < $smallestKey )
+				$smallestKey = $key;
+		}
+	}
+
+	for( $curve in $animTT ) {
+		int $last = `keyframe -q -kc $curve`;
+		if( $last > 0 ) {
+			$last--;
+		}
+
+		$keys = `keyframe -index 0 -index $last -q -tc $curve`;
+		$keyCount += size( $keys );
+		for ( $key in $keys ) {
+			if( $key > $largestKey ) 
+				$largestKey = $key;
+			if( $key < $smallestKey )
+				$smallestKey = $key;
+		}
+	}
+
+	// Only adjust the playback range if we've found animation.
+	//
+	if( $keyCount > 0 ) {
+		playbackOptions -min (( $smallestKey )) -max (( $largestKey ));
+	} else {
+		error( "No keys found; cannot determine min/max of animation range.");
+	}
+}

@@ -1,0 +1,416 @@
+global proc setupIK()
+{
+	source copyAnim.mel;
+	source ltExport;
+	string $parent[];
+
+	$sel = `ls -sl -type joint`;
+	$numChains = size($sel);
+	if($numChains == 0) error("Select something");
+
+	if(`optionVar -ex st_setupIKselection`)
+		optionVar -ca st_setupIKselection;
+	for($i = 0; $i < $numChains; $i++)
+		optionVar -sva st_setupIKselection $sel[$i];
+
+	if(!`optionVar -ex st_setupIKTranslationNode`)
+		optionVar -sv st_setupIKTranslationNode "translation";
+
+
+	//buildMocapIKWindow $numChains $sel;
+	doSetupIK $numChains $sel;
+}
+
+
+global proc doSetupIK(int $numChains, string $parent[])
+{
+
+	string $poleVectorNull[], $pointNull[], $exp[];
+	string $child[], $grandChild[], $IKhandle[];
+	string $IKgroup[], $IKparent[], $IKchild[], $IKgrandChild[];
+	string $IKhandle[], $IKparentXRot[], $IKchildXRot[];
+	string $controlGroup[], $transNode;
+	float $prefAngle[];
+
+	
+	for($i = 0; $i < $numChains; $i++)
+	{
+		$c = `listRelatives -c $parent[$i]`;			//	get lower joint in chain
+		$child[$i] = $c[0];						
+		$c = `listRelatives -c $child[$i]`;			//	get end joint in chain
+		$grandChild[$i] = $c[0];				
+		$c = `spaceLocator -n ($parent[$i] + "_PoleVector")`;		//	create null for pole vector constraint
+		$poleVectorNull[$i] = $c[0];				
+		$c = `spaceLocator -n ($parent[$i] + "_IKHandle")`;		//	create IK end constraint null
+		$pointNull[$i] = $c[0];
+		$controlGroup[$i] = `group $pointNull[$i] $poleVectorNull[$i]`;
+
+
+		$exp[$i] = `setupExpression $parent[$i] $child[$i] $grandChild[$i] $poleVectorNull[$i]`; //  create expression for polevector constraint
+	
+		pointConstraint $grandChild[$i] $pointNull[$i];		//	constrain IK end joint to end of chain
+		orientConstraint $grandChild[$i] $pointNull[$i];
+		
+		select -cl;
+		
+		$IKparent[$i] = `joint -o 0 0 0`;
+		pointConstraint $parent[$i] $IKparent[$i];
+		orientConstraint $parent[$i] $IKparent[$i];
+
+		$prefAngle = `getAttr ($child[$i] + ".r")`; 
+		$IKchild[$i] = `joint -o 0 0 0 -ax $prefAngle[0] -ay $prefAngle[1] -az $prefAngle[2]`;
+		joint -e -spa;
+		pointConstraint $child[$i] $IKchild[$i];
+		orientConstraint $child[$i] $IKchild[$i];
+
+		$IKgrandChild[$i] = `joint -o 0 0 0`;
+		pointConstraint $grandChild[$i] $IKgrandChild[$i];
+		orientConstraint $grandChild[$i] $IKgrandChild[$i];
+
+		$IKgroup[$i] = `group $IKparent[$i]`;
+		pointConstraint $parent[$i] $IKgroup[$i];
+
+		delete -constraints $IKparent[$i];
+		delete -constraints $IKchild[$i];
+		delete -constraints $IKgrandChild[$i];
+
+		$c = `ikHandle -sj $IKparent[$i] -ee $IKgrandChild[$i]`;
+		$IKhandle[$i] = $c[0];
+		pointConstraint $pointNull[$i] $IKhandle[$i];
+		poleVectorConstraint $poleVectorNull[$i] $IKhandle[$i];
+
+	
+		select -r $IKparent[$i];
+		$IKparentXRot[$i] = `joint -o 0 0 0 -n ($parent[$i] + "_XRot")`;
+		pointConstraint $parent[$i] $IKparentXRot[$i];
+		orientConstraint $parent[$i] $IKparentXRot[$i];
+
+		select -r $IKchild[$i];
+		$IKchildXRot[$i] = `joint -o 0 0 0 -n ($child[$i] + "_XRot")`;
+		pointConstraint $child[$i] $IKchildXRot[$i];
+		orientConstraint $child[$i] $IKchildXRot[$i];
+
+	}
+
+
+	
+	
+	select -r $pointNull $poleVectorNull $IKchildXRot $IKparentXRot;
+
+	bake;
+	delete -constraints;
+	select $parent $child $grandChild;
+	DeleteKeys;
+
+
+	
+	
+	for($i = 0; $i < $numChains; $i++)
+	{
+		pointConstraint $pointNull[$i] $IKhandle[$i];
+		poleVectorConstraint $poleVectorNull[$i] $IKhandle[$i];
+		orientConstraint $pointNull[$i] $grandChild[$i];
+
+		orientConstraint $IKparentXRot[$i] $parent[$i];
+		orientConstraint $IKchildXRot[$i] $child[$i];
+	}
+
+
+	select -cl;
+	for($i = 0; $i < $numChains; $i++)
+		$chainGroup[$i] = `group $IKgroup[$i] $IKhandle[$i] $controlGroup[$i]`;
+	$masterGroup = `group $chainGroup`;
+
+
+	buildMocapIKWindow $numChains $parent $child $grandChild $pointNull $poleVectorNull $IKparentXRot $IKchildXRot $masterGroup;
+}
+
+
+
+
+global proc buildMocapIKWindow(int $numChains, string $parent[], string $child[], string $grandChild[], string $pointNull[], string $poleVectorNull[], string $IKparentXRot[], string $IKchildXRot[], string $masterGroup)
+{
+	if(`window -ex MocapIKWindow`)
+		deleteUI MocapIKWindow;
+	if(`windowPref -q -ex MocapIKWIndow`)
+		windowPref -r MocapIKWindow;
+	
+	window
+		-menuBar false 
+		-maximizeButton 0
+		-minimizeButton 0
+		-sizeable 1
+		-rtf 1
+		-w 5
+		-h 5
+		-title "ScottTech2000: IK-mocap fixer"
+		MocapIKWindow;	
+
+	columnLayout
+		-rs 2;
+		$layoutCmd = "rowLayout -numberOfColumns " + $numChains;
+		for($i = 1; $i < $numChains; $i++)
+			$layoutCmd = $layoutCmd + " -cw " + $i + " " + "160";
+		eval $layoutCmd;
+		
+			for($i = 0; $i < $numChains; $i++)
+			{
+				frameLayout
+					-label $parent[$i]
+					-w 150
+					-h 230;
+					columnLayout
+						-co "left" 5
+						-rs 2;
+						text -label "Select:";
+						button 
+							-label $pointNull[$i] 
+							-w 135 
+							-c ("select -r (`button -q -l " + $pointNull[$i] + "_button`); setToolTo moveSuperContext;")
+							($pointNull[$i] + "_button");
+						button 
+							-label $poleVectorNull[$i] 
+							-w 135
+							-c ("select -r (`button -q -l " + $poleVectorNull[$i] + "_button`); setToolTo moveSuperContext;")
+							($poleVectorNull[$i] + "_button");
+						button 
+							-label $IKparentXRot[$i] 
+							-w 135
+							-c ("select -r (`button -q -l " + $IKparentXRot[$i] + "_button`); setToolTo RotateSuperContext;")
+							($IKparentXRot[$i] + "_button");
+						button 
+							-label $IKchildXRot[$i] 
+							-w 135
+							-c ("select -r (`button -q -l " + $IKchildXRot[$i] + "_button`); setToolTo RotateSuperContext;")
+							($IKchildXRot[$i] + "_button");
+
+						text -label "End Effector Planting";
+						button
+							-label "Constrain to Joint"
+							-w 135
+							-c ("constrainToJointWin " + $parent[$i] + " " + $masterGroup)
+							($parent[$i] + "_constraintButton");
+						checkBox 
+							-label "Don't lock Z-translation" 
+							-value 0
+							($parent[$i] + "_plantCheckBox");
+
+							$cmd = "if((`button -q -label " + $parent[$i] + "_plantButton`) == \"Plant\") 
+								setupIKPlant " + $parent[$i] + "; else setupIKUnplant " + $parent[$i] + ";";
+						button
+							-label "Plant"
+							-w 135
+							-h 35
+							-c $cmd
+							($parent[$i] + "_plantButton");
+						
+					
+					setParent ..;
+				setParent ..;
+			}
+		setParent ..;
+
+		string $bakeCmd = "select -r"; // + $parent + " " + $child + " " + $grandChild + "; bake; deleteUI MocapIKWindow;";
+		for($i = 0; $i < $numChains; $i++)
+			$bakeCmd = $bakeCmd + " " + $parent[$i] + " " + $child[$i] + " " + $grandChild[$i];
+		$bakeCmd = $bakeCmd + "; bake; delete " + $masterGroup + "; deleteUI MocapIKWindow; select -cl";
+		button -label "Bake IK" -w 150 -h 50 -c $bakeCmd;
+
+
+	showWindow MocapIKWindow;
+}
+
+
+//		$cmd = "if((`button -q -label " + $parent[$i] + "_plantButton`) == \"Plant\") 
+//			button -e -label \"Unplant\" -e -w 135 " + $parent[$i] + "_plantButton;
+//			else button -e -label \"Plant\" -e -w 135 " + $parent[$i] + "_plantButton;" ;
+
+
+
+
+
+global proc constrainToJointWin(string $parent, string $masterGroup)
+{
+	if(`window -ex ConstrainToJointUI`)
+		deleteUI ConstrainToJointUI;
+
+
+	string $joints[] = `getSkeleton`;
+	window 
+		-menuBar false
+		-maximizeButton false
+		-w 5 
+		-h 5
+		-rtf 1
+		-title "ConstrainToJoint"
+		ConstrainToJointUI;	
+		columnLayout;
+			paneLayout
+				-w 190
+				-h 140;
+				textScrollList 
+					-w 190
+					-nr 10
+					lt_jointList;
+				for($i = 0; $i< size($joints); $i++)
+					textScrollList -e -append $joints[$i] lt_jointList;
+			setParent ..;
+			rowLayout 
+				-numberOfColumns 2
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-cw 1 95
+				-cw 2 95;
+				button -label "Constrain" -w 90 -h 25 -c ("constrainToJoint " + $parent + " " + $masterGroup);
+				button -label "Cancel" -w 90 -h 25 -c "deleteUI ConstrainToJointUI";
+			setParent ..;
+		setParent ..;
+
+	showWindow ConstrainToJointUI;
+}
+
+global proc constrainToJoint(string $parent, string $masterGroup)
+{
+	$toJoint = `textScrollList -q -si lt_jointList`;
+	$parentIK = $parent + "_IKHandle";
+
+	$null1 = `spaceLocator`;
+	$null2 = `spaceLocator`;
+	parent $null2 $null1;
+
+	pointConstraint $toJoint $null1;
+	orientConstraint $toJoint $null1;
+
+	pointConstraint $parentIK $null2;
+	orientConstraint $parentIK $null2;
+
+
+	rename $parentIK ($parent + "_OldIKHandle");
+	rename $null2 $parentIK;
+
+	select -r $parentIK;
+	bake;
+	delete -constraints;
+
+	select -r ($parent + "_OldIKHandle");
+	cutKey -clear;
+
+	pointConstraint $parentIK ($parent + "_OldIKHandle");
+	orientConstraint $parentIK ($parent + "_OldIKHandle");
+
+	parent $null1 $masterGroup;
+
+	deleteUI ConstrainToJointUI;
+}
+
+
+
+
+
+global proc setupIKPlant(string $parent)
+{	
+	$curTime = `currentTime -q`;
+
+	button -e -label ("Unplant frame " + $curTime) -e -w 135 ($parent + "_plantButton");
+}
+
+
+
+global proc setupIKUnplant(string $parent)
+{
+	int $curTime = `currentTime -q`;
+	string $label = `button -q -label ($parent + "_plantButton")`;
+	int $len = size($label);
+	int $startTime = int(`substring $label 15 $len`);
+
+	select -r ($parent + "_IKHandle");
+	selectKey -clear ;
+
+	$parentIK = $parent + "_IKHandle";
+	string $rotInput[3] = `listConnections -type animCurveTA $parentIK`; 
+	string $tranInput[3] = `listConnections -type animCurveTL $parentIK`;
+
+	if($startTime > $curTime)
+	{
+		if(`objExists $tranInput[0]`) selectKey -add -k -t ($curTime + ":" + ($startTime - 1)) $tranInput[0];
+		if(`objExists $tranInput[1]`) selectKey -add -k -t ($curTime + ":" + ($startTime - 1)) $tranInput[1];
+		if(`objExists $tranInput[2]`) selectKey -add -k -t ($curTime + ":" + ($startTime - 1)) $tranInput[2];
+		if(`objExists $rotInput[0]`) selectKey -add -k -t ($curTime + ":" + ($startTime - 1)) $rotInput[0];
+		if(`objExists $rotInput[1]`) selectKey -add -k -t ($curTime + ":" + ($startTime - 1)) $rotInput[1];
+		if(`objExists $rotInput[2]`) selectKey -add -k -t ($curTime + ":" + ($startTime - 1)) $rotInput[2];
+	}
+	else
+	{
+		if(`objExists $tranInput[0]`) selectKey -add -k -t (($startTime + 1) + ":" + $curTime) $tranInput[0];
+		if(`objExists $tranInput[1]`) selectKey -add -k -t (($startTime + 1) + ":" + $curTime) $tranInput[1];
+		if(`objExists $tranInput[2]`) selectKey -add -k -t (($startTime + 1) + ":" + $curTime) $tranInput[2];
+		if(`objExists $rotInput[0]`) selectKey -add -k -t (($startTime + 1) + ":" + $curTime) $rotInput[0];
+		if(`objExists $rotInput[1]`) selectKey -add -k -t (($startTime + 1) + ":" + $curTime) $rotInput[1];
+		if(`objExists $rotInput[2]`) selectKey -add -k -t (($startTime + 1) + ":" + $curTime) $rotInput[2];
+	}
+
+	cutKey -animation keys -clear;
+
+
+	currentTime $startTime;
+	currentTime -update false $curTime;
+	setKeyframe -at translate -at rotate;
+
+	if(`objExists $tranInput[0]`) selectKey -add -k -t $startTime -t $curTime $tranInput[0];
+	if(`objExists $tranInput[1]`) selectKey -add -k -t $startTime -t $curTime $tranInput[1];
+	if(`objExists $tranInput[2]`) selectKey -add -k -t $startTime -t $curTime $tranInput[2];
+	if(`objExists $rotInput[0]`) selectKey -add -k -t $startTime -t $curTime $rotInput[0];
+	if(`objExists $rotInput[1]`) selectKey -add -k -t $startTime -t $curTime $rotInput[1];
+	if(`objExists $rotInput[2]`) selectKey -add -k -t $startTime -t $curTime $rotInput[2];
+
+	keyTangent -itt flat -ott flat;
+	selectKey -clear ;
+
+	button -e -label "Plant" -e -w 135  ($parent + "_plantButton");
+}
+	
+
+
+global proc string setupExpression(string $parent, string $child, string $grandchild, string $target)
+{
+
+	
+/*	$expString =	"$hip 	= `getAttr " + $parent + ".wm`;\n" +
+		"$knee	= `getAttr " + $child + ".wm`;\n" +
+		"$ankle = `getAttr " + $grandchild + ".wm`;\n" +
+
+		$target + ".tx = 3 * $knee[12] - $hip[12] - $ankle[12];\n" +
+		$target + ".ty = 3 * $knee[13] - $hip[13] - $ankle[13];\n" +
+		$target + ".tz = 3 * $knee[14] - $hip[14] - $ankle[14];\n";
+*/
+	$expString = "float $p0[3], $v[3], $t, $magV, $len, $upper, $lower;" +	
+		"$hip 	= `getAttr " + $parent + ".wm`;\n" +
+		"$knee	= `getAttr " + $child + ".wm`;\n" +
+		"$ankle = `getAttr " + $grandchild + ".wm`;\n" +
+		"$kneeRot = `getAttr " + $child + ".rz`;\n" +
+
+		"$upper = `getAttr " + $child + ".tx`;\n" + 
+		"$lower = `getAttr " + $grandchild + ".tx`;\n" +
+		"$len = $upper + $lower;\n" + 
+
+		"$p0[0] = 0.5 * ($hip[12] + $ankle[12]);\n" +  
+		"$p0[1] = 0.5 * ($hip[13] + $ankle[13]);\n" +  
+		"$p0[2] = 0.5 * ($hip[14] + $ankle[14]);\n" +  
+
+		"$v[0] = $knee[12] - $p0[0];\n" + 
+		"$v[1] = $knee[13] - $p0[1];\n" + 
+		"$v[2] = $knee[14] - $p0[2];\n" + 
+
+		"$magV = sqrt($v[0]*$v[0] + $v[1]*$v[1] + $v[2]*$v[2]);\n" +
+//		"print ($kneeRot + \" \" + $magV + \"\\n\");\n" + 
+
+		"$t = $len / $magV;\n" + 
+		
+		$target + ".tx = $p0[0] + $t * $v[0];\n" +
+		$target + ".ty = $p0[1] + $t * $v[1];\n" +
+		$target + ".tz = $p0[2] + $t * $v[2];\n";
+
+	$exp = `expression -s $expString -o $target -ae 1 -uc all`;		
+
+	return $exp;
+}

@@ -1,0 +1,568 @@
+global proc exportPhysics()
+
+{
+
+	float 	$xTrans[], $yTrans[], $zTrans[], 
+
+		$xRot[], $yRot[], $zRot[], $time[];
+
+	float $prec = 0.0001;
+
+	$filename = "C:/Documents and Settings/scotta/DESKTOP/keyFrames.lta";
+
+
+
+	$sel = `ls -sl`;
+
+	$numObj = size($sel);
+
+	$object = $sel[0];
+
+	int $numKeys = (`keyframe -q -kc`)/(6*$numObj);
+
+	print ($numKeys + "\n");
+
+
+
+	int $fileID = `fopen $filename "w"`;
+
+	printPolyHedronList $fileID;
+
+	printNodeHierarchy $fileID $sel $numKeys;
+
+
+
+	fprint($fileID, "\t( globalproplist ( \n"
+
+		+ "\t\t( proplist ( \n"
+
+		+ "\t\t) ) \n");
+
+
+
+	for($j = 0; $j < $numObj; $j++)
+
+	{
+
+		currentTime (`playbackOptions -q -min`);
+
+		float $curTime = 0;
+
+		for($i = 0; $i < $numKeys; $i++)
+
+		{
+
+			$prevTime = $curTime;
+
+			$curTime = (float(`currentTime -q`))/30;
+
+			$time[$i] = `roundOff ($curTime - $prevTime) 0.00001`;
+
+				
+
+			$xTrans[$i] = (`getAttr ($sel[$j] + ".tx")`) + (`getAttr ($sel[$j] + ".rpx")`);
+
+			$xTrans[$i] = -(`roundOff $xTrans[$i] $prec`); //print($xTrans[$i] + "\n");
+
+			$yTrans[$i] = (`getAttr ($sel[$j] + ".ty")`) + (`getAttr ($sel[$j] + ".rpy")`);
+
+			$yTrans[$i] = `roundOff $yTrans[$i] $prec`; //print($yTrans[$i] + "\n");
+
+			$zTrans[$i] = (`getAttr ($sel[$j] + ".tz")`) + (`getAttr ($sel[$j] + ".rpz")`);
+
+			$zTrans[$i] = `roundOff $zTrans[$i] $prec`; //print($zTrans[$i] + "\n");
+
+
+
+			$xRot[$i] = (`getAttr ($sel[$j] + ".rx")`); 	 $xRot[$i] = `deg_to_rad $xRot[$i]`;
+
+			$xRot[$i] = `roundOff $xRot[$i] $prec`;
+
+			$yRot[$i] = (`getAttr ($sel[$j] + ".ry")`);  $yRot[$i] = `deg_to_rad $yRot[$i]`;
+
+			$yRot[$i] = -(`roundOff $yRot[$i] $prec`);
+
+			$zRot[$i] = (`getAttr ($sel[$j] + ".rz")`);  $zRot[$i] = `deg_to_rad $zRot[$i]`;
+
+			$zRot[$i] = -(`roundOff $zRot[$i] $prec`);
+
+	
+
+			currentTime -edit `findKeyframe -timeSlider -which next`;
+
+		}
+
+		printGlobalPropList $fileID $sel[$j] $xTrans $yTrans $zTrans $xRot $yRot $zRot $time;
+
+	}
+
+
+
+	fprint($fileID, "\t\t) ) \n"
+
+		+ "\t( navigatorposlist ( \n"
+
+		+ "\t) ) \n"
+
+		+ ") \n");
+
+
+
+	fclose $fileID;
+
+}
+
+
+
+global proc float roundOff(float $input, float $prec)
+
+{
+
+	float $output;
+
+	if($input >=0)
+
+		$output = float(int(($input/$prec) + 0.5))*$prec;
+
+	else
+
+		$output = float(int(($input/$prec) - 0.5))*$prec;
+
+	return $output;
+
+}
+
+
+
+global proc printPolyHedronList(int $fileID)
+
+{
+
+	fprint	$fileID ("( world \n\n"
+
+		+ "\t( header ( \n"
+
+		+ "\t\t( versioncode 1 ) \n"
+
+		+ "\t) ) \n"
+
+		+ "\t( polyhedronlist ( \n"
+
+		+ "\t) ) \n");
+
+}
+
+
+
+global proc printNodeHierarchy(int $fileID, string $name[], int $numKeys)
+
+{
+
+	fprint($fileID, "\t( nodehierarchy \n" 
+
+		+ "\t\t( worldnode \n" 
+
+		+ "\t\t\t( type null ) \n"
+
+		+ "\t\t\t( label \"Container\" ) \n"		
+
+		+ "\t\t\t( nodeid 1 )\n" 
+
+		+ "\t\t\t( flags ( worldroot expanded ) )\n" 
+
+		+ "\t\t\t( properties\n"
+
+		+ "\t\t\t\t( propid  0 )\n" 
+
+		+ "\t\t\t)\n"
+
+ 		+ "\t\t\t( childlist ( \n");
+
+	int $lastProp = 1;	
+
+
+
+	for($j = 0; $j<size($name); $j++)
+
+	{
+
+		fprint($fileID, "\t\t\t\t( worldnode \n"
+
+			+ "\t\t\t\t\t( type null ) \n"
+
+			+ "\t\t\t\t\t( label \"" + $name[$j] + "\" ) \n"
+
+			+ "\t\t\t\t\t( flags ( expanded ) ) \n"
+
+			+ "\t\t\t\t\t( properties \n"
+
+			+ "\t\t\t\t\t\t( propid  0 ) \n"
+
+			+ "\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t( childlist ( \n" 
+
+			+ "\t\t\t\t\t\t( worldnode \n" 
+
+			+ "\t\t\t\t\t\t\t( type object ) \n"
+
+			+ "\t\t\t\t\t\t\t( flags ( expanded ) ) \n" 
+
+			+ "\t\t\t\t\t\t\t( properties\n"
+
+			+ "\t\t\t\t\t\t\t\t( name \"TranslucentWorldModel\" ) \n" 
+
+			+ "\t\t\t\t\t\t\t\t( propid  " + ($lastProp) + " ) \n" 
+
+			+ "\t\t\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t\t( worldnode \n"
+
+			+ "\t\t\t\t\t\t\t( type object ) \n"
+
+			+ "\t\t\t\t\t\t\t( flags ( expanded ) ) \n" 
+
+			+ "\t\t\t\t\t\t\t( properties \n"
+
+			+ "\t\t\t\t\t\t\t\t( name \"KeyFramer\" ) \n" 
+
+			+ "\t\t\t\t\t\t\t\t( propid  " + ($lastProp + 1) + " ) \n" 
+
+			+ "\t\t\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t\t( worldnode \n"
+
+			+ "\t\t\t\t\t\t\t( type null ) \n"
+
+			+ "\t\t\t\t\t\t\t( label \"" + $name[$j] + "Path\" ) \n" 
+
+			+ "\t\t\t\t\t\t\t( flags ( path expanded ) ) \n" 
+
+			+ "\t\t\t\t\t\t\t( properties \n"
+
+			+ "\t\t\t\t\t\t\t\t( propid  0 ) \n" 
+
+			+ "\t\t\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t\t\t( childlist ( \n");
+
+
+
+		$lastProp += 2;
+
+
+
+		for($i = 0; $i < $numKeys; $i++)
+
+		{
+
+			fprint($fileID, "\t\t\t\t\t\t\t\t( worldnode \n"
+
+				+ "\t\t\t\t\t\t\t\t\t( type object ) \n"
+
+				+ "\t\t\t\t\t\t\t\t\t( flags ( ) ) \n"
+
+				+ "\t\t\t\t\t\t\t\t\t( properties \n"
+
+				+ "\t\t\t\t\t\t\t\t\t\t( name \"Key\" ) \n"
+
+				+ "\t\t\t\t\t\t\t\t\t\t( propid  " + ($i+$lastProp) + " ) \n"
+
+				+ "\t\t\t\t\t\t\t\t\t) \n"
+
+				+ "\t\t\t\t\t\t\t\t) \n");
+
+		}
+
+
+
+		$lastProp += $numKeys;
+
+	
+
+		fprint($fileID, "\t\t\t\t\t\t\t) ) \n"
+
+			+ "\t\t\t\t\t\t) \n"
+
+			+ "\t\t\t\t\t) ) \n"
+
+			+ "\t\t\t\t) \n");
+
+	}
+
+
+
+	fprint($fileID, "\t\t\t) ) \n"
+
+		+ "\t\t) \n"
+
+		+ "\t) \n" );
+
+
+
+}
+
+
+
+global proc printGlobalPropList(int $fileID, string $object, float $xTrans[], float $yTrans[], float $zTrans[], float $xRot[], float $yRot[], float $zRot[], float $time[])
+
+{
+
+	string $keyname;
+
+	int $numKeys = size($time);
+
+
+
+	fprint($fileID, "\t\t( proplist ( \n"
+
+		+ "\t\t\t(  string \"Name\" (  ) ( data \"" + $object + "WM\") ) \n"
+
+		+ "\t\t\t(  vector \"Pos\" ( distance  ) ( data ( vector (" 
+
+				+ $xTrans[0] + " " + $yTrans[0] + " " + $zTrans[0] 		
+
+		+ ") ) ) ) \n" 
+
+		+ "\t\t\t(  rotation \"Rotation\" (  ) ( data (eulerangles (0.000000 0.000000 0.000000) ) ) ) \n" 
+
+		+ "\t\t\t(  longint \"DamageProperties\" ( groupowner group1  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  longint \"ExplosionProperties\" ( groupowner group2  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  string \"DebrisType\" ( staticlist  ) ( data \"Glass large\") ) \n" 
+
+		+ "\t\t\t(  string \"SurfaceOverride\" ( staticlist  ) ( data \"Unknown\") ) \n" 
+
+		+ "\t\t\t(  longint \"LensFlareProps\" ( groupowner group4  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  bool \"Visible\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"Solid\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"Rayhit\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"Gravity\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"Chromakey\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"BlockLight\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"BoxPhysics\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"FogDisable\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  real \"Alpha\" (  ) ( data 1.000000 )) \n" 
+
+		+ "\t\t\t(  bool \"LensFlare\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"IsKeyframed\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  real \"HitPoints\" ( group1  ) ( data 100.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MaxHitPoints\" ( group1  ) ( data 100.000000 )) \n" 
+
+		+ "\t\t\t(  real \"Armor\" ( group1  ) ( data 100.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MaxArmor\" ( group1  ) ( data 100.000000 )) \n" 
+
+		+ "\t\t\t(  longint \"DamageTriggerCounter\" ( group1  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  string \"DamageTriggerTarget\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  string \"DamageTriggerMessage\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  longint \"DamageTriggerNumSends\" ( group1  ) ( data 1.000000 )) \n" 
+
+		+ "\t\t\t(  string \"DamagerMessage\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  string \"DeathTriggerTarget\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  string \"DeathTriggerMessage\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  string \"PlayerDeathTriggerTarget\" ( group1  ) )  \n"
+
+		+ "\t\t\t(  string \"PlayerDeathTriggerMessage\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  string \"KillerMessage\" ( group1  ) ) \n" 
+
+		+ "\t\t\t(  bool \"CanHeal\" ( group1  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"CanRepair\" ( group1  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"CanDamage\" ( group1  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  real \"Mass\" ( group1  ) ( data 10000.000000 )) \n" 
+
+		+ "\t\t\t(  bool \"CreateExplosion\" ( group2  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  longint \"WeaponId\" ( group2  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  bool \"FireAlongForward\" ( group2  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  real \"DamageFactor\" ( group2  ) ( data 1.000000 )) \n" 
+
+		+ "\t\t\t(  string \"Spawn\" ( group2  ) ) \n" 
+
+		+ "\t\t\t(  bool \"NeverDestroy\" ( group1  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"InSkyBox\" ( group4  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  real \"MinAngle\" ( group4  ) ( data 18.000000 )) \n" 
+
+		+ "\t\t\t(  bool \"CreateSprite\" ( hidden group4  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"UseObjectAngle\" ( group4  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"SpriteOnly\" ( hidden group4  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  real \"SpriteOffset\" ( hidden group4  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MinSpriteAlpha\" ( hidden group4  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MaxSpriteAlpha\" ( hidden group4  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MinSpriteScale\" ( hidden group4  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MaxSpriteScale\" ( hidden group4  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  string \"SpriteFile\" ( hidden group4  ) )  \n"
+
+		+ "\t\t\t(  bool \"BlindingFlare\" ( hidden group4  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  real \"BlindObjectAngle\" ( hidden group4  ) ( data 5.000000 )) \n" 
+
+		+ "\t\t\t(  real \"BlindCameraAngle\" ( hidden group4  ) ( data 90.000000 ))  \n"
+
+		+ "\t\t\t(  real \"MinBlindScale\" ( hidden group4  ) ( data 1.000000 )) \n" 
+
+		+ "\t\t\t(  real \"MaxBlindScale\" ( hidden group4  ) ( data 10.000000 )) \n" 
+
+		+ "\t\t) ) \n"
+
+
+
+		+ "\t\t( proplist ( \n" 
+
+		+ "\t\t\t(  string \"Name\" (  ) ( data \"" + $object + "KF\") ) \n" 
+
+		+ "\t\t\t(  vector \"Pos\" ( distance  ) ( data ( vector (" 
+
+				+ $xTrans[0] + " " + $yTrans[0] + " " + $zTrans[0] 
+
+		+ ") ) ) ) \n" 
+
+		+ "\t\t\t(  rotation \"Rotation\" (  ) ( data (eulerangles (0.000000 0.000000 0.000000) ) ) ) \n" 
+
+		+ "\t\t\t(  string \"ObjectName\" (  ) ( data \"" + $object + "WM\") ) \n" 
+
+		+ "\t\t\t(  string \"BaseKeyName\" (  ) ( data \"" + $object + "Key\") ) \n" 
+
+		+ "\t\t\t(  bool \"PushObjects\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"StartActive\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"StartPaused\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"Looping\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"AlignToPath\" (  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"IgnoreOffsets\" (  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  string \"TargetName\" (  ) ) \n" 
+
+		+ "\t\t\t(  vector \"TargetOffset\" (  ) ( data ( vector (0.000000 0.000000 0.000000) ) ) ) \n" 
+
+		+ "\t\t\t(  string \"ActiveSound\" (  ) ) \n" 
+
+		+ "\t\t\t(  real \"SoundRadius\" (  ) ( data 1000.000000 )) \n" 
+
+		+ "\t\t\t(  string \"RotationWave\" (  ) ( data \"LINEAR\") ) \n"
+
+		+ "\t\t\t(  longint \"Waveform\" ( groupowner group1  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  longint \"Lighting\" ( groupowner group2  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  real \"TotalPathTime\" ( group1  ) ( data 0.000000 )) \n" 
+
+		+ "\t\t\t(  bool \"Linear\" ( group1  ) ( data 1 )) \n" 
+
+		+ "\t\t\t(  bool \"Sine\" ( group1  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"SlowOff\" ( group1  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  bool \"SlowOn\" ( group1  ) ( data 0 )) \n" 
+
+		+ "\t\t\t(  string \"ShadowLights\" ( group2  ) ) \n" 
+
+		+ "\t\t\t(  bool \"ShadowMaps\" ( hidden group2  ) ( data 0 )) \n" 
+
+		+ "\t\t) ) \n");
+
+
+
+	for($i = 0; $i < $numKeys; $i++)
+
+	{
+
+		if($i == 0)
+
+			$keyname = $object + "Key0";
+
+		else if($i < 10)
+
+			$keyname = $object + "Key0" + $i;
+
+		else 
+
+			$keyname = $object + "Key" + $i;
+
+	
+
+		fprint($fileID, "\t\t( proplist ( \n" 
+
+			+ "\t\t\t(  string \"Name\" (  ) ( data \"" + $keyname + "\") ) \n" 
+
+			+ "\t\t\t(  vector \"Pos\" ( distance  ) ( data ( vector (" 
+
+				+ $xTrans[$i] + " " + $yTrans[$i] + " " + $zTrans[$i] 
+
+			+ ") ) ) ) \n" 
+
+			+ "\t\t\t(  rotation \"Rotation\" (  ) ( data (eulerangles (" 
+
+				+ $xRot[$i] + " " + $yRot[$i] + " " + $zRot[$i] 				
+
+			+ ") ) ) ) \n" 
+
+			+ "\t\t\t(  real \"TimeStamp\" (  ) ( data " + $time[$i] + " )) \n" 
+
+			+ "\t\t\t(  string \"SoundName\" (  ) ) \n" 
+
+			+ "\t\t\t(  real \"SoundRadius\" ( radius  ) ( data 0.000000 )) \n" 
+
+			+ "\t\t\t(  string \"MessageTarget\" (  ) ) \n" 
+
+			+ "\t\t\t(  string \"MessageName\" (  ) ) \n" 
+
+			+ "\t\t\t(  string \"BPrintMessage\" (  ) ) \n" 
+
+			+ "\t\t\t(  vector \"BezierPrev\" ( bezierprevtangent  ) ( data ( vector (0.000000 0.000000 0.000000) ) ) ) \n" 
+
+			+ "\t\t\t(  vector \"BezierNext\" ( beziernexttangent  ) ( data ( vector (0.000000 0.000000 0.000000) ) ) ) \n" 
+
+			+ "\t\t\t(  longint \"LightFrames\" (  ) ( data 1.000000 )) \n" 
+
+			+ "\t\t) ) \n");
+
+	}
+
+
+
+};
+

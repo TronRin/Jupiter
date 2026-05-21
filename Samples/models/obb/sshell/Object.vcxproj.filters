@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\sdk">
+      <UniqueIdentifier>{ACF9F502-98B1-3750-01B9-10ACED8FD240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\sdk\inc">
+      <UniqueIdentifier>{B5828E1B-A150-8221-8AE4-F24776515E86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\gamestartpoint.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ltservershell.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serverinterfaces.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\iltbaseclass.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltengineobjects.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltmodule.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltquatbase.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamestartpoint.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltservershell.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serverinterfaces.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

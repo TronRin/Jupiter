@@ -1,0 +1,183 @@
+global proc centerMocap()
+{
+	string $floorNode, $transNode;
+	int $charHeight = 106;
+	int $minY = 9999;
+	select -hi;
+	$joint = `ls -sl`;
+	for($i = 0; $i < size($joint); $i++)
+	{
+		$pos = `joint -q -a -p $joint[$i]`;
+		if($pos[1] < $minY) 
+		{	$minY = $pos[1];
+			$floorNode = $joint[$i];
+		}
+	}
+
+	if(size($joint) > 22)
+	{
+		$transNode = $joint[22];
+		if($floorNode =="") $floorNode = $joint[17];	
+	}
+	else
+	{
+		$transNode = $joint[20];
+		if($floorNode =="") $floorNode = $joint[15];	
+	}
+
+	$charPos = `joint -q -a -p $transNode`;
+	$floorPos = `joint -q -a -p $floorNode`;
+	$yOffset = 4 - $charHeight/2 - $floorPos[1];
+
+	selectKey -r -k -at tx $transNode;
+	keyframe -e -iub true -animation keys -r -o move -vc (0-$charPos[0]);
+
+	selectKey -r -k -at ty $transNode;
+	keyframe -e -iub true -animation keys -r -o move -vc $yOffset;
+
+	selectKey -r -k -at tz $transNode;
+	keyframe -e -iub true -animation keys -r -o move -vc (0-$charPos[2]);
+	selectKey -cl;
+}
+
+global proc xBone(string $flag)
+{
+
+	int $i, $numJoints;
+	string $buffer[], $newSkeleton[], $cmd;
+	string $sword = "sword";
+
+	prefsChangeNodeNameScheme 0;
+
+//Get rid of dead nodes and make temp skeletons
+	
+	select -cl;
+	delete LeftHandendJoint  LeftFootendJoint RightFootendJoint HeadendJoint;
+
+	if($flag == $sword)
+	{
+		delete SwordTipendJoint;
+		select -r SwordHilt ;
+		selectKey -clear ;
+		selectKey -add -k SwordHilt_rotateZ ;
+		keyframe -e -iub true -animation keys -r -o over -vc 60 ;
+		select -cl;
+	}
+	else
+		delete RighttHandendJoint;
+
+	select -hi LowerTorso;
+	$template = `ls -sl`;
+	select -cl;
+	
+	joint -p 0 0 0 -n null;
+	joint -p 0 0 0 -n translation;
+	currentTime 0;
+	currentTime 5;
+	currentTime 0;
+
+	select -r LowerTorso ;
+	duplicate ;
+	duplicate ;
+
+	select -hi LowerTorso;
+	$mocap = `ls -sl`;
+	select -hi LowerTorso2;
+	$newSkeleton = `ls -sl`;
+	select -hi LowerTorso1;
+	$tempSkel = `ls -sl`;
+	$numJoints = size($mocap);
+
+	if($flag != $sword)	
+	{
+		parent $newSkeleton[19] translation;
+		parent $newSkeleton[11] translation;
+		parent $newSkeleton[15] translation;
+	}
+	else
+	{
+		parent $newSkeleton[21] translation;
+		parent $newSkeleton[13] translation;
+		parent $newSkeleton[17] translation;
+	} 
+
+
+	currentTime 0;
+
+	if($flag != $sword)		
+		for($i = 11; $i < 19; $i++)	
+			$newSkeleton[$i] = "translation" + `substring $newSkeleton[$i] 12 100`;
+	else
+		for($i = 13; $i < 21; $i++)	
+			$newSkeleton[$i] = "translation" + `substring $newSkeleton[$i] 12 100`;
+
+//Make the crazed hierarchy
+
+	currentTime 0;
+	for($i = ($numJoints-2); $i > -1; $i--)
+	{ 
+		parent $tempSkel[$i] $mocap[$i];
+	}
+
+	if($flag != $sword)		
+		parent $tempSkel[19] $mocap[19];
+	else
+		parent $tempSkel[21] $mocap[21];
+
+//Re-orient nodes 	
+
+	currentTime 0;
+	select -cl;
+	for($i = 0; $i <($numJoints-1); $i++)
+	{
+		$tempSkel[$i] = $mocap[$i] + "|" + $template[$i];
+		select -tgl $tempSkel[$i];
+	}
+	select -tgl $tempSkel[$numJoints-1];
+	rotate -r -os 90 0 90;
+
+//Constrain rebuilt skeleton to reoriented nodes
+	
+	currentTime 0;
+
+	if($flag != $sword)		
+		pointConstraint $tempSkel[19] translation;
+	else
+		pointConstraint $tempSkel[21] translation;
+
+	for($i = 0; $i < $numJoints; $i++)
+	{
+		pointConstraint $tempSkel[$i] $newSkeleton[$i];
+		orientConstraint $tempSkel[$i] $newSkeleton[$i];
+		setAttr ($newSkeleton[$i]+".jointOrientX") 0;
+		setAttr ($newSkeleton[$i]+".jointOrientY") 0;
+		setAttr ($newSkeleton[$i]+".jointOrientZ") 0;
+	}
+//Bake animation and get rid of constraints and old skeleton	
+	int $min = `playbackOptions -q -min`;
+	int $max = `playbackOptions -q -max`;
+	$cmd = "bakeResults -simulation true -t \"" + $min + ":" + $max + "\" -sampleBy 1 -disableImplicitControl true -preserveOutsideKeys true -sparseAnimCurveBake false -at tx -at ty -at tz -at rx -at ry -at rz translation ";
+
+	for($i = 0; $i < $numJoints; $i++)  $cmd = $cmd + $newSkeleton[$i] + " ";
+	eval($cmd);
+
+
+	delete -all -cn;
+	select -r LowerTorso ;
+	delete;
+	delete -all -sc;
+
+	select -r translation;
+	centerMocap;
+	prefsChangeNodeNameScheme 1;
+	if($flag == $sword)
+	{
+		select -r RighttHand;
+		setupSword;
+	}
+	
+//	setAttr null.ry 180;
+//	select -r null;
+//	unrotateMocap;
+//	select -cl;
+}

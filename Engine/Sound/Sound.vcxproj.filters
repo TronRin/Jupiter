@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="kernel">
+      <UniqueIdentifier>{860FDB08-72B1-05DF-5B6C-193347AD8C2F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\src">
+      <UniqueIdentifier>{9D205F17-89D8-A064-F2DF-79C0DEB63B55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\src\sys">
+      <UniqueIdentifier>{2BE623FD-17B4-1703-0048-8829ECB4F367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernel\src\sys\win">
+      <UniqueIdentifier>{A8D1CC1B-94B5-8D71-FD15-88C4E91878F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound">
+      <UniqueIdentifier>{6EE05E10-DAF4-86C1-A376-2A210F4A83F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound\src">
+      <UniqueIdentifier>{8525B1EC-F18F-6563-3ACE-1609A67743B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound\src\sys">
+      <UniqueIdentifier>{131F3E84-7FDF-B9BA-481A-0338B499FE96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound\src\sys\s_dx8">
+      <UniqueIdentifier>{E829A5B4-548B-82C2-DDF8-C8744959B981}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\runtime\sound\src\sys\s_dx8\StdAfx.h">
+      <Filter>sound\src\sys\s_dx8</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\sys\s_dx8\s_dx8.h">
+      <Filter>sound\src\sys\s_dx8</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\counter.cpp">
+      <Filter>kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\sys\s_dx8\StdAfx.cpp">
+      <Filter>sound\src\sys\s_dx8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\sys\s_dx8\parsewavefile.cpp">
+      <Filter>sound\src\sys\s_dx8</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\sys\s_dx8\s_dx8.cpp">
+      <Filter>sound\src\sys\s_dx8</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

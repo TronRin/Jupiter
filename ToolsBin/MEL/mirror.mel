@@ -1,0 +1,47 @@
+global proc mirror()
+
+{
+
+	string $selection[] = `ls -sl`;
+
+	string $mirror[], $parent[];
+
+
+
+	for($i = 0; $i < size($selection); $i++)
+
+	{
+
+		$temp = `duplicate -rr $selection[$i]`;
+
+		$mirror[$i] = $temp[0];
+
+		$parent = `listRelatives -p $mirror[$i]`;
+
+		if($parent[0]!="")
+
+			parent -w $mirror[$i];
+
+		$tempGroup = `group $mirror[$i]`;
+
+		xform -ws -piv 0 0 0;
+
+		setAttr ($tempGroup + ".sx") -1;
+
+		makeIdentity -apply true -t 1 -r 1 -s 1 $tempGroup;
+
+		ungroup $tempGroup;
+
+		ReversePolygonNormals; 
+
+		if($parent[0]!="")
+
+			parent $mirror[$i] $parent[0];        
+
+	}
+
+	select -r $mirror;
+
+	selectMode -o;
+
+}

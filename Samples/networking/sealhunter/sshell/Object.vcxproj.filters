@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\clientfx">
+      <UniqueIdentifier>{87233D30-F3AE-AAF4-FCBF-2DE968CA06F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\clientfx\src">
+      <UniqueIdentifier>{1E4DBD89-8AAE-9A97-131C-E1497F7CD156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\clientfx\src\shared">
+      <UniqueIdentifier>{A41E9F45-902E-4B16-F9E7-AF34E5163AAF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\sdk">
+      <UniqueIdentifier>{ACF9F502-98B1-3750-01B9-10ACED8FD240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\sdk\inc">
+      <UniqueIdentifier>{B5828E1B-A150-8221-8AE4-F24776515E86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\AIVolume.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerSpecialFX.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TransWorldmodel.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamestartpoint.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\linkedlist.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ltservershell.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pickup.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\playersrvr.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\projectile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\seal.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serverinterfaces.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serverutilities.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snowman.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\statsmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\trigger.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\worldproperties.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Engine\clientfx\src\shared\ParsedMsg.cpp">
+      <Filter>Engine\clientfx\src\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\iltbaseclass.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltengineobjects.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltmodule.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltquatbase.cpp">
+      <Filter>Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AIVolume.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerSpecialFX.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TransWorldmodel.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamestartpoint.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltservershell.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pickup.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playersrvr.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\projectile.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\seal.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serverinterfaces.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serverutilities.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snowman.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statsmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\trigger.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\worldproperties.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

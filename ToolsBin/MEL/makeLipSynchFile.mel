@@ -1,0 +1,227 @@
+global proc makeLipSynchFile()
+{
+	$sel = `ls -sl`;
+	$root = $sel[0];
+	select -hi $root;
+	$list = `ls -sl -type joint`;
+
+	if(`window -ex LipSynchUI`)
+		deleteUI LipSynchUI;
+
+	window
+		-w 10
+		-h 10
+		-rtf 1
+		-title "ScottTech2000"
+		LipSynchUI;
+		columnLayout;
+			text -label $root lt_lipSynchRoot;
+			paneLayout
+				-w 190
+				-h 200;
+				textScrollList 
+					-w 190
+					-nr 15
+					-allowMultiSelection 1
+					lt_lipSynchList;
+				for($i = 0; $i< ((size($list))-1); $i++)
+					textScrollList -e -append $list[$i] lt_lipSynchList;	
+			setParent ..;
+			rowLayout 
+				-numberOfColumns 2
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-cw 1 95
+				-cw 2 95; 
+				button -label "Export" -w 90 -h 25 -c "exportLipSynch \"\" {\"\"}";
+				button -label "Close" -w 90 -h 25 -c "deleteUI LipSynchUI";
+			setParent ..;
+
+		setParent ..;
+
+	showWindow LipSynchUI;
+
+	select -r $sel;
+}
+
+global proc exportLipSynch( string $root, string $exportNodes[])
+{
+	global string $gPlayBackSlider;
+
+	string $node[], $baseNodes[], $outNodes[];
+	float $xTran[], $yTran[], $zTran[], $xRot[], $yRot[], $zRot[];
+	float $xTranOffset, $yTranOffset, $zTranOffset, $xRotOffset, $yRotOffset, $zRotOffset;
+	float $curXTran, $curYTran, $curZTran, $curXRot, $curYRot, $curZRot;
+	int $i, $j;
+	int $maxTime = `playbackOptions -q -max`;
+	int $minTime = `playbackOptions -q -min`;
+
+	currentTime 0;
+
+	if(`window -ex LipSynchUI`)
+	{
+		clear $exportNodes;
+		$exportNodes = `textScrollList -q -si lt_lipSynchList`;
+		$root = `text -q -label lt_lipSynchRoot`;
+	} 
+	if(size($exportNodes) == 0)
+		return;
+
+	$rootNull = `spaceLocator`;
+	pointConstraint $root $rootNull;
+	orientConstraint $root $rootNull;
+
+	for($i = 0; $i < size($exportNodes); $i++)
+	{
+		$newNull = `spaceLocator`;
+		$outNodes[$i] = $newNull[0];
+		pointConstraint $exportNodes[$i] $outNodes[$i];
+		orientConstraint $exportNodes[$i] $outNodes[$i];
+		
+		$newNull = `spaceLocator`;//`duplicate -rr $outNodes[$i]`;
+		$baseNodes[$i] = $newNull[0];
+		pointConstraint $exportNodes[$i] $baseNodes[$i];
+		orientConstraint $exportNodes[$i] $baseNodes[$i];
+		delete -constraints $baseNodes[$i];
+		parent $outNodes[$i] $baseNodes[$i];
+
+	}
+
+	for($i = 0; $i < size($exportNodes); $i++)
+	{
+		$parent = `listRelatives -p $exportNodes[$i]`;
+		if($parent[0] == $root)
+			parent $baseNodes[$i] $rootNull;
+		else
+		{
+			for($j = 0; $j < $i; $j++)
+			{
+				if($parent[0] == $exportNodes[$j])
+				{
+					parent $baseNodes[$i] $outNodes[$j];
+					break;
+				}
+			}
+		}
+	}
+	
+
+	
+
+	
+//	return;
+	
+	
+	for($i = 0; $i < size($outNodes); $i++)
+	{	
+		$xTran[$i] = checkNum (`getAttr -t 0 ($outNodes[$i] + ".translateX")`);
+		$yTran[$i] = checkNum (`getAttr -t 0 ($outNodes[$i] + ".translateY")`);
+		$zTran[$i] = checkNum (`getAttr -t 0 ($outNodes[$i] + ".translateZ")`);
+		$xRot[$i] = checkNum (`getAttr -t 0 ($outNodes[$i] + ".rotateX")`);
+		$yRot[$i] = checkNum (`getAttr -t 0 ($outNodes[$i] + ".rotateY")`);
+		$zRot[$i] = checkNum (`getAttr  -t 0 ($outNodes[$i] + ".rotateZ")`);
+	}
+
+	int $newi;
+	for($i = $minTime; $i <= 99999; $i++)
+	{
+		$newi = `findKeyframe -t $i -which next FacePoser2000`;
+		if($newi == $i) break;
+	}
+	$maxTime = $newi;
+	playbackOptions -max $maxTime;
+
+
+	string $soundNode = `timeControl -q -s $gPlayBackSlider`;
+	string $soundFile = `sound -q -f $soundNode`;
+	string $soundTextFile = `substitute "wav" $soundFile "txt"`;
+	int $fileId = `fopen $soundTextFile "w"`;
+
+	fprint $fileId ((size($outNodes)) + "\r\n");
+	fprint $fileId (trunc(float($maxTime)*33.334) + "\r\n");
+
+	for($i = 0; $i < size($outNodes); $i++)
+	{
+		fprint $fileId ($exportNodes[$i] + "\r\n");	
+	}
+	
+//select -r FacePoser2000;
+//$i = $minTime;
+
+
+	for($i = $minTime; $i <= $maxTime; $i++)
+	{
+		fprint $fileId (trunc(float($i)*33.334));
+		for($j=0; $j<size($outNodes); $j++)
+		{
+			
+			$curXTran = checkNum (`getAttr -t $i ($outNodes[$j] + ".translateX")`);
+			$xTranOffset = $curXTran - $xTran[$j];
+			$curYTran = checkNum (`getAttr -t $i ($outNodes[$j] + ".translateY")`);
+			$yTranOffset = $curYTran - $yTran[$j];
+			$curZTran = checkNum (`getAttr -t $i ($outNodes[$j] + ".translateZ")`);
+			$zTranOffset = $curZTran - $zTran[$j];
+			$curXRot = checkNum (`getAttr -t $i ($outNodes[$j] + ".rotateX")`);
+			$xRotOffset = $curXRot - $xRot[$j];
+			$curYRot = checkNum (`getAttr -t $i ($outNodes[$j] + ".rotateY")`);
+			$yRotOffset = $curYRot - $yRot[$j];
+			$curZRot = checkNum (`getAttr -t $i ($outNodes[$j] + ".rotateZ")`);
+			$zRotOffset = $curZRot - $zRot[$j];
+
+			fprint $fileId ("\t" + $xTranOffset + " " + $yTranOffset + " " + $zTranOffset + " " + $xRotOffset + " " + $yRotOffset + " " + $zRotOffset + "\r\n");
+		}
+//		$newi = `findKeyframe -t $i -which next FacePoser2000`;
+//		print($i + " " + $newi + "\n");
+//		if($newi == $i) break;
+//		else $i = $newi;
+	}	
+	print("Saved as " + $soundTextFile + "\n");
+	fclose $fileId;
+	delete $rootNull;
+	if(`window -ex LipSynchUI`)
+		deleteUI LipSynchUI;
+}
+
+global proc float checkNum(float $input)
+{
+	if(abs($input) < 0.001) $input = 0;
+	$input = (trunc($input*10000)/10000);
+	return $input;
+}
+/*
+voiceWorks 
+	-s "C:/TO2/Game/Voice/beggars.wav" 
+	-d "C:/PuppetWorks/VoiceWorksV1.0/plug-ins/Dicteng.txt" 
+	-t "C:/TO2/Game/Voice/beggarsText.txt"  
+	-v 0  
+	-vi "aAcCeHiIW^!" FacePoser2000.AAA 
+	-vi "Ey" FacePoser2000.EEE 
+	-vi "Fv" FacePoser2000.FFV 
+	-vi "oOwuU" FacePoser2000.OOO 
+	-vi "dGknN" FacePoser2000.GNK 
+	-vi "bmp" FacePoser2000.BMP 
+	-vi "JDrjRSZ" FacePoser2000.SHH 
+	-vi "lstTz" FacePoser2000.SZZ 
+	-as "c" 0.5 1  -as "a" 0.5 1  -as "^" 0.5 1  
+	-as "C" 0.5 1  -as "W" 0.5 1  
+	-as "!" 0.5 1  -as "I" 0.5 1  
+	-as "b" 0.2624 1  -as "J" 0.5 1  
+	-as "d" 0.5 1  -as "D" 0.5 1  
+	-as "e" 0.5 1  -as "r" 0.5 1  
+	-as "A" 0.5 1  -as "F" 0.5816 3.0687  
+	-as "G" 0.5 1  -as "H" 0.5 1  
+	-as "i" 0.5 1  -as "E" 0.5 1  
+	-as "j" 0.5 1  -as "k" 0.5 1  
+	-as "l" 0.5 1  -as "m" 0.5 1  
+	-as "n" 0.5 1  -as "N" 0.5 1  
+	-as "O" 0.4184 1  -as "o" 0.5 1  
+	-as "p" 0.2128 1  -as "R" 0.5 1  
+	-as "s" 0.5 1  -as "S" 0.5 1  
+	-as "t" 0.5 1  -as "T" 0.5 1  
+	-as "u" 0.7376 1  -as "U" 0.3901 1  
+	-as "v" 0.5 1  -as "w" 0.5 1  
+	-as "y" 0.5 1  -as "z" 0.5 1  
+	-as "Z" 0.5 1  -as "x" 0.5 1  
+	-as "X" 0.5 1 ; 
+fwLoadAudioFile "C:/TO2/Game/Voice/beggars.wav";
+*/

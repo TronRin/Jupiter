@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{070D75BE-F3AE-9F94-DC69-B3E8C8AA26E5}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LIB-UI</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\bin\Debug\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Debug\LIB-UI\</IntDir>
+    <TargetName>LIB-UI</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\bin\Release\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Release\LIB-UI\</IntDir>
+    <TargetName>LIB-UI</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(ProjectDir)..\..\bin\Final\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Final\LIB-UI\</IntDir>
+    <TargetName>LIB-UI</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;__D3D;__D3DREND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src,;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__D3D;__D3DREND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src,;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_FINAL;__D3D;__D3DREND;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src,;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\runtime\ui\src\cuibase_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuibitmapfont.h" />
+    <ClInclude Include="..\runtime\ui\src\cuibutton_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuicheck_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuidebug.h" />
+    <ClInclude Include="..\runtime\ui\src\cuidropdownlist_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuifont_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuifontmanager.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiformattedpolystring_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiinterval_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuilinklist.h" />
+    <ClInclude Include="..\runtime\ui\src\cuilist_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuimessagequeue.h" />
+    <ClInclude Include="..\runtime\ui\src\cuioption_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuipolystring_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuipolytex.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiprogress_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiredblack.h" />
+    <ClInclude Include="..\runtime\ui\src\cuirenderstate.h" />
+    <ClInclude Include="..\runtime\ui\src\cuislider_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuistaticimage_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuistatictext_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuivectorfont.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiwidget_impl.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiwidgetmanager.h" />
+    <ClInclude Include="..\runtime\ui\src\cuiwindow_impl.h" />
+    <ClInclude Include="..\sdk\inc\cui.h" />
+    <ClInclude Include="..\sdk\inc\cuibase.h" />
+    <ClInclude Include="..\sdk\inc\cuibutton.h" />
+    <ClInclude Include="..\sdk\inc\cuicheck.h" />
+    <ClInclude Include="..\sdk\inc\cuidropdownlist.h" />
+    <ClInclude Include="..\sdk\inc\cuifont.h" />
+    <ClInclude Include="..\sdk\inc\cuiformattedpolystring.h" />
+    <ClInclude Include="..\sdk\inc\cuiinterval.h" />
+    <ClInclude Include="..\sdk\inc\cuilist.h" />
+    <ClInclude Include="..\sdk\inc\cuimessage.h" />
+    <ClInclude Include="..\sdk\inc\cuioption.h" />
+    <ClInclude Include="..\sdk\inc\cuipolystring.h" />
+    <ClInclude Include="..\sdk\inc\cuiprogress.h" />
+    <ClInclude Include="..\sdk\inc\cuislider.h" />
+    <ClInclude Include="..\sdk\inc\cuistaticimage.h" />
+    <ClInclude Include="..\sdk\inc\cuistatictext.h" />
+    <ClInclude Include="..\sdk\inc\cuitypes.h" />
+    <ClInclude Include="..\sdk\inc\cuiwidget.h" />
+    <ClInclude Include="..\sdk\inc\cuiwindow.h" />
+    <ClInclude Include="..\sdk\inc\iltfontmanager.h" />
+    <ClInclude Include="..\sdk\inc\iltwidgetmanager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\ui\src\cuibase.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuibase_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuibitmapfont.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuibutton.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuibutton_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuicheck.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuicheck_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuidropdownlist.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuidropdownlist_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuifont_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuifontmanager.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiformattedpolystring.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiformattedpolystring_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiinterval.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiinterval_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuilinklist.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuilist.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuilist_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuimessagequeue.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuioption.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuioption_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuipolystring.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuipolystring_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuipolytex.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiprogress.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiprogress_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiredblack.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuirenderstate.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuislider.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuislider_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuistaticimage.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuistaticimage_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuistatictext.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuistatictext_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuivectorfont.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiwidget.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiwidget_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiwidgetmanager.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiwindow.cpp" />
+    <ClCompile Include="..\runtime\ui\src\cuiwindow_impl.cpp" />
+    <ClCompile Include="..\runtime\ui\src\sys\d3d\cuidebug.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libs\LIB-Lith\LIB-Lith.vcxproj">
+      <Project>{DA12E82F-C6DF-423B-EFF8-30E3DB2478C9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-RezMgr\LIB-RezMgr.vcxproj">
+      <Project>{40A8F1D7-2C60-3325-9567-0C81813ECE15}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-STDLith\LIB-STDLith.vcxproj">
+      <Project>{E58BA7F7-5141-20ED-DA35-1AC446EA16F1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

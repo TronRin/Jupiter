@@ -1,0 +1,156 @@
+/*  This file downloaded from Highend3d.com
+''  
+''  Highend3d.com File Information:
+''  
+''    Script Name: fixWeight v1.1
+''    Author: Jan-Bart van Beek
+''    Last Updated: November 20, 2000
+''    Update/Change this file at:
+''    http://www.highend3d.com/maya/mel/?section=animation#729
+''  
+''  Please do not alter any information above this line
+''  it is generated dynamically by Highend3d.com and will
+''  be changed automatically on any updates.
+*/
+
+// Property of and copyright held by Jan-Bart van Beek, Lost Boys Games.
+// version 1.1
+// fixed double Shape errors
+// fixed faulty recursive check
+// added nurbs support
+// removed flaky subdiv support, will be added again in future
+// removed flaky set reassignment, will be added again in future
+
+global proc fixWeight()
+{
+string $selection[] = `ls -sl -l`;
+
+for ($object in $selection)
+	{
+	string $shapes[] = `listRelatives -shapes -pa $object`;
+	string $meshes[] = `ls -type "mesh" $shapes`;
+	string $nurbs[] = `ls -type "nurbsSurface" $shapes`;
+
+
+	string $surfaces[];
+	string $surfaceType;
+
+	if (size($meshes) > 1) 
+		{
+		$surfaceType = "poly";
+		$surfaces = $meshes;
+		}
+
+	if (size($nurbs) > 1) 
+		{
+		$surfaceType = "nurbs";
+		$surfaces = $nurbs;
+		}
+
+	string $new_object[] = `duplicate -rr $object`;
+	delete -ch $new_object[0];	
+	
+	string $new_shapes[] = `listRelatives -shapes -pa $new_object[0]`;
+	
+	string $new_surfaces[];
+
+	if ($surfaceType == "poly")  $new_surfaces = `ls -type "mesh" $new_shapes`;
+	if ($surfaceType == "nurbs")  $new_surfaces = `ls -type "nurbsSurface" $new_shapes`;
+
+// filter new_meshes for Orig meshtypes
+
+	for ($new_surface in $new_surfaces)
+		{
+		string $hasshading[] = `listConnections -d 1 -type "shadingEngine" $new_surface`;
+		if (size($hasshading) == 0) delete $new_surface;
+		}
+
+	$new_shapes = `listRelatives -shapes -pa $new_object[0]`;
+	if ($surfaceType == "poly")  $new_surfaces = `ls -type "mesh" $new_shapes`;
+	if ($surfaceType == "nurbs")  $new_surfaces = `ls -type "nurbsSurface" $new_shapes`;
+
+		
+
+// find skinCluster
+
+	string $inConnections[]; clear $inConnections;
+	string $connections[];
+	string $skinCluster[];
+	
+// first check
+
+		if ($surfaceType == "poly")
+		{
+		for ($surface in $surfaces)
+			{
+			if (objExists ($surface + ".inMesh"))
+				{
+				$connections = `listConnections -d 1 ($surface + ".inMesh")`;
+				$inConnections = AWAppendStringsToStringArray($connections, $inConnections);
+				$skinCluster = `ls -type "skinCluster" $inConnections`;
+				if (size($skinCluster) > 0) break;
+				}
+			}
+		}
+
+	if ($surfaceType == "nurbs")
+		{
+		for ($surface in $surfaces)
+			{
+			if (objExists ($surface + ".create"))
+				{
+				$connections = `listConnections -d 1 ($surface + ".create")`;
+				$inConnections = AWAppendStringsToStringArray($connections, $inConnections);
+				$skinCluster = `ls -type "skinCluster" $inConnections`;
+				if (size($skinCluster) > 0) break;
+				}
+			}
+		}
+
+// recursive check 50 deep
+
+	string $newConnections[];
+
+	if (size($skinCluster) == 0)
+		{
+		for ($count = 0; $count < 20; $count ++)
+			{
+			for ($inConnection in $inConnections)
+				{
+				$connections = `listConnections -s 1 -d 0 $inConnection`;
+				$newConnections = AWAppendStringsToStringArray($connections, $newConnections);
+				$skinCluster = `ls -type "skinCluster" $newConnections`;
+				if (size($skinCluster) > 0) 
+					{
+					print $skinCluster;
+					$count = 50;
+					break;
+					}
+				}
+			$inConnections = $newConnections;
+			clear $newConnections;
+			}
+		}
+
+
+		
+// if skinCluster found, looking for bones
+
+	string $bones[];
+	if (size($skinCluster) > 0) 
+		{
+		$bones = `listConnections -d 1 ($skinCluster[0] + ".matrix")`;
+		int $maximumInfluenes = `skinCluster -query -mi $skinCluster[0]`;
+		string $newSkinCluster[] = `skinCluster -mi $maximumInfluenes -dr 4 -tsb -ibp $bones $new_object[0]`;
+		copySkinWeights -ss $skinCluster[0] -ds $newSkinCluster[0] -nm;
+		select $object;
+		string $shortname[] = `ls -sl`;
+		delete $object;
+		rename $new_object[0] $shortname;
+		}
+		
+select $selection;
+// added features
+					
+	}
+}

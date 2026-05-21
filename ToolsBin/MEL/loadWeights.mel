@@ -1,0 +1,94 @@
+global proc loadWeights()
+
+{
+
+	string $FileName, $line, $skinNodes[],$shape[], $weightsCommand;
+	string $savedNodes[], $savedShape[], $savedJoints[], $buffer[], $cluster;
+	int $fileID, $i, $j, $k, $numPoints, $numJoints, $numSkinNodes;
+	string $weights[];
+
+	$FileName =  "c:/zzz.lts" ; 
+	$fileID=`fopen $FileName "r"`; 	
+
+	$numSkinNodes =  int(fgetline($fileID));
+	$skinNodes = `ls -typ skinCluster`;
+
+	for($i = 0; $i < $numSkinNodes; $i++)
+	{
+		$line = fgetline($fileID);
+		tokenize($line, "\n", $buffer);
+		$savedNodes[$i] = $buffer[0];
+
+		$line = fgetline($fileID);
+		tokenize($line, "\n", $buffer);
+		$savedShapes[$i] = $buffer[0];
+
+		$numPoints = int(fgetline($fileID));
+		$numJoints = int(fgetline($fileID));
+		print ($savedNodes[$i] + " " + $savedShapes[$i] + " " + $numPoints + " " + $numJoints + "\n");
+
+
+		$line = fgetline($fileID);
+		tokenize($line, $savedJoints);
+		
+		$buffer = `listConnections -t skinCluster $savedShapes[$i]`;
+		$cluster = $buffer[0];
+
+//		clearWeights $savedShapes[$i] $cluster;
+		setAttr ($cluster + ".normalizeWeights") false;
+		for($j = 0; $j < $numPoints; $j++)
+		{	
+			$weightsCommand = "";
+			$line = fgetline($fileID);
+			tokenize($line,  $weights);	
+			for($k = 0; $k < $numJoints; $k++)
+			{
+				$weightsCommand = $weightsCommand + "-tv " + $savedJoints[$k] + " " + $weights[$k] + " ";
+			}
+			$weightsCommand = "skinPercent " + $weightsCommand + " " + $cluster + " " + $savedShapes[$i] + ".vtx[" + $j + "]";
+			eval($weightsCommand);
+		} 
+		setAttr ($cluster + ".normalizeWeights") true;
+	}
+
+	clear $weights;
+	clear $savedJoints;
+	clear $savedShape;
+	clear $skinNodes;
+	clear $shape;   
+	fclose $fileID; 
+	print ("Done.\n");
+	
+
+}
+
+
+global proc clearWeights(string $piece, string $cluster)
+{
+	$joints = `skinCluster -q -inf $cluster`;
+	int $numVerts[] = `polyEvaluate $piece`;
+	setAttr ($cluster + ".normalizeWeights") false;
+
+//	for($i = 0; $i < size($joints); $i++)
+//		skinCluster -e  -ri $joints[$i] $cluster;
+//	for($i = 0; $i < size($joints); $i++)
+//		skinCluster -e  -dr 4  -lw 1 -wt 0 -ai $joints[$i] $cluster;
+//	for($i = 0; $i < size($joints); $i++)
+//	{
+//		skinCluster -e  -lw 0 -ai $joints[$i] skinCluster1;
+//	}
+
+
+	for($i = 0; $i < $numVerts[0]; $i++)
+	{
+		$cmd = "skinPercent ";
+		for($j = 0; $j < size($joints); $j++)
+		{
+			$cmd = $cmd + "-tv " + $joints[$j] + " 0 " ;
+		}
+		$cmd = $cmd + $cluster + " " + ($piece + ".vtx[" + $i + "]");
+		eval( $cmd );
+	}	
+
+}
+//	setAttr ($newCluster[0] + ".normalizeWeights") true;

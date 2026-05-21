@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sdk">
+      <UniqueIdentifier>{67A9880B-D3B2-887C-5C2E-9F7CC836947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\inc">
+      <UniqueIdentifier>{F0971889-5C77-9724-658F-22FBD1EDFD85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Shared">
+      <UniqueIdentifier>{B3216B2E-9FD9-AC7B-08E1-85D7F4B7476C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CreateFX.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FlareSpriteFX.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBbouncychunkfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystemFX.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shared\BankedList.h">
+      <Filter>src\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shared\BankedList_impl.h">
+      <Filter>src\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shared\BaseFx.h">
+      <Filter>src\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shared\DebugNew.h">
+      <Filter>src\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shared\DebugNew_impl.h">
+      <Filter>src\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bouncychunkfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camjitterfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camwobblefx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\clientfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cycletimer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dynalightfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fallingstufffx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lightningfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ltbmodelfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\memarray.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nullfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\playrandomsoundfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\playsoundfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\polyfanfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\polytubefx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\spritefx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\spritesystemfx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\swaplist.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sdk\inc\ltmodule.cpp">
+      <Filter>sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltquatbase.cpp">
+      <Filter>sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseFx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CreateFX.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FlareSpriteFX.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBbouncychunkfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleSystemFX.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shared\DebugNew.cpp">
+      <Filter>src\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bouncychunkfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camjitterfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camwobblefx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\clientfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cycletimer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynalightfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fallingstufffx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lightningfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltbmodelfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nullfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playrandomsoundfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playsoundfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\polyfanfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\polytubefx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spritefx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spritesystemfx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

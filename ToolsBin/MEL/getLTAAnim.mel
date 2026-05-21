@@ -1,0 +1,1066 @@
+global proc getLTAAnim()
+{
+	source ltExport;
+	if(!`optionVar -ex st_defaultGetLTAAnimDirectory`)
+		optionVar -sv st_defaultGetLTAAnimDirectory "C:/";
+
+	$currentDir = `pwd`;
+	string $savedDir = `optionVar -q st_defaultGetLTAAnimDirectory`;
+	
+	string $filename = `fileDialog -directoryMask ($savedDir + "*.lta;*.ltc")`;
+	chdir $currentDir;
+
+	string $newSavedDir, $buffer[];
+	tokenize($filename, "/",$buffer);
+	for($i = 0; $i <((size($buffer))-1); $i++)
+		$newSavedDir = $newSavedDir + $buffer[$i] + "/";
+
+	optionVar -sv st_defaultGetLTAAnimDirectory $newSavedDir;
+
+	if ( $filename == "" )
+		error "No file selected";
+
+	$animList = `getAnimList $filename`;
+
+	if(`window -ex getLTAAnimUI`)
+		deleteUI getLTAAnimUI;
+
+	window
+		-w 10
+		-h 10
+		-rtf 1
+		-title "ScottTech2000"
+		getLTAAnimUI;
+		columnLayout;
+			text -label $filename lt_getAnimFilename;
+			paneLayout
+				-w 190
+				-h 140;
+				textScrollList 
+					-w 190
+					-nr 10
+					lt_animList;
+				for($i = 0; $i< size($animList); $i++)
+					textScrollList -e -append $animList[$i] lt_animList;	
+			setParent ..;
+			checkBox 
+				-label "NOLF character animation"
+				lt_isNOLFanim;
+			rowLayout 
+				-numberOfColumns 3
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-rat 3 "top" 2
+				-cw 1 65
+				-cw 2 65 
+				-cw 3 65;
+				button -label "Import" -w 60 -h 25 -c "$anim = `textScrollList -q -si lt_animList`; importAnim (`text -q -l lt_getAnimFilename`) $anim[0]";
+
+				button -label "Batch" -w 60 -h 25 -c "batchImportAnim";
+				button -label "Close" -w 60 -h 25 -c "deleteUI getLTAAnimUI";
+			setParent ..;
+		setParent ..;
+
+	showWindow getLTAAnimUI;
+	clear $animList;
+}
+
+
+
+global proc string[] getAnimList(string $filename) 
+{	
+	string $tmpLtaFilename = `getTempLtaFile $filename`;
+
+
+ 	int $fileId = `fopen $tmpLtaFilename "r"`;
+ 	if($fileId ==0)
+  	{ 		
+		fclose $fileId;
+ 		error("The programmer has failed you");
+	}
+
+  	string $line, $buffer[], $animList[];
+ 	int  $index, $i, $len, $animNum = 0;
+  	while(!`feof $fileId`)
+ 	{
+ 		$line = `fgetline $fileId`;
+ 		if(`gmatch $line "*animset*"`)
+ 		{
+ 			tokenize($line, "\"", $buffer);
+ 			$animList[$animNum] = $buffer[1];
+ 			$animNum++;
+ 		}
+ 	}
+  	fclose $fileId;
+
+	cleanUpTempLtaFile $tmpLtaFilename;
+
+ 	return $animList; 
+}
+
+global proc string fixName(string $name)
+{
+	string $buffer[];
+	$name = "x" + $name + "x";
+
+	if(`gmatch $name "*\\\**"`)
+	{
+		tokenize($name, "\*", $buffer);
+		$name = $buffer[0];
+		for($i = 1; $i <size($buffer); $i++)
+			$name = $name + "\\\*" + $buffer[$i];
+	}
+	if(`gmatch $name "*\\\+*"`)
+	{
+		tokenize($name, "\+", $buffer); 
+		$name = $buffer[0];
+		for($i = 1; $i <size($buffer); $i++)
+			$name = $name + "\\\+" + $buffer[$i];
+	}
+
+	$name = `substring $name 2 (size($name)-1)`;
+	return $name;
+}
+
+global proc importAnim(string $fileName, string $animName)
+{
+	string $postring[],$quastring[],$p[],$q[],$pos[],$quat[];
+	string $ext, $line = "", $buffer[],$row[], $modelString;
+	string $child[], $parent[], $newChild[], $newParent[], $root = "ROOT";
+	float $posx, $posy, $posz, $w, $x, $y, $z, $keyTime[];
+	float $rotx, $roty, $rotz, $diff, $oldx, $oldy, $oldz;
+	int $a, $fileID, $numKeys;
+	string $origAnimName = $animName;
+	
+	$ltaHierarchy = `getHierarchy $fileName`;
+	$numJoints = size($ltaHierarchy)/2;
+	for($i = 0; $i < size($ltaHierarchy); $i=$i+2)
+	{
+		$child[$i/2] = $ltaHierarchy[$i];
+		$parent[$i/2] = $ltaHierarchy[(int($ltaHierarchy[$i+1])*2)];
+	}
+
+	select -cl;
+	string $justAnimName = $animName;
+	$animName = "\"" + `fixName $animName` + "\"";
+
+	string $tmpLtaFilename = `getTempLtaFile $fileName`;
+
+	int $fileID = fopen($tmpLtaFilename, "r");
+	if ( $fileID == 0 )
+	{	fclose $fileID; error ("Error opening file: "+$fileID+"\n");	}
+
+
+	//
+	// 	Create the joints
+	//
+
+	for ( $i = 0; $i < $numJoints; $i++ )
+	{
+		$ext = "";
+		while(`objExists ($child[$i] + $ext)`)
+		{
+			if($ext == "")
+				$ext = "0";
+			else 
+				$ext = (string)((int)$ext + 1);
+		}
+		$newJoint = `joint -n $child[$i]`;
+		$newChild[$i] = $newJoint + $ext;
+		$newParent[$i] = $newChild[(int($ltaHierarchy[2*$i+1]))]; 
+		rename $newChild[$i];
+		select -cl;
+	}
+
+	$newParent[0] = $root;
+
+	for ( $i = 0; $i < $numJoints; $i++ )
+	{
+		if ( $newParent[$i] != "ROOT")
+			parent $newChild[$i] $newParent[$i];
+		else
+			$root = $newChild[$i];
+	}
+
+	//
+	//	find interpolation Time
+	//
+
+	while ( !`feof $fileID` &&  match(("name " + $animName), $line) == "" )
+		$line = fgetline($fileID);
+	while ( !`feof $fileID` &&  match(("translation"), $line) == "" )
+		$line = fgetline($fileID);
+		$line = fgetline($fileID);
+	if(!`feof $fileID`) 
+	{	
+		tokenize($line, "()\n\t", $buffer);
+
+		if(!`objExists ($newChild[0] + ".translation")`)
+			addAttr -ln "translation" -dt "string" $newChild[0];
+		setAttr ($newChild[0] + ".translation") -type "string" $buffer[0];
+	}
+	while ( !`feof $fileID` &&  match(("interp"), $line) == "" )
+		$line = fgetline($fileID);
+	if(!`feof $fileID`) 
+	{	
+		tokenize($line, "( )\n\t", $buffer);
+
+		if(!`objExists ($newChild[0] + ".interpolation")`)
+			addAttr -ln "interpolation" -at "float" $newChild[0];
+		setAttr ($newChild[0] + ".interpolation") (float($buffer[1]));
+	}
+	addAttr -ln "animName" -dt "string" $newChild[0];
+	setAttr ($newChild[0] + ".animName") -type "string" $justAnimName;
+
+
+
+
+
+
+
+	frewind $fileID;
+
+	//
+	// 	find animation
+	//
+
+	while ( ! `feof $fileID` && match(("animset " + $animName), $line) == "" )
+		$line = fgetline($fileID);
+	if(!`objExists ($newChild[0] + ".animName")`)
+		addAttr -ln "animName" -dt "string" $newChild[0];
+	setAttr ($newChild[0] + ".animName") -type "string" $origAnimName;
+	
+
+
+	//
+	//	Get number of keys and key times.
+	//
+
+	while ( ! `feof $fileID` && match("times",$line) == "" )
+		$line = fgetline($fileID);
+	$i=0;
+	$line = fgetline($fileID);
+	tokenize($line,"(",$buffer);
+	$row[0] = $buffer[1];
+
+	tokenize($row[0], $buffer);
+
+	for($j = 0; $j < (size($buffer)-1); $j++)
+		$keyTime[$j] = (float)$buffer[$j]/33.333333333333;
+
+	$numKeys = size($keyTime);  
+//print $keyTime;
+
+	//
+	//	Get model Strings //
+	//
+
+	$line = fgetline($fileID);
+	$line = fgetline($fileID);
+	$line = fgetline($fileID);
+
+	tokenize($line, "()\t\n\"", $buffer);
+
+	$j=0;
+	$modelString = "";
+	$keyTimeString = "";
+	for($i = 0; $i < size($buffer); $i++)
+	{
+		if(size($buffer[$j]) > 1)
+		{
+			$modelString = $modelString + "\"" + $buffer[$j] + "\"#";
+			$keyTimeString = $keyTimeString + ($keyTime[$i]*33.333333333333) + " ";
+			$j++;
+		}
+		$j++;
+	}
+
+	if($modelString != "")
+	{
+		if(!`objExists ($newChild[0] + ".modelStrings")`)
+			addAttr -ln "modelStrings" -dt "string" $newChild[0];
+		setAttr ($newChild[0] + ".modelStrings") -type "string" $modelString;
+	}
+	if($keyTimeString != "")
+	{
+		if(!`objExists ($newChild[0] + ".keyTimes")`)
+			addAttr -ln "keyTimes" -dt "string" $newChild[0];
+		setAttr ($newChild[0] + ".keyTimes") -type "string" $keyTimeString;
+	}
+
+	//
+	//
+	//
+
+	
+	
+	for ( $i = 0; $i < $numJoints; $i++ )
+	{
+		
+		while ( ! `feof $fileID` && match($child[$i],$line) == "" )
+			$line = fgetline($fileID);
+		$line = fgetline($fileID);
+		$line = fgetline($fileID);
+		$line = fgetline($fileID);
+		$line = fgetline($fileID);
+		for($j = 0; $j < $numKeys; $j++)
+		{
+
+			if($j!=0)
+				fgetline($fileID);
+			$postring[$j] = fgetline($fileID);
+			$quastring[$j] = fgetline($fileID);
+			tokenize($postring[$j], "(",$p);
+			tokenize($quastring[$j],"(",$q);
+			if($j==0)
+				tokenize($p[1],$pos); 
+			else
+				tokenize($p[2],$pos);
+			tokenize($q[1],$quat);
+
+			$x = (float) $quat[0];		
+			$y = (float) $quat[1];		
+			$z = (float) $quat[2];		
+			$w = (float) $quat[3];
+	
+			if(( abs( ( $y * $w )  - ( $x * $z ) ) ) < 0.5)
+				$roty = - ( asind(2 * ( ( $y * $w )  - ( $x * $z ) ) ) );
+			else 
+				$roty = -90;
+
+			$roty = float(int($roty * 100)) / 100;
+			if($roty<-180) $roty +=360;
+			if($roty>180) $roty -=360;
+			while(abs($roty-$oldy)>255)
+			{
+				if($roty>$oldy) $roty -= 360;
+				else $roty += 360;
+			}
+		
+			if (abs(cosd($roty)) > 0.001)
+			{
+				$rotx =  - 90 - atan2d(($x *$x + $y* $y - $z * $z - $w * $w), ( -2* ($y * $z + $x * $w)));
+				$rotz = 90 - atan2d(($x *$x - $y* $y - $z * $z + $w * $w), ( -2* ($x * $y + $z * $w)));                  
+
+			}
+			else
+			{
+				$rotx = -90;
+
+				$rotz = 180 - atan2d(($x *$x - $y* $y + $z * $z - $w * $w), ( -2* ($y * $z - $x * $w)));      
+			}  
+		
+			$rotx = float(int($rotx * 100)) / 100;
+			if($rotx<-180) $rotx +=360;
+			if($rotx>180) $rotx -=360;
+			while(abs($rotx-$oldx)>255)
+			{
+				if($rotx>$oldx) $rotx -= 360;
+				else $rotx += 360;
+			}
+
+			$rotz = float(int($rotz * 100)) / 100;
+			if($rotz<-180) $rotz +=360;
+			if($rotz>180) $rotz -=360;
+			while(abs($rotz-$oldz)>255)
+			{
+				if($rotz>$oldz) $rotz -= 360;
+				else $rotz += 360;
+			}
+			if((abs($rotz-$oldz)>105)&&$j>0)
+			{
+				$rotx +=180;
+				$rotz +=180;
+				$roty = -($roty+180);
+				while(abs($rotx-$oldx)>255)
+				{
+					if($rotx>$oldx) $rotx -= 360;
+					else $rotx += 360;
+				}
+				while(abs($roty-$oldy)>255)
+				{
+					if($roty>$oldy) $roty -= 360;
+					else $roty += 360;
+				}
+				while(abs($rotz-$oldz)>255)
+				{
+					if($rotz>$oldz) $rotz -= 360;
+					else $rotz += 360;
+				}
+			}
+
+			setKeyframe -attribute "rotateX" -time $keyTime[$j] -value $rotx $newChild[$i];
+			setKeyframe -attribute "rotateY" -time $keyTime[$j] -value $roty $newChild[$i];
+			setKeyframe -attribute "rotateZ" -time $keyTime[$j] -value $rotz $newChild[$i];
+
+			$oldx = $rotx;  $oldy = $roty;  $oldz = $rotz;
+
+			$posx = - (float) $pos[0];
+			$posy =  (float) $pos[1];
+			$posz =  (float) $pos[2];
+
+			$posx = float(int($posx * 100)) / 100;
+			$posy = float(int($posy * 100)) / 100;
+			$posz = float(int($posz * 100)) / 100;
+
+			setKeyframe -attribute "translateX" -time $keyTime[$j]  -value $posx $newChild[$i];
+			setKeyframe -attribute "translateY" -time $keyTime[$j]  -value $posy $newChild[$i];
+			setKeyframe -attribute "translateZ" -time $keyTime[$j]  -value $posz $newChild[$i];
+		}
+	}
+	
+	$keyTimes = `keyframe -q -tc $root`;
+
+	playbackOptions -minTime ($keyTimes[0]) -maxTime ($keyTimes[(size($keyTimes))-1]);
+	select -cl;
+	fclose($fileID);
+	cleanUpTempLtaFile $tmpLtaFilename;
+
+	if(`checkBox -q -v lt_isNOLFanim`)
+		fixNOLFAnim $newChild;
+
+	delete -all -sc;
+	print("Done.\n");
+}
+
+global proc fixNOLFAnim(string $inSkel[])
+{
+	string $skel[], $newSkel[];
+	float $rot1[],$rot2[],$rot3[],$oldrot1[],$oldrot2[],$oldrot3[];
+	parent -w $inSkel[1];
+	delete $inSkel[0];
+	for($i = 1; $i < size($inSkel); $i++)
+	{
+		$name = `ls -l $inSkel[$i]`;
+		$skel[$i] = $name[0];
+
+	}
+	$newSkel = `duplicate -rr $skel[1]`;
+
+	select -hi $skel[1];
+	performCopyKeyArgList 1 {"0", "animationList", "0"};
+
+	select -hi $newSkel[0];
+	performPasteKeyArgList 1 {"0", "animationList", "0"};
+	$newSkel = `ls -l -sl`;
+
+	delete ($inSkel[1]+"_rotateX") ($inSkel[1]+"_rotateY") ($inSkel[1]+"_rotateZ");
+	delete ($inSkel[1]+"_translateX") ($inSkel[1]+"_translateY") ($inSkel[1]+"_translateZ");
+	delete ($inSkel[2]+"_rotateX") ($inSkel[2]+"_rotateY") ($inSkel[2]+"_rotateZ");
+	setAttr ($skel[1]+".t") 0 0 0;
+	setAttr ($skel[1]+".r") 0 0 0;
+	setAttr ($skel[1]+".jo") 0 0 0;
+	setAttr ($skel[2]+".r") 0 0 0;
+
+	$keyTimes = `keyframe -q -tc $newSkel[0]`;
+	for($i = 0; $i<((size($keyTimes))/6);$i++)
+	{ 
+		currentTime -e $keyTimes[$i];
+
+		$pos = `xform -ws -q -t $newSkel[1]`; 
+		xform -ws -t $pos[0] $pos[1] $pos[2] $skel[2];
+		setKeyframe -at translate $skel[2];
+
+		$rot1 = `xform -ws -q -ro $newSkel[1]`;
+		setAttr ($skel[3] + ".rx") $rot1[0];
+		setAttr ($skel[3] + ".ry") $rot1[1];
+		setAttr ($skel[3] + ".rz") $rot1[2];
+		setKeyframe -at rotate $skel[3];
+		$oldrot1 = $rot1;
+		
+		$rot2 = `xform -ws -q -ro $newSkel[15]`;
+		setAttr ($skel[17] + ".rx") $rot2[0];
+		setAttr ($skel[17] + ".ry") $rot2[1];
+		setAttr ($skel[17] + ".rz") $rot2[2];
+		setKeyframe -at rotate $skel[17];
+		$oldrot2 = $rot2;
+
+		$rot3 = `xform -ws -q -ro $newSkel[19]`;  
+		setAttr ($skel[21] + ".rx") $rot3[0];
+		setAttr ($skel[21] + ".ry") $rot3[1];
+		setAttr ($skel[21] + ".rz") $rot3[2];
+		setKeyframe -at rotate $skel[21];
+		$oldrot3 = $rot3;
+	}
+
+	delete $newSkel[(size($newSkel)-1)] $skel[7] $skel[8];	
+}
+
+global proc string getDestDirectory()
+{ 	
+	global string $targetDirectory;
+ 	string $targetNtDirectory; 	
+	string $targetPathElements[];
+ 	int $i, $pathElementsCount; 	
+	fileBrowser "getTargetDirectory" "Choose Destination Directory" "directory" 4;
+	tokenize($targetDirectory,"/",$targetPathElements);
+ 	$pathElementsCount=size($targetPathElements);
+  	for ($i=0;$i<$pathElementsCount;$i++)
+       		$targetNtDirectory=$targetNtDirectory+$targetPathElements[$i]+"\\";
+  	return $targetNtDirectory;
+}
+global proc getTargetDirectory ( string $directory , string $type) 
+{
+ 	global string $targetDirectory;
+ 	$targetDirectory=$directory + "/"; 
+}
+
+global proc batchImportAnim()
+{
+	string $buffer[];
+	string $filename = `text -q -l lt_getAnimFilename`;
+	$dir = `getDestDirectory`;
+
+	tokenize($dir, "\\", $buffer);
+ 	$destPath = $buffer[0] + "/";
+ 	for($i = 1; $i < size($buffer); $i++)
+  		$destPath = $destPath + $buffer[$i] + "/"; 
+
+	string $anims[] = `textScrollList -q -ai lt_animList`; 
+	for($i = 0;$i < size($anims); $i++)
+	{
+		importAnim $filename $anims[$i];
+
+		if(`gmatch $anims[$i] "*\\\**"`)
+		{	print($anims[$i] + "\n");
+			tokenize($anims[$i], "\*", $buffer);
+ 			$anims[$i] = $buffer[0];
+ 			for($j = 1; $j <= size($buffer); $j++)
+  				$anims[$i] = $anims[$i] + "_" + $buffer[$j];
+		}
+
+
+		file -rename ($destPath + $anims[$i] + ".mb");
+		file -f -save -options "v=0" -type "mayaBinary";
+		file -new; 		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+global proc  string[] getWeights(string $filename, string $mesh, int $numVerts)
+{
+	string $line, $buffer[], $output[];
+	int $sizeOfOutput = 0;
+	int $fileId = `fopen $filename "r"`;
+	if($fileId == 0) { print "Error opening file\n"; fclose $fileId; return { "" }; }
+
+	while(!`feof $fileId`)
+	{
+		$line = `fgetline $fileId`;
+		if(`gmatch $line ("*target \"*" + $mesh + "*")`)
+		{
+			fgetline $fileId; fgetline $fileId;
+			fgetline $fileId; fgetline $fileId; fgetline $fileId;
+			for($i = 0; $i < $numVerts; $i++)
+			{
+				$line = `fgetline $fileId`;
+				tokenize($line,"\t\n()", $buffer);
+				$output[$i] = $buffer[0];
+			}
+			fclose $fileId; 
+			return $output;
+		}
+	}
+	fclose $fileId;
+	return $output;
+}
+
+
+
+
+
+global proc float[] getMatrix(string $filename, string $joint)
+{
+	float $output[16];
+	string $buffer[];
+
+	int $fileId = `fopen $filename "r"`;
+	if($fileId == 0) { print "Error opening file\n"; fclose $fileId; return $output; }
+
+	while(!`feof $fileId`)
+	{
+		$line = `fgetline $fileId`;
+		if(`gmatch $line ("*(transform \"" + $joint + "*")`)
+		{
+			fgetline $fileId; fgetline $fileId;
+			$line = `fgetline $fileId`;
+			tokenize($line,"\t\n( )", $buffer);
+				$output[0] = float($buffer[0]);
+				$output[4] = -float($buffer[1]);
+				$output[8] = -float($buffer[2]);
+				$output[12] = -float($buffer[3]);
+
+			$line = `fgetline $fileId`;
+			tokenize($line,"\t\n( )", $buffer);
+				$output[1] = -float($buffer[0]);
+				$output[5] = float($buffer[1]);
+				$output[9] = float($buffer[2]);
+				$output[13] = float($buffer[3]);
+
+			$line = `fgetline $fileId`;
+			tokenize($line,"\t\n( )", $buffer);
+				$output[2] = -float($buffer[0]);
+				$output[6] = float($buffer[1]);
+				$output[10] = float($buffer[2]);
+				$output[14] = float($buffer[3]);
+
+			$line = `fgetline $fileId`;
+			tokenize($line,"\t\n( )", $buffer);
+				$output[3] = -float($buffer[0]);
+				$output[7] = float($buffer[1]);
+				$output[11] = float($buffer[2]);
+				$output[15] = float($buffer[3]);
+
+		}
+	}
+
+	fclose $fileId;
+	return $output;
+}
+
+
+
+
+
+global proc importModelWindow()
+{
+	int $i;
+	string $buffer[];//, $filename;
+
+	string $inPath = "C:\\NOFL2\\NOLFPROPS\\";
+
+	string $fileList[] = `getFileList -folder $inPath -fs "*.lta"`;
+
+
+	if(`window -ex ImportModel_UI`)
+		deleteUI ImportModel_UI;
+
+	window
+		-w 10
+		-h 10
+		-rtf 1
+		-title "ScottTech2000"
+		ImportModel_UI;
+		columnLayout;
+			text -font "boldLabelFont" -l "  Import...";
+			paneLayout
+				-w 190
+				-h 280;
+				textScrollList 
+					-w 190
+					-nr 20
+					st_importModelList;
+				for($i = 0; $i< size($fileList); $i++)
+					textScrollList -e -append $fileList[$i] st_importModelList;	
+			setParent ..;
+
+			rowLayout 
+				-numberOfColumns 3
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-rat 3 "top" 2
+				-cw 1 65
+				-cw 2 65 
+				-cw 3 65;
+				button -label "Import" -w 60 -h 25 -c "	$importModelFilenames = `textScrollList -q -si st_importModelList`;
+									importModel $importModelFilenames[0];";
+									//fixNOLFModel;";
+									//ltExport; lta_Export";
+				button -label "Batch" -w 60 -h 25 -c	"$importModelFilenames = `textScrollList -q -ai st_importModelList`;
+									for($importModelFilename in $importModelFilenames) 
+									{	file -f -new; importModel $importModelFilename; fixNOLFModel; ltExport; lta_Export;  }";
+				button -label "Close" -w 60 -h 25 -c "deleteUI ImportModel_UI";
+			setParent ..;
+		setParent ..;
+
+	showWindow ImportModel_UI;
+
+}
+
+
+
+
+
+
+
+global proc importModel(string $name)
+{
+	string $buffer[], $face[], $vertInfo[], $hierarchy[], $weights[], $oldMesh, $curVert, $skinCluster[];
+	string $child[], $parent[], $newChild[], $newParent[], $tempHierarchy[], $newHierarchy[], $ext, $cmd, $root;
+	float $vertX[], $vertY[], $vertZ[], $U[], $V[], $transMatrix[];
+	int $numVerts, $numUVs,  $meshNumber =0, $vertFace[], $uvFace[], $vertFaceImport[], $weightSaved[], $newWeights[];
+
+	//////////////////////////////////////////////////////////
+	//							//
+	//		Set this line to filename...		//
+	//							//
+	//	
+	string $inPath = "C:/NOFL2/NOLFPROPS/";
+		$filename = $inPath + $name;
+	//							//
+	//							//
+	//							//
+	//////////////////////////////////////////////////////////
+	string $outPath = "C:/NOFL2/NOLFPROPS/new/";
+	string $outName = $outPath + (`substitute "lta" $name "ltc"`);
+
+	$hierarchy = `getHierarchy $filename`;
+	$numJoints = size($hierarchy)/2;
+	
+	
+////////////////////////////////////////////////////////////////	
+	for($i = 0; $i < size($hierarchy); $i=$i+2)
+	{
+		$child[$i/2] = $hierarchy[$i];
+		$parent[$i/2] = $hierarchy[(int($hierarchy[$i+1])*2)];
+	}
+
+	//
+	// 	Create the joints
+	//
+
+	for ( $i = 0; $i < $numJoints; $i++ )
+	{
+		$ext = "";
+		while(`objExists ($child[$i] + $ext)`)
+		{
+			if($ext == "")
+				$ext = "0";
+			else 
+				$ext = (string)((int)$ext + 1);
+		}
+		$newJoint = `joint -n $child[$i]`;
+		$newChild[$i] = $newJoint + $ext;
+		$newParent[$i] = $newChild[(int($hierarchy[2*$i+1]))]; 
+		rename $newChild[$i];
+		select -cl;
+	}
+
+	$newParent[0] = "ROOT";
+	$cmd = "";
+	for($i = 0; $i < $numJoints; $i++)
+	{
+		$transMatrix = `getMatrix $filename $hierarchy[$i*2]`;
+		$cmd = "xform -m ";
+		for($j = 0; $j < 16; $j++)
+			$cmd = $cmd + $transMatrix[$j] + " ";
+		$cmd = $cmd + $hierarchy[$i*2];
+//////////	print($cmd + "\n");
+		eval $cmd;
+
+		clear $transMatrix;
+	}
+
+	for ( $i = 0; $i < $numJoints; $i++ )
+	{
+		if ( $newParent[$i] != "ROOT")
+			parent $newChild[$i] $newParent[$i];
+		else
+			$root = $newChild[$i];
+	}
+
+	select -hi $hierarchy[0];
+	$tempHierarchy = `ls -sl`;
+	for($i = 0; $i < size($tempHierarchy); $i++)
+	{
+		if(`gmatch ($tempHierarchy[$i]) "*transform*"`)
+			ungroup -a $tempHierarchy[$i];
+	}
+
+	select -hi $hierarchy[0];
+	string $temp[] = `ls -sl`;
+	$newHierarchy[0] = $temp[size($temp)-1];
+	for ($i = 1; $i < size($temp); $i++)
+	{
+		$newHierarchy[$i] = $temp[$i-1];
+	}
+
+
+	addAttr -ln "fileName" -dt "string" $root;
+	setAttr ($root + ".fileName") -type "string" $outName;
+
+
+///////////////////////////////////////////////////////////////////////////
+	
+	
+	int $fileId = `fopen $filename "r"`;
+	if($fileId == 0) { print "Error opening file\n"; fclose $fileId; return; }
+
+	while(!`feof $fileId`)
+	{
+		$line = `fgetline $fileId`;
+		if(`gmatch $line "*(dims*"`)
+		{
+			$newLine = `fgetline $fileId`;
+			string $dims[];
+			tokenize($newLine, "\t\n( )", $dims);
+
+			addAttr  -ln "dimX" -at "float" $root;	
+			setAttr ($root + ".dimX") (float($dims[0]));
+
+			addAttr  -ln "dimY" -at "float" $root;	
+			setAttr ($root + ".dimY") (float($dims[1]));
+
+			addAttr  -ln "dimZ" -at "float" $root;	
+			setAttr ($root + ".dimZ") (float($dims[2]));
+		}
+
+		if(`gmatch $line "*(translation*"`)
+		{
+			$newLine = `fgetline $fileId`;
+			tokenize($newLine, "\t\n()", $buffer);
+
+			addAttr -ln "translation" -dt "string" $root;
+			setAttr ($root + ".translation") -type "string" $buffer[0];
+		}
+
+		if(`gmatch $line "*(set-global-radius*"`)
+		{
+			tokenize ($line, "\t\n\"( )", $buffer); 
+
+			addAttr -ln "internalRadius" -dt "string" $root;
+			setAttr ($root + ".internalRadius") -type "string" $buffer[1];
+		}
+
+		if(`gmatch $line "*(animset*"`)
+		{
+			tokenize ($line, "\t\n\" ", $buffer); 
+
+			addAttr -ln "animName" -dt "string" $root;
+			setAttr ($root + ".animName") -type "string" $buffer[1];
+		}
+
+		if(`gmatch $line "*(mesh*"`)
+		{
+			$meshNumber++;
+			$numVerts = 0;
+			$numUVs = 0;
+			clear $vertX;
+			clear $vertY;
+			clear $vertZ;
+			clear $U;
+			clear $V;
+			clear $vertFace;
+			clear $uvFace;
+			clear $weights;
+			clear $weightSaved;
+			clear $face;
+			clear $newWeights;
+
+			tokenize($line, "\"", $buffer);
+			$mesh = $buffer[1];
+			fgetline $fileId; //fgetline $fileId; 
+	////////////////////////////////////////////////////
+	//
+	//	Get vertex coordinates...
+	//
+	/////////////////////////////////////////////////////////
+
+
+			while((!`gmatch $line "*\t)*"`) && (!`feof $fileId`))
+			{
+				$line = `fgetline $fileId`;
+				tokenize($line, "()", $buffer);
+				$vertCoords = $buffer[1];
+				if(size($buffer) > 2)
+				{
+					tokenize($vertCoords, " ", $buffer);
+					$vertX[$numVerts] = -(float($buffer[0]));
+					$vertY[$numVerts] = float($buffer[1]);
+					$vertZ[$numVerts] = float($buffer[2]);
+					
+					$numVerts++;
+				}
+				
+			}
+
+
+	////////////////////////////////////////////////////
+	//
+	//	Ignore normals, get UVs...
+	//
+	///////////////////////////////////////////////////////////
+
+			while((!`gmatch $line "*(uvs*"`) && (!`feof $fileId`))
+				$line = `fgetline $fileId`; 
+
+			fgetline $fileId;
+			while((!`gmatch $line "*\t)*"`) && (!`feof $fileId`))
+			{
+				$line = `fgetline $fileId`;
+				tokenize($line, "()", $buffer);
+				$uvs = $buffer[1];
+				if(size($buffer) > 2)
+				{
+					tokenize($uvs, " ", $buffer);
+					$U[$numUVs] = float($buffer[0]);
+					$V[$numUVs] = 1-(float($buffer[1]));
+				}
+				$numUVs++;
+			}
+			
+
+	////////////////////////////////////////////////////
+	//
+	//	Skip face-uvs list...
+	//
+	///////////////////////////////////////////////////////////
+
+			fgetline $fileId; fgetline $fileId; fgetline $fileId;
+
+	////////////////////////////////////////////////////
+	//
+	//	Get face-vertex list...
+	//
+	///////////////////////////////////////////////////////////
+
+			fgetline $fileId; fgetline $fileId;
+			$line = `fgetline $fileId`; 
+			tokenize($line, "\t( )\n", $buffer);
+			for($i = 0; $i < size($buffer); $i++)
+				$vertFace[$i] = int($buffer[$i]);
+
+	////////////////////////////////////////////////////
+	//
+	//	Build mesh and uvs...
+	//
+	///////////////////////////////////////////////////////////
+
+			for($i = 0; $i < size($vertFace); $i=$i+3)
+			{
+				$newface = `polyCreateFacet -ch off -tx 1 -s 1 
+					-p $vertX[$vertFace[$i]] $vertY[$vertFace[$i]] $vertZ[$vertFace[$i]]  
+					-p $vertX[$vertFace[$i+2]] $vertY[$vertFace[$i+2]] $vertZ[$vertFace[$i+2]]
+					-p $vertX[$vertFace[$i+1]] $vertY[$vertFace[$i+1]] $vertZ[$vertFace[$i+1]]`;
+				$face[($i/3)] = $newface[0]; 
+				polyEditUV -r 0 -u $U[$i] -v $V[$i] ($face[($i/3)]+ ".map[0]");
+				polyEditUV -r 0 -u $U[$i+2] -v $V[$i+2] ($face[($i/3)]+ ".map[1]");
+				polyEditUV -r 0 -u $U[$i+1] -v $V[$i+1] ($face[($i/3)]+ ".map[2]");
+			}
+			select -r $face;
+
+			$oldMesh = $mesh;
+			if(`objExists $mesh`)
+				$mesh = $mesh + "model";
+
+			polyUnite -ch off -n ($mesh);
+			$faceCount = `polyEvaluate -f $mesh`;
+			$vertCount = `polyEvaluate -v $mesh`;
+			polyMergeVertex -d 0.00001 -tx 1 -ch 0 ($mesh + ".vtx[0:" + $vertCount[0] + "]");
+			$vertCount = `polyEvaluate -v $mesh`;
+
+	////////////////////////////////////////////////////
+	//
+	//	Figure out weights...
+	//
+	///////////////////////////////////////////////////////////
+			for($i = 0; $i < $faceCount[0];  $i++)
+			{
+				$vertInfo = `polyInfo -fv ($mesh + ".f[" + $i + "]")`;
+				tokenize($vertInfo[0],$buffer); 
+				$vertFaceImport[3*$i] = int($buffer[2]);
+				$vertFaceImport[3*$i + 1] = int($buffer[4]);
+				$vertFaceImport[3*$i + 2] = int($buffer[3]);				
+			}
+
+			for($i = 0; $i < $faceCount[0]; $i++)
+			{
+				$newWeights[$vertFace[3*$i]] = $vertFaceImport[3*$i];
+				$newWeights[$vertFace[3*$i+1]] = $vertFaceImport[3*$i+1];
+				$newWeights[$vertFace[3*$i+2]] = $vertFaceImport[3*$i+2];
+			}
+
+			$weights = `getWeights $filename $oldMesh $vertCount[0]`;
+			select -r $newHierarchy $mesh;
+			$skinCluster = `newSkinCluster "-toSelectedBones -mi 2 -dr 4"`;
+//			setAttr ($skinCluster[0] + ".normalizeWeights") false;
+				
+			for($i = 0; $i < size($weights); $i++)
+			{
+				tokenize($weights[$i],$buffer);
+				$numWeights = (size($buffer))/2;
+				$curVert = $mesh + ".vtx[" + $newWeights[$i] + "]";
+				skinPercent -tv $newHierarchy[int($buffer[0])] 1 $skinCluster[0] $curVert;
+				
+				$cmd = "skinPercent";
+				for($j = 0; $j < $numWeights; $j++)
+				{
+					$cmd = $cmd + " -tv " + $newHierarchy[int($buffer[$j*2])] + " " + $buffer[$j*2+1];
+				}
+				$cmd = $cmd + " " + $skinCluster[0] + " " + $curVert;
+				eval $cmd;
+			}
+
+//			setAttr ($skinCluster[0] + ".normalizeWeights") true;
+			
+
+		}
+	}
+
+	fclose $fileId;
+	clear $vertX;
+	clear $vertY;
+	clear $vertZ;
+	clear $U;
+	clear $V;
+	clear $vertFace;
+	clear $uvFace;
+	clear $face;
+	clear $buffer;
+	clear $weightSaved;
+	clear $weights;
+
+	clear $hierarchy;
+
+	select -cl;
+
+}
+
+
+global proc fixNOLFModel()
+{
+	string $piece;
+	$topNodes = `ls -as`;
+	select $topNodes;
+	$root = `filterExpand -ex false -sm 3`;
+	$geom = `filterExpand -ex true -sm 12`;
+	string $file = `getAttr ($root[0] + ".fileName")`;
+	$mayaFile = `substitute "ltc" $file "mb"`;
+
+	if(size($geom) > 1)
+		print("********************\n" + $file + "\n********************\n");
+
+	select -r $geom;
+	doDetachSkin "2" { "1","1" };
+
+	$deadNodes = `listRelatives -ad $root[0]`;
+	print ("Removed " + (size($deadNodes)) + " dead nodes from " + $file + "\n");
+
+	delete (`listRelatives -ad $root[0]`);
+	setAttr ($root[0] + ".rotate") 0 0 0;
+	select -r $root $geom;
+	newSkinCluster "-toSelectedBones -mi 0 -dr 4";
+ 
+	for($piece in $geom)
+	{
+		int $newSize = (size($piece) - 5);
+		$newName = `substring $piece 1 $newSize`;
+		rename $piece $newName;
+	}
+
+	file -rename $mayaFile;
+	file -f -save -options "v=0" -type "mayaBinary";
+//	file -new; 		
+}
+
+
+
+

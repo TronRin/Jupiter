@@ -1,0 +1,181 @@
+global proc ltaImport(int $whatToGet)
+{
+	string $lastLine, $prevLine, $buffer[], $filename;
+	string $sockets = "", $weightSets = "", $childModels = "";
+
+	waitCursor -st on;
+	$selection = `ls -dag -typ joint`;
+	$dataNode = $selection[0];
+	if($dataNode == "")
+	{ 	print "Nothing in this scene is exportable\n";  waitCursor -st off; return; }
+
+	$filename = `fileDialog -directoryMask "~/*.lta"`;
+	if ( $filename == "" )
+	{	print "No file selected\n"; waitCursor -st off; return; }
+
+	switch($whatToGet)
+	{
+		case 1:
+			$buffer = `getLTAInfo "sockets" $filename`;
+			$sockets = $buffer[0];
+
+			if(!`objExists ($dataNode + ".sockets")`)
+				addAttr -sn "skt" -ln "sockets" -dt "string"; 
+			if($sockets != "")
+				setAttr ($dataNode + ".sockets") -type "string" $sockets;
+			break;
+
+		case 2:
+			$buffer = `getLTAInfo "anim-weightsets" $filename`;
+			$weightSets = $buffer[0];
+
+			if(!`objExists ($dataNode + ".weightSets")`)
+				addAttr -sn "wts" -ln "weightSets" -dt "string";
+			if($weightSets != "")
+				setAttr ($dataNode + ".weightSets") -type "string" $weightSets;
+			break;
+
+		case 3:
+			$buffer = `getLTAInfo "childmodels" $filename`;
+			$childModels = $buffer[0];
+
+			if(!`objExists ($dataNode + ".childModels")`)
+				addAttr -sn "chm" -ln "childModels" -dt "string";
+			if($childModels != "")
+				setAttr ($dataNode + ".childModels") -type "string" $childModels;
+			break;
+
+
+		default:
+	}
+	waitCursor -st off;
+}
+
+global proc showUserDims()
+{	
+	float $dimX, $dimY, $dimZ;
+	$selection = `ls -dag -typ joint`;
+	$root = $selection[0];
+	if($root == "")
+	{ 	print "Nothing in this scene is exportable\n";   return; }
+
+	$rootDimX = $root + ".dimX";
+	$rootDimY = $root + ".dimY";
+	$rootDimZ = $root + ".dimZ";
+	
+	if(!`objExists $rootDimX`)
+	{
+		addAttr  -ln "dimX" -at "float" $root;	
+		setAttr $rootDimX ( `floatFieldGrp -q -v1 lt_userDims`);
+	}
+	else if((`getAttr -type $rootDimX`)!= "float")
+	{
+		deleteAttr $rootDimX;
+		addAttr  -ln "dimX" -at "float" $root;	
+		setAttr $rootDimX ( `floatFieldGrp -q -v1 lt_userDims`);
+	}
+	if(!`objExists $rootDimY`)
+	{
+		addAttr  -ln "dimY" -at "float" $root;	
+		setAttr $rootDimY (`floatFieldGrp -q -v2 lt_userDims`);
+	}
+	else if((`getAttr -type $rootDimY`)!= "float")
+	{
+		deleteAttr $rootDimY;
+		addAttr  -ln "dimY" -at "float" $root;	
+		setAttr $rootDimY ( `floatFieldGrp -q -v2 lt_userDims`);
+	}
+	if(!`objExists $rootDimZ`)
+	{
+		addAttr  -ln "dimZ" -at "float" $root;	
+		setAttr $rootDimZ (`floatFieldGrp -q -v3 lt_userDims`);
+	}
+	else if((`getAttr -type $rootDimZ`)!= "float")
+	{
+		deleteAttr $rootDimZ;
+		addAttr  -ln "dimZ" -at "float" $root;	
+		setAttr $rootDimZ ( `floatFieldGrp -q -v3 lt_userDims`);
+	}
+	
+	if(!`objExists "userDimsBox"`)
+	{	
+		polyCube -w 2 -h 2 -d 2 -n "userDimsBox";
+		toggle -template userDimsBox;
+		setAttr -lock 1 userDimsBox.translate;
+		setAttr -lock 1 userDimsBox.rotate;
+		transformLimits -sx 0.1 1 -esx 1 0 -sy 0.1 1 -esy 1 0 -sz 0.1 1 -esz 1 0 userDimsBox;
+
+		setAttr userDimsBox.scaleX (`getAttr $rootDimX`);
+		setAttr userDimsBox.scaleY (`getAttr $rootDimY`);
+		setAttr userDimsBox.scaleZ (`getAttr $rootDimZ`);
+
+		connectAttr userDimsBox.scaleX $rootDimX;
+		connectAttr userDimsBox.scaleY $rootDimY;
+		connectAttr userDimsBox.scaleZ $rootDimZ;
+		connectAttr userDimsBox.scaleX userDimsBox.scaleZ;
+	}
+	select -r userDimsBox;
+
+	updateUserDims;
+	scriptJob -ac "userDimsBox.scale" "updateUserDims";
+}
+
+global proc updateUserDims()
+{
+	$dims = `getAttr userDimsBox.scale`;
+	optionVar -fv lt_defaultUserDimX $dims[0];
+	optionVar -fv lt_defaultUserDimY $dims[1];
+	optionVar -fv lt_defaultUserDimZ $dims[2];
+
+	if(`floatFieldGrp -ex lt_userDims`)
+	{	
+		floatFieldGrp -e -v1 $dims[0] lt_userDims;	
+		floatFieldGrp -e -v2 $dims[1] lt_userDims;	
+		floatFieldGrp -e -v3 $dims[2] lt_userDims;
+	}
+}
+
+global proc setUserDims()
+{
+	string $root[] = `ls -dag -typ joint`;
+
+	$newX = `floatFieldGrp -q -v1 lt_userDims`;
+	$newY = `floatFieldGrp -q -v2 lt_userDims`;
+	$newZ = `floatFieldGrp -q -v3 lt_userDims`;
+	$oldX = `optionVar -q lt_defaultUserDimX`;
+	$oldY = `optionVar -q lt_defaultUserDimY`;
+	$oldZ = `optionVar -q lt_defaultUserDimZ`;
+	
+	if($newX <=0) 
+	{	floatFieldGrp -e -v1 $oldX lt_userDims; $newX = $oldX; }
+	if($newY <=0) 
+	{	floatFieldGrp -e -v2 $oldY lt_userDims; $newY = $oldY; }
+	if($newZ <=0) 
+	{	floatFieldGrp -e -v3 $oldZ lt_userDims; $newZ = $oldZ; }
+
+	if($newX != $oldX)
+	{
+		optionVar -fv lt_defaultUserDimX $newX;
+		optionVar -fv lt_defaultUserDimZ $newX;
+		floatFieldGrp -e -v3 $newX lt_userDims;
+	}
+	else if($newZ != $oldZ)
+	{
+		optionVar -fv lt_defaultUserDimX $newZ;
+		optionVar -fv lt_defaultUserDimZ $newZ;		
+		floatFieldGrp -e -v1 $newZ lt_userDims;
+	}
+	optionVar -fv lt_defaultUserDimY 	(`floatFieldGrp -q -v2 lt_userDims`);
+
+	if(`objExists userDimsBox`)
+	{
+		setAttr userDimsBox.scaleX (`floatFieldGrp -q -v1 lt_userDims`);
+		setAttr userDimsBox.scaleY (`floatFieldGrp -q -v2 lt_userDims`);
+	}
+	else if(`objExists ($root[0] + ".dimX")`)
+	{
+		setAttr ($root[0] + ".dimX") (`floatFieldGrp -q -v1 lt_userDims`);
+		setAttr ($root[0] + ".dimY") (`floatFieldGrp -q -v2 lt_userDims`);
+		setAttr ($root[0] + ".dimZ") (`floatFieldGrp -q -v3 lt_userDims`);
+	}
+}

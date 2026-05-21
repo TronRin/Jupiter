@@ -1,0 +1,363 @@
+// Copyright (C) 1997-2000 Alias|Wavefront,
+// a division of Silicon Graphics Limited.
+//
+// The information in this file is provided for the exclusive use of the
+// licensees of Alias|Wavefront.  Such users have the right to use, modify,
+// and incorporate this code into other products for purposes authorized
+// by the Alias|Wavefront license agreement, without fee.
+//
+// ALIAS|WAVEFRONT DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+// INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+// EVENT SHALL ALIAS|WAVEFRONT BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+// CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+// DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+// TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+//
+//
+// Alias|Wavefront Script File
+// MODIFY THIS AT YOUR OWN RISK
+//
+// Creation Date:  Nov 17 1996
+//
+//  Procedure Name:
+//      FileMenu
+//
+//  Description:
+//		This procedure creates the main menubar File menu.
+//
+//  Input Arguments:
+//      None
+//
+//  Return Value:
+//      None.
+//
+
+global proc forceSavePreferences()
+// Removed for Maya 3.0 but could still be on people's shelves
+{
+	warning ("The procedure forceSavePreferences is obsolete and is no longer supported.");
+}
+
+global proc FileMenu_SaveItem()
+//
+// If the current file is named, save it.  If it
+// is still untitled, then bring up the Save As
+// dialog.
+//
+{
+	if(`checkForCylProj`) error("Scene contains buggy cylindrical or spherical projection");
+
+	string $sceneName = `file -q -sceneName`;
+
+	// Get the name of the scene File.
+	if ( size($sceneName) == 0 ) {
+		// Then the name can't be set.
+		projectViewer SaveAs;
+	// bug fix 89970 file save
+	} else if ((`file -q -amf`) || (`file -q -ex` == 0)){
+		string $cmd = "file -save";
+		evalEcho($cmd);
+	} else {
+		warning ("No changes to save.");
+	}
+}
+
+
+global proc buildRecentProjectsMenu()
+{
+	global string $gMainFileMenu;
+	global string $gMainWindow;
+
+	string $RecentProjectsList[];
+	string $localList[];
+	string $menu;
+	string $name;
+	int $i;
+	int $nNumItems;
+
+	if (!`optionVar -exists "RecentProjectsList"`) return;
+
+	// get the list
+	$RecentProjectsList = `optionVar -q "RecentProjectsList"`;
+		
+	$nNumItems = size($RecentProjectsList);
+
+	// first, check if we are the same.
+	$menu = ($gMainWindow + "|" + $gMainFileMenu + "|recentProjectItems");
+	$localList = `menu -q -itemArray $menu`;
+	if ($nNumItems == size($localList))
+	{
+		for ($i = 0; $i < $nNumItems; $i++)
+		{
+			if ($localList[$i] != $RecentProjectsList[$nNumItems-$i-1])
+				break;
+		}
+		if ($i == $nNumItems) return;
+	}
+
+	// we are not the same, so start over.
+	menu -e -deleteAllItems  $menu;
+	setParent -menu $menu;
+	for ($i = 0; $i < $nNumItems; $i++)
+	{
+		string $cmd = "setProject \"" + $RecentProjectsList[$nNumItems-$i-1] + "\"";
+		if (`about -nt`)
+		{
+			$name = unconvert ($RecentProjectsList[$nNumItems-$i-1]);
+			menuItem -l $name -c $cmd;
+		}
+		else
+		{
+			menuItem -l $RecentProjectsList[$nNumItems-$i-1] -c $cmd;
+		}
+	}
+}
+
+global proc  buildRecentFileMenu()
+{
+	global string $gMainFileMenu;
+	global string $gMainWindow;
+
+	string $RecentFilesList[];
+	string $RecentFilesTypeList[];
+	string $localList[];
+	string $menu;
+	string $name;
+	int $i;
+	int $nNumItems;
+
+	if (!`optionVar -exists "RecentFilesList"`) return;
+
+	// get the list
+	$RecentFilesList = `optionVar -q "RecentFilesList"`;
+	$nNumItems = size($RecentFilesList);
+
+	// The RecentFilesTypeList optionVar may not exist since it was
+	// added after the RecentFilesList optionVar. If it doesn't exist,
+	// we create it and initialize it with a guest at the file type
+	if ($nNumItems > 0 )
+	{
+		if ( !`optionVar -exists "RecentFilesTypeList"`)
+		{
+			initRecentFilesTypeList( $RecentFilesList );
+		}
+		$RecentFilesTypeList = `optionVar -q "RecentFilesTypeList"`;
+	}
+		
+
+	// first, check if we are the same.
+	$menu = ($gMainWindow + "|" + $gMainFileMenu + "|recentFileItems");
+	$localList = `menu -q -itemArray $menu`;
+	if ($nNumItems == size($localList))
+	{
+		for ($i = 0; $i < $nNumItems; $i++)
+		{
+			if ($localList[$i] != $RecentFilesList[$nNumItems-$i-1])
+				break;
+		}
+		if ($i == $nNumItems) return;
+	}
+
+	// we are not the same, so start over.
+	menu -e -deleteAllItems  $menu;
+	setParent -menu $menu;
+	for ($i = 0; $i < $nNumItems; $i++)
+	{
+		string $cmd = "file -f -open -type \\\"" +
+				$RecentFilesTypeList[$nNumItems-$i-1] + "\\\" \\\"" +
+				$RecentFilesList[$nNumItems-$i-1] + "\\\";";
+		$cmd = $cmd + "addRecentFile(\\\"" +
+				$RecentFilesList[$nNumItems-$i-1] + "\\\", \\\"" +
+				$RecentFilesTypeList[$nNumItems-$i-1] + "\\\");";
+		$cmd = "saveChanges (\"" + $cmd + "\")";
+		if (`about -nt`)
+		{
+			$name = unconvert ($RecentFilesList[$nNumItems-$i-1]);
+			menuItem -l $name -c $cmd;
+		}
+		else
+		{
+			menuItem -l $RecentFilesList[$nNumItems-$i-1] -c $cmd;
+		}
+	}
+}
+
+global proc  checkMainFileMenu()
+{
+	global string $gMainFileMenu;
+	global string $gMainWindow;
+
+	string $menu = ($gMainWindow + "|" + $gMainFileMenu + "|recentFileItems");
+
+	int $b = 0;
+	if (`optionVar -exists "RecentFilesList"`)
+	{
+		if (`optionVar -arraySize "RecentFilesList"` > 0) $b = 1;		
+	}
+	menuItem -e -enable $b $menu;
+	
+	$menu = ($gMainWindow + "|" + $gMainFileMenu + "|recentProjectItems");
+
+	$b = 0;
+	if (`optionVar -exists "RecentProjectsList"`)
+	{
+		if (`optionVar -arraySize "RecentProjectsList"` > 0) $b = 1;		
+	}
+	menuItem -e -enable $b $menu;
+}
+
+
+{
+	global string $gMainFileMenu;
+
+	int $dimWhenNoSelect = 0;
+	menu -p $gMainWindow -l "File"
+		-allowOptionBoxes true -tearOff true 
+	    -postMenuCommand checkMainFileMenu
+		-familyImage "menuIconFile.xpm" $gMainFileMenu;
+		
+		menuItem -label "New Scene" 
+			-annotation "New Scene: Create a new scene"
+			-command ("if(`checkForCylProj`) error(\"Delete buggy cylindrical or spherical projection before saveing\"); NewScene;") newProject;
+
+		menuItem -label "Open Scene..." 
+			-annotation "Open Scene: Open a scene"
+			-command ("if(`checkForCylProj`) error(\"Delete buggy cylindrical or spherical projection before saveing\"); OpenScene;") openProject;
+			menuItem -optionBox true 
+				-annotation "Open Scene Option Box"
+				-label "Open Scene Option Box"
+				-command ("OpenSceneOptions")
+				openFileOptions;
+
+		menuItem -divider true;
+		
+		menuItem -l "Optimize Scene Size"
+			-annotation "Optimize Scene Size: Remove unused items"
+			-command ("OptimizeScene") cleanUpProject;
+			menuItem -optionBox true
+				-annotation "Optimize Scene Size Option Box"
+				-label "Optimize Scene Size Option Box"
+				-command ("OptimizeSceneOptions") cleanUpSceneOptions;
+		
+		menuItem -label "Save Scene" 
+			-annotation "Save Scene: Save the current scene"
+			-command ("SaveScene;") saveItem;
+
+		menuItem -l "Save Scene As..." 
+			-annotation "Save Scene As: Save the current scene under a new name or export all"
+			-command ("if(`checkForCylProj`) error(\"Scene contains buggy cylindrical or spherical projection\"); SaveSceneAs;") saveAsItem;
+			menuItem -optionBox true 
+				-annotation "Save Scene As Option Box"
+				-label "Save Scene As Option Box"
+				-command ("if(`checkForCylProj`) error(\"Scene contains buggy cylindrical or spherical projection\"); SaveSceneAsOptions;") 
+				saveAsOptions;
+
+		menuItem -divider true;
+
+		menuItem -ecr false -label "Save Preferences" 
+			-annotation "Save Preferences: Save the current preferences"
+			-command ("SavePreferences");
+
+		menuItem -divider true;
+
+		menuItem -label "Import..." 
+			-annotation "Import: Add the file to the current scene"
+			-command ("Import") importFileItem;
+			menuItem -optionBox true 
+				-annotation "Import Option Box"
+				-label "Import Option Box"
+				-command ("ImportOptions") 
+				importFileOptions;
+
+		menuItem -label "Export All..." 
+			-annotation "Export All: Export entire scene (including contents of all references) into one file"
+			-command ("Export") exportAllFileItem;
+			menuItem -optionBox true 
+				-annotation "Export All Option Box"
+				-label "Export All Option Box"
+				-command ("ExportOptions") 
+				exportAllFileOptions;
+
+		menuItem -label "Export Selection..." 
+			-annotation "Export Selection: Export selected objects (and related info) to a new file"
+			-command ("ExportSelection") exportActiveFileItem;
+			menuItem -optionBox true 
+				-annotation "Export Selection Option Box"
+				-label "Export Selection Option Box"
+				-command ("ExportSelectionOptions") 
+				exportActiveFileOptions;
+			if( $dimWhenNoSelect )
+				dimWhen -false SomethingSelected exportActiveFileItem;
+		
+		menuItem -divider true;
+
+		menuItem -label "Create Reference..." 
+			-annotation "Create Reference: Create a reference"
+			-command ("CreateReference") referenceFileItem;
+			menuItem -optionBox true 
+				-annotation "Create Reference Option Box"
+				-label "Create Reference Option Box"
+				-command ("CreateReferenceOptions")
+				referenceFileOptions;
+
+		menuItem -label "Reference Editor..." 
+			-annotation "Reference Editor: Edit the references for the current scene"
+			-command ("ReferenceEditor")
+			residentFileItem;
+
+		menuItem -subMenu true -tearOff true -allowOptionBoxes false -label "Project" projectItems;
+			menuItem -label "New..." 
+				-annotation "New Project: Create a new project and make it the current project"
+				-command ("NewProject") newProjectFileItem;
+
+			menuItem -label "Edit Current..." 
+				-annotation "Edit Project: Edit the current project"
+				-command ("EditProject") editProjectFileItem;
+
+			menuItem -label "Set..." 
+				-annotation "Set Project: Change the current project"
+				-command ("SetProject") setProjectFileItem;
+
+		setParent -m ..;
+
+		menuItem -divider true;
+
+		// add recent file and project lists
+		menuItem -subMenu true -l "Recent Files" -postMenuCommand "buildRecentFileMenu" recentFileItems;
+		setParent -m ..;
+
+		menuItem -subMenu true -l "Recent Projects" -postMenuCommand "buildRecentProjectsMenu" recentProjectItems;
+		setParent -m ..;
+
+		menuItem -divider true;
+		
+		// Do not add any other code to the quit or you will not
+		// have it executed for some types of quitting - like
+		// quitting through the command language or by double-clicking
+		// the main Maya window.
+		//
+		menuItem -l "Exit" 
+			-annotation "Exit: Exit Maya"
+			-command ("Quit;") quitItem;
+
+		if (`about -nt`)
+		{
+			menuItem -e -mn "O" openProject;
+			menuItem -e -mn "S" saveItem;
+			menuItem -e -mn "A" saveAsItem;
+			menuItem -e -mn	"x" quitItem;
+		}
+	
+	setParent -m ..;
+}
+
+global proc int checkForCylProj()
+{
+	string $cylProj[] = `ls -type polyCylProj -type polySphProj`;
+
+	if (size($cylProj)!=0) 
+		return 1;
+	else 
+		return 0;
+}

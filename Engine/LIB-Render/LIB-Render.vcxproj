@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4975EBD7-352D-2D25-9E34-06818A0BC815}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LIB-Render</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\bin\Debug\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Debug\LIB-Render\</IntDir>
+    <TargetName>LIB-Render</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <ExternalIncludePath>$(DXSDK_DIR)Include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\bin\Release\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Release\LIB-Render\</IntDir>
+    <TargetName>LIB-Render</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <ExternalIncludePath>$(DXSDK_DIR)Include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(ProjectDir)..\..\bin\Final\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Final\LIB-Render\</IntDir>
+    <TargetName>LIB-Render</TargetName>
+    <TargetExt>.lib</TargetExt>
+    <ExternalIncludePath>$(DXSDK_DIR)Include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\runtime;..\runtime\client\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\model\src\sys\d3d;..\runtime\render_a\src\sys\d3d;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\world\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\runtime;..\runtime\client\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\model\src\sys\d3d;..\runtime\render_a\src\sys\d3d;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\world\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_FINAL;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\runtime;..\runtime\client\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\model\src\sys\d3d;..\runtime\render_a\src\sys\d3d;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\world\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\runtime\client\src\client_formatmgr.h" />
+    <ClInclude Include="..\runtime\kernel\mem\src\de_memory.h" />
+    <ClInclude Include="..\runtime\kernel\src\dsys.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\counter.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dsys_interface.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\interface_helpers.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\lthread.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\render.h" />
+    <ClInclude Include="..\runtime\kernel\src\syscounter.h" />
+    <ClInclude Include="..\runtime\model\src\animtracker.h" />
+    <ClInclude Include="..\runtime\model\src\ltb.h" />
+    <ClInclude Include="..\runtime\model\src\model.h" />
+    <ClInclude Include="..\runtime\model\src\model_ops.h" />
+    <ClInclude Include="..\runtime\model\src\modelallocations.h" />
+    <ClInclude Include="..\runtime\model\src\transformmaker.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\3d_ops.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\AABB.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\FixedPoint.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\LTEffectImpl.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\LTEffectInclude.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\LTShaderDeviceStateImp.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\SimD_Utilities.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\VertexBufferController.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\clipline.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\common_draw.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\common_init.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\common_stuff.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_convar.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_defs.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_device.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_device_wrapper.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_draw.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_init.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderblock.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_base.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_default.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_dynamiclight.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_glow.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_gouraud.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_gouraud_fullbright.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_lightmap.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstatemgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstyle.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstyleinterface.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderworld.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderworld_occluder.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_shell.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_surface.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_texture.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_utils.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_viewparams.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3dmeshrendobj_rigid.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3dmeshrendobj_skel.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3dmeshrendobj_vertanim.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\devicelightlist.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\dirtyrect.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\draw_canvas.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\drawlight.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\drawobjects.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\drawsky.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\drawworldmodel.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\iaggregateshader.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\lteffectshadermgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\ltpixelshadermgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\ltvertexshadermgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\memstats_world.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\modeldebug.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\modelshadowshader.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\objectgroupmgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\polyclip.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\precompile.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\relevantlightlist.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendererconsolevars.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendererframestats.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\renderlight.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendermodelinfolist.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendermodelpiecelist.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendershadowlist.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\renderstylelookuptables.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\renderstylemap.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendertarget.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\rendertargetmgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\screenglowmgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\setupmodel.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\setuptouchinglights.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\tagnodes.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\texturescriptdefs.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\texturescriptevaluator.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\texturescriptinstance.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\texturescriptinterpreter.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\texturescriptmgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\texturescriptvarmgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\shadows\d3dshadowtexture.h" />
+    <ClInclude Include="..\runtime\shared\src\DebugGeometry.h" />
+    <ClInclude Include="..\runtime\shared\src\RenderObject.h" />
+    <ClInclude Include="..\runtime\shared\src\bdefs.h" />
+    <ClInclude Include="..\runtime\shared\src\colorops.h" />
+    <ClInclude Include="..\runtime\shared\src\conparse.h" />
+    <ClInclude Include="..\runtime\shared\src\dtxmgr.h" />
+    <ClInclude Include="..\runtime\shared\src\gamemath.h" />
+    <ClInclude Include="..\runtime\shared\src\geometry.h" />
+    <ClInclude Include="..\runtime\shared\src\geomroutines.h" />
+    <ClInclude Include="..\runtime\shared\src\lightmap_compress.h" />
+    <ClInclude Include="..\runtime\shared\src\nexus.h" />
+    <ClInclude Include="..\runtime\shared\src\objectmgr.h" />
+    <ClInclude Include="..\runtime\shared\src\pixelformat.h" />
+    <ClInclude Include="..\runtime\shared\src\renderinfostruct.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\d3dddstructs.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\renderstruct.h" />
+    <ClInclude Include="..\runtime\shared\src\sysddstructs.h" />
+    <ClInclude Include="..\runtime\shared\src\version_info.h" />
+    <ClInclude Include="..\runtime\world\src\de_mainworld.h" />
+    <ClInclude Include="..\runtime\world\src\de_objects.h" />
+    <ClInclude Include="..\runtime\world\src\de_sprite.h" />
+    <ClInclude Include="..\runtime\world\src\de_world.h" />
+    <ClInclude Include="..\runtime\world\src\fullintersectline.h" />
+    <ClInclude Include="..\runtime\world\src\intersect_line.h" />
+    <ClInclude Include="..\runtime\world\src\light_table.h" />
+    <ClInclude Include="..\runtime\world\src\visit_pvs.h" />
+    <ClInclude Include="..\runtime\world\src\world_tree.h" />
+    <ClInclude Include="..\runtime\world\src\worldtreehelper.h" />
+    <ClInclude Include="..\sdk\inc\iclientshell.h" />
+    <ClInclude Include="..\sdk\inc\iltbenchmark.h" />
+    <ClInclude Include="..\sdk\inc\iltclient.h" />
+    <ClInclude Include="..\sdk\inc\iltcommon.h" />
+    <ClInclude Include="..\sdk\inc\iltcsbase.h" />
+    <ClInclude Include="..\sdk\inc\iltdirectmusic.h" />
+    <ClInclude Include="..\sdk\inc\iltdrawprim.h" />
+    <ClInclude Include="..\sdk\inc\iltinfo.h" />
+    <ClInclude Include="..\sdk\inc\iltmath.h" />
+    <ClInclude Include="..\sdk\inc\iltrenderstyles.h" />
+    <ClInclude Include="..\sdk\inc\iltsoundmgr.h" />
+    <ClInclude Include="..\sdk\inc\iltspritecontrol.h" />
+    <ClInclude Include="..\sdk\inc\iltstream.h" />
+    <ClInclude Include="..\sdk\inc\ilttexinterface.h" />
+    <ClInclude Include="..\sdk\inc\lithtech.h" />
+    <ClInclude Include="..\sdk\inc\ltanimtracker.h" />
+    <ClInclude Include="..\sdk\inc\ltassert.h" />
+    <ClInclude Include="..\sdk\inc\ltbasedefs.h" />
+    <ClInclude Include="..\sdk\inc\ltbasetypes.h" />
+    <ClInclude Include="..\sdk\inc\ltcodes.h" />
+    <ClInclude Include="..\sdk\inc\ltinteger.h" />
+    <ClInclude Include="..\sdk\inc\ltlink.h" />
+    <ClInclude Include="..\sdk\inc\ltmatrix.h" />
+    <ClInclude Include="..\sdk\inc\ltmodule.h" />
+    <ClInclude Include="..\sdk\inc\ltplane.h" />
+    <ClInclude Include="..\sdk\inc\ltpvalue.h" />
+    <ClInclude Include="..\sdk\inc\ltquatbase.h" />
+    <ClInclude Include="..\sdk\inc\ltrect.h" />
+    <ClInclude Include="..\sdk\inc\ltrenderstyle.h" />
+    <ClInclude Include="..\sdk\inc\ltrotation.h" />
+    <ClInclude Include="..\sdk\inc\ltvector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\3d_ops.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\AABB.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\LTEffectImpl.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\LTEffectInclude.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\LTShaderDeviceStateImp.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\VertexBufferController.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\common_draw.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\common_init.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\common_stuff.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_device.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_device_wrapper.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_draw.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_drawsky.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_init.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_optimizedsurface.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_renderblock.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_dynamiclight.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_glow.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_gouraud.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_gouraud_fullbright.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_rendershader_lightmap.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_renderstatemgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_renderstyle.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_renderstyleinterface.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_renderworld.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_renderworld_occluder.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_shell.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_surface.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_texture.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_utils.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3d_viewparams.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3dmeshrendobj_rigid.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3dmeshrendobj_skel.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\d3dmeshrendobj_vertanim.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\devicelightlist.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\dirtyrect.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\draw_canvas.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawlight.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawlinesystem.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawmodel.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawobjects.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawparticles.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawparticles_A.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawpolygrid.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawsky.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawsprite.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawvolumeeffects.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\drawworldmodel.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\lteffectshadermgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\ltpixelshadermgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\ltvertexshadermgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\memstats_world.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\modeldebug.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\modelshadowshader.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\objectgroupmgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\precompile.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\relevantlightlist.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendererconsolevars.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendererframestats.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\renderlight.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendermodelinfolist.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendermodelpiecelist.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendershadowlist.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\renderstylelookuptables.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\renderstylemap.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendertarget.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\rendertargetmgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\screenglowmgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\setupmodel.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\setuptouchinglights.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\tagnodes.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\texturescriptinstance.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\texturescriptinterpreter.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\texturescriptmgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\d3d\texturescriptvarmgr.cpp" />
+    <ClCompile Include="..\runtime\render_a\src\sys\shadows\d3dshadowtexture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libs\LIB-STDLith\LIB-STDLith.vcxproj">
+      <Project>{E58BA7F7-5141-20ED-DA35-1AC446EA16F1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

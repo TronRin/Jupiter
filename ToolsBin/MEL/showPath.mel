@@ -1,0 +1,68 @@
+global proc showPath() 
+
+{
+
+	string $selected[] = `ls -sl`;
+
+	int $minTime = `playbackOptions -q -min`;
+
+	int $maxTime = `playbackOptions -q -max`;
+
+	string $cmd[];
+
+	string $loc[];
+
+
+
+	for ($i = 0; $i < `size $selected`; $i++) 
+
+	{		
+
+		$cmd[$i] = ("curve -d 2 -ws ");
+
+		$loc[$i] = `createNode locator`;
+
+		string $locParents[] = `listRelatives -p $loc[$i]`;
+
+		$loc[$i] = $locParents[0];
+
+		pointConstraint $selected[$i] $loc[$i];
+
+	}
+
+	for ($j =  $minTime; $j <=  $maxTime; $j ++) 
+
+	{
+
+		currentTime  $j;
+
+		for ($i = 0; $i < `size $selected`; $i++) 
+
+		{
+
+			float $pos[] = `getAttr  ($loc[$i] + ".translate")`;
+
+			$cmd[$i] = ($cmd[$i] + " -p " + $pos[0] + " " + $pos[1] + " " + $pos[2] + " ");
+
+		}
+
+	}
+
+	for ($i = 0; $i < `size $selected`; $i++) 
+
+	{
+
+		$cmd[$i] = ($cmd[$i] + " -n " +  $selected[$i] + "Path_" +  $minTime + "_" + $maxTime);
+
+		eval $cmd[$i];
+
+		delete   $loc[$i];
+
+	}
+
+	select -r $selected;
+
+	currentTime $minTime;
+
+}
+

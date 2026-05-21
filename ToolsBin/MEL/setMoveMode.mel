@@ -1,0 +1,52 @@
+global proc setMoveMode(int $mode)
+
+{
+
+	if(`selectMode -q -o`)
+
+		$vertexMode = `selectType -ocm -q -v`;
+
+	else
+
+		$vertexMode = `selectType -q -v`;
+
+
+
+	if($mode == 3)
+
+		if(!$vertexMode) 
+
+			$mode = 2;
+
+		else
+
+			scriptJob -ro 1 -e "SelectTypeChanged" "setMoveWorld";
+
+	
+
+	manipMoveContext -e -m $mode Move;
+
+	manipMoveValues Move;
+
+	toolPropertyShow;
+
+}
+
+global proc setMoveWorld()
+
+{	
+
+	manipMoveContext -e -m 2 Move;
+
+	manipMoveValues Move;
+
+	toolPropertyShow;
+
+}
+
+
+
+
+
+
+

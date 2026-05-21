@@ -1,0 +1,215 @@
+global proc getPoseWindow()
+{
+	int $i;
+	string $buffer[];//, $filename;
+
+	if(!`optionVar -ex st_getPosePath`)
+		optionVar -sv st_getPosePath "C:";
+	string $inPath = `optionVar -q st_getPosePath`;
+
+	string $fileList[] = `getFileList -folder $inPath -fs "*.txt"`;
+
+
+	if(`window -ex GetPose_UI`)
+		deleteUI GetPose_UI;
+
+	window
+		-w 10
+		-h 10
+		-rtf 1
+		-title "ScottTech2000"
+		GetPose_UI;
+		columnLayout;
+			text -l $inPath st_getPosePath;
+			paneLayout
+				-w 190
+				-h 170;
+				textScrollList 
+					-w 190
+					-nr 13 
+					-dcc "	$getPoseFilenames = `textScrollList -q -si st_getPoseList`;
+										_getPose $getPoseFilenames[0];"
+					st_getPoseList;
+				for($i = 0; $i< size($fileList); $i++)
+					textScrollList -e -append $fileList[$i] st_getPoseList;	
+				popupMenu;
+					menuItem 
+						-label "Rename";
+					menuItem 
+						-label "Delete"
+						-command "deleteSelectedItem st_getPoseList";
+					menuItem 
+						-label "Open";
+			setParent ..;
+			text -l "Save Pose as...";
+			textField -w 190 -ec "_savePose" st_savePoseName;
+			rowLayout 
+				-numberOfColumns 3
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-rat 3 "top" 2
+				-cw 1 65
+				-cw 2 65 
+				-cw 3 65;
+				button -label "Get Pose" -w 60 -h 25 -c		"	$getPoseFilenames = `textScrollList -q -si st_getPoseList`;
+										_getPose $getPoseFilenames[0];";
+				button -label "Save Pose" -w 60 -h 25 -c	"_savePose";
+				button -label "Browse" -w 60 -h 25 -c		"getNewPoseDirectory";
+			setParent ..;
+
+		setParent ..;
+
+	showWindow GetPose_UI;
+
+}
+
+
+
+
+global proc _getPose(string $filename)
+{	
+	string $inPath = `text -q -l st_getPosePath`;
+	$filename  = $inPath + $filename ;
+	$fileId = `fopen $filename "r"` ;
+
+	$attr = `fgetline $fileId`;
+	$values = `fgetline $fileId`;
+	string $test[];
+	doEnableNodeItems false all;
+
+	while ( !`feof $fileId`) 
+	{
+		if(eval("objExists " + $attr))
+			eval("setAttr " + $attr + $values);
+	
+		$attr = `fgetline $fileId`;
+		$values = `fgetline $fileId`;
+	}
+
+	fclose $fileId;
+	doEnableNodeItems true all;	
+}
+
+
+
+
+
+
+
+global proc _savePose()
+{	
+	string $saveName = `textField -q -text st_savePoseName`;
+	string $inPath = `text -q -l st_getPosePath`;
+	$len = size($saveName);
+	$extension = `substring $saveName ($len-3) $len`;
+	if($extension != ".txt")
+		$saveName = $saveName + ".txt";
+
+	$saveName = $inPath + $saveName ;
+	if(`file -q -ex $saveName`)
+		error "Filename exists";
+	
+
+	$selection = `ls -sl`;
+	if(size($selection) == 0)
+		error "No skeleton selected";
+
+	$fromRoot = $selection[0];
+
+	select -r -hi $fromRoot;
+	$fromSkel = `ls -sl -type joint`;
+	$numJoints = size($fromSkel);
+
+	$fileId = `fopen $saveName "w"`;
+
+	for($i = 0; $i < $numJoints; $i++)
+	{
+		$transInfo = `getAttr ($fromSkel[$i] + ".translate")`;
+		$rotInfo = `getAttr ($fromSkel[$i] + ".rotate")`;
+		
+		fprint $fileId ($fromSkel[$i] + ".translate\n");
+		fprint $fileId ($transInfo[0] + " " + $transInfo[1] + " " + $transInfo[2] + "\n");
+		fprint $fileId ($fromSkel[$i] + ".rotate\n");
+		fprint $fileId ($rotInfo[0] + " " + $rotInfo[1] + " " + $rotInfo[2] + "\n");
+	}	
+
+	fclose $fileId;
+
+	
+	textField -e -text "" st_savePoseName;
+	string $fileList[] = `getFileList -folder $inPath -fs "*.txt"`;
+	if($inPath != "" )//&& (size($fileList) > 0))
+	{
+		text -e -label $inPath st_getPosePath;
+		textScrollList -e -removeAll st_getPoseList;
+		for($i = 0; $i< size($fileList); $i++)
+			textScrollList -e -append $fileList[$i] st_getPoseList;	
+		optionVar -sv st_getPosePath $inPath;
+	}
+	
+	select -cl;
+}
+
+
+
+
+
+
+
+
+global proc getNewPoseDirectory()
+{
+	$currentPath = `text -q -l st_getPosePath`;
+	$inPath = `getNewDirectory $currentPath`;
+
+	string $fileList[] = `getFileList -folder $inPath -fs "*.txt"`;
+	if($inPath != "" )//&& (size($fileList) > 0))
+	{
+		text -e -label $inPath st_getPosePath;
+		textScrollList -e -removeAll st_getPoseList;
+		for($i = 0; $i< size($fileList); $i++)
+			textScrollList -e -append $fileList[$i] st_getPoseList;	
+		optionVar -sv st_getPosePath $inPath;
+	}
+
+}
+
+global proc string getNewDirectory(string $defaultPath)
+{
+	global string $targetDirectory;
+	string $targetNtDirectory;
+	string $targetPathElements[];
+	int $i, $pathElementsCount;
+	
+	$currentDir = dirname( `workspace -q -fn` );
+	$defaultPath = dirname($defaultPath);
+	workspace -dir $defaultPath;
+
+	fileBrowser "getTargetDirectory" "Choose Path" "directory" 4;
+	tokenize $targetDirectory "/" $targetPathElements;
+	$pathElementsCount=size($targetPathElements);
+
+	int $startAdding = 0 ;
+	for ($i=0;$i<$pathElementsCount;$i++)
+      			$targetNtDirectory=$targetNtDirectory+$targetPathElements[$i]+"\\";
+
+	workspace -dir $currentDir;
+
+	return $targetNtDirectory;
+}
+
+global proc getTargetDirectory ( string $directory , string $type)
+{
+	global string $targetDirectory;
+	$targetDirectory=$directory + "/";
+}
+
+
+global proc deleteSelectedItem(string $list)
+{
+	string $item[] = `textScrollList -q -si $list`;
+	string $inPath = `text -q -l st_getPosePath`;
+
+	textScrollList -e -ri $item[0] $list;
+	deleteFile ($inPath + $item[0]);	
+}

@@ -1,0 +1,238 @@
+/*
+	This script will copy animations from one skeleton to another
+	under very specific (but useful) conditions.  The source skeleton 
+	must have the hierarchy of mocap imported using my version of readHTR.mel.
+	The destination must also have this form at the top of the hierarchy, 
+	but can also have any number additional joints below this.
+
+	Basically it copies mocap onto any skelton the is based on the mocap skeleton.
+
+	To use, select the source root, then the destination root and run the script.
+
+*/
+
+global proc copyAnimInterface()
+{
+	int $i=0;
+	float $keyTimes[];
+	string $toSkeleton[], $transInput[], $rotInput[];
+
+	$selection = `ls -sl`;
+	$fromRoot = $selection[0];
+	$toRoot = $selection[1];
+
+	select -r -hi $toRoot;
+	$keySkel = `ls -sl -l`;
+	for($i = 0; $i < size($keySkel); $i++)
+	{
+		$transInput = `listConnections -t animCurveTL $keySkel[$i]`;
+		$rotInput = `listConnections -t animCurveTA $keySkel[$i]`;
+		if(($rotInput[0]!="") || ($transInput[0]!=""))
+		{
+			$cmd = "cutKey -clear -time \":\" -hierarchy none -controlPoints 0 -shape 1 {\"" + $keySkel[$i] + "\"}";
+			evalEcho($cmd);
+		}
+	}
+
+	$i=0;
+	select -r -hi $fromRoot;
+	$fromSkel = `ls -sl -type joint`;
+	$numJoints = size($fromSkel);
+	select -cl;
+			
+	pointConstraint $fromRoot $toRoot;
+	orientConstraint $fromRoot $toRoot;
+	$toSkeleton[$i] = $toRoot;  $i++;
+
+	$fromParent = $fromRoot;
+	$toParent = $toRoot;
+	$fromChild = `listRelatives -c -f $fromParent`;
+	$toChild = `listRelatives -c -f $toParent`;
+
+	pointConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent = $fromChild[0];
+	$toParent = $toChild[0];
+//print ($fromChild[0] + "\n");
+	$keyTimes = `keyframe -q -tc $fromChild[0]`;
+//print (size($keyTimes));
+	if(size($keyTimes) != 0 )
+		playbackOptions -minTime ($keyTimes[0]) -maxTime ($keyTimes[(size($keyTimes))-1]);
+	else
+		playbackOptions -minTime ($keyTimes[0]) -maxTime ($keyTimes[0] + 1);
+
+
+	$fromChild = `listRelatives -c -f $fromParent`;
+	$temp = `listRelatives -c -f $toParent`;
+
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+//	orientConstraint $fromChild[1] $toChild[1];
+//	$toSkeleton[$i] = $toChild[1];  $i++;
+//	orientConstraint $fromChild[2] $toChild[2];
+//	$toSkeleton[$i] = $toChild[2];  $i++;
+
+	$fromParent1 = $fromChild[0];
+	$toParent1 = $toChild[0];
+	$fromParent2 = $fromChild[1];
+	$toParent2 = $temp[1];
+	$fromParent3 = $fromChild[2];
+	$toParent3 = $temp[2];
+	
+	$fromChild = `listRelatives -c -f $fromParent1`;
+	$toChild = `listRelatives -c -f $toParent1`;
+
+
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent1 = $fromChild[0];
+	$toParent1 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent1`;
+	$toChild = `listRelatives -c -f $toParent1`;
+
+
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	orientConstraint $fromChild[1] $toChild[1];
+	$toSkeleton[$i] = $toChild[1];  $i++;
+	orientConstraint $fromChild[2] $toChild[2];
+	$toSkeleton[$i] = $toChild[2];  $i++;
+
+
+	$fromParent11 = $fromChild[0];
+	$toParent11 = $toChild[0];
+	$fromParent12 = $fromChild[1];
+	$toParent12 = $toChild[1];
+	$fromParent13 = $fromChild[2];
+	$toParent13 = $toChild[2];
+
+	$fromChild = `listRelatives -c -f $fromParent11`;
+	$toChild = `listRelatives -c -f $toParent11`;
+
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+
+	$fromChild = `listRelatives -c -f $fromParent12`;
+	$toChild = `listRelatives -c -f $toParent12`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent12 = $fromChild[0];
+	$toParent12 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent12`;
+	$toChild = `listRelatives -c -f $toParent12`;
+
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent12 = $fromChild[0];
+	$toParent12 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent12`;
+	$toChild = `listRelatives -c -f $toParent12`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+
+
+	$fromChild = `listRelatives -c -f $fromParent13`;
+	$toChild = `listRelatives -c -f $toParent13`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent13 = $fromChild[0];
+	$toParent13 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent13`;
+	$toChild = `listRelatives -c -f $toParent13`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent13 = $fromChild[0];
+	$toParent13 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent13`;
+	$toChild = `listRelatives -c -f $toParent13`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromChild = `listRelatives -c -f $fromParent2`;
+	$toChild[0] = $toParent2;//`listRelatives -c -f $toParent2`;
+
+	orientConstraint $fromChild[0] $toChild[0];
+	pointConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent2 = $fromChild[0];
+	$toParent2 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent2`;
+	$toChild = `listRelatives -c -f $toParent2`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent2 = $fromChild[0];
+	$toParent2 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent2`;
+	$toChild = `listRelatives -c -f $toParent2`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+
+	$fromChild = `listRelatives -c -f $fromParent3`;
+	$toChild[0] = $toParent3;//`listRelatives -c -f $toParent3`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent3 = $fromChild[0];
+	$toParent3 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent3`;
+	$toChild = `listRelatives -c -f $toParent3`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+	$fromParent3 = $fromChild[0];
+	$toParent3 = $toChild[0];
+
+	$fromChild = `listRelatives -c -f $fromParent3`;
+	$toChild = `listRelatives -c -f $toParent3`;
+	orientConstraint $fromChild[0] $toChild[0];
+	$toSkeleton[$i] = $toChild[0];  $i++;
+
+	select -r $toSkeleton;
+	bake;
+
+	select -r $fromSkel;
+	delete -constraints;
+
+	select -cl;
+}
+
+global proc bake() 
+{
+	int $vis[];
+	$sceneShapes = `ls -ni -type mesh`;
+	for($i = 0; $i < size($sceneShapes); $i++)
+	{
+		$obj = `listRelatives -f -p $sceneShapes[$i]`;
+		$sceneShapes[$i] = $obj[0];
+		$vis[$i] = `getAttr ($sceneShapes[$i] + ".visibility")`;
+		setAttr ($sceneShapes[$i] + ".visibility") 0;
+	}
+	
+ 	int $rate = 1; ///`intField -q -v sb_sampleRate`; 	
+	optionVar -fv "bakeSimulationByTime" $rate; 	
+	BakeSimulation; 
+	delete -staticChannels; 
+
+	for($i = 0; $i < size($sceneShapes); $i++)
+	{
+		setAttr ($sceneShapes[$i] + ".visibility") $vis[$i];
+	}
+
+	$selection = `ls -sl`;
+	string $cmd = "filterCurve ";
+	for($i = 0; $i < size($selection); $i++)
+	{
+		if(`objExists ($selection[$i] + ".rotateX")`)
+			$cmd = $cmd+ $selection[$i] + ".rotateX ";
+		if(`objExists ($selection[$i] + ".rotateY")`)
+			$cmd = $cmd+ $selection[$i] + ".rotateY ";
+		if(`objExists ($selection[$i] + ".rotateZ")`)
+			$cmd = $cmd+ $selection[$i] + ".rotateZ ";
+	}
+	eval($cmd);
+}

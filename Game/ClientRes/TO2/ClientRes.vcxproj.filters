@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Localized Files">
+      <UniqueIdentifier>{cf7e2191-c0b3-47f3-90ed-39fdaf5bd4eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localized Files\DE">
+      <UniqueIdentifier>{4601208e-e921-422c-8333-5633784734d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localized Files\EN">
+      <UniqueIdentifier>{de792000-12af-4f98-aad5-f96b33969540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localized Files\ES">
+      <UniqueIdentifier>{825178f3-b989-4117-add3-e990bc8f32fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localized Files\IT">
+      <UniqueIdentifier>{f7ed0258-8b39-45ad-a5e8-fc6c5dfd8ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Localized Files\FR">
+      <UniqueIdentifier>{63dad52e-89f7-4f33-aa5a-638c4aed4ea2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Lang\DE\ClientRes.rc">
+      <Filter>Localized Files\DE</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="Lang\EN\ClientRes.rc">
+      <Filter>Localized Files\EN</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="Lang\ES\ClientRes.rc">
+      <Filter>Localized Files\ES</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="Lang\IT\ClientRes.rc">
+      <Filter>Localized Files\IT</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="Lang\FR\ClientRes.rc">
+      <Filter>Localized Files\FR</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Lang\DE\credits.txt">
+      <Filter>Localized Files\DE</Filter>
+    </None>
+    <None Include="Lang\DE\intro.txt">
+      <Filter>Localized Files\DE</Filter>
+    </None>
+    <None Include="Lang\EN\credits.txt">
+      <Filter>Localized Files\EN</Filter>
+    </None>
+    <None Include="Lang\EN\intro.txt">
+      <Filter>Localized Files\EN</Filter>
+    </None>
+    <None Include="Lang\ES\credits.txt">
+      <Filter>Localized Files\ES</Filter>
+    </None>
+    <None Include="Lang\ES\intro.txt">
+      <Filter>Localized Files\ES</Filter>
+    </None>
+    <None Include="Lang\IT\credits.txt">
+      <Filter>Localized Files\IT</Filter>
+    </None>
+    <None Include="Lang\IT\intro.txt">
+      <Filter>Localized Files\IT</Filter>
+    </None>
+    <None Include="Lang\FR\credits.txt">
+      <Filter>Localized Files\FR</Filter>
+    </None>
+    <None Include="Lang\FR\intro.txt">
+      <Filter>Localized Files\FR</Filter>
+    </None>
+    <None Include="arrow.cur" />
+    <None Include="..\Shared\arrow.cur" />
+    <None Include="bitmap1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientRes.h" />
+    <ClInclude Include="..\Shared\ClientResShared.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+</Project>

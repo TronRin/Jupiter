@@ -1,0 +1,46 @@
+global proc splitEdge()
+
+{
+
+	string $buffer[];
+
+	string $edgeList[] = `filterExpand -ex 1 -sm 32`;
+
+	int $numEdges = size($edgeList);
+
+
+
+	if($numEdges == 0)
+
+	{ 	print "No edges selected\n"; return;	}
+
+
+
+	polySubdivideEdge -ch 0;
+
+	getFaces;
+
+	polyTriangulate -ch 0;
+
+	select -cl;
+
+
+
+	doMenuComponentSelection("pCube1", "edge");
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

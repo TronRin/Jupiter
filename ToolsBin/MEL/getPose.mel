@@ -1,0 +1,38 @@
+global proc getPose()
+{	
+	$poseFile = ( `internalVar -userTmpDir` + "pose2.txt" ) ;
+	$fileId = `fopen $poseFile "r"` ;
+	$nextWord = `fgetword $fileId`;
+	string $test[];
+	doEnableNodeItems false all;
+
+	while ( size($nextWord ) > 0 ) 
+	{
+		for ($Index = 0; $Index < 4; $Index++)
+		{
+			$test[$Index] = $nextWord;
+			$nextWord = `fgetword $fileId`;			
+		}
+
+		$theNode = $test[0];
+		float $theXvalue = $test[1];
+		float $theYvalue = $test[2];
+		float $theZvalue = $test[3];		
+		setAttr ( $theNode + "X") $theXvalue;
+		setAttr ( $theNode + "Y") $theYvalue;
+		setAttr ( $theNode + "Z") $theZvalue;
+
+
+//		print $test;
+
+//		print "\n";
+
+	}
+
+	fclose $fileId;
+	doEnableNodeItems true all;	
+}
+
+
+
+

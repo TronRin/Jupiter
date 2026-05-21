@@ -1,0 +1,66 @@
+global proc cleanSkel()
+
+{
+
+	$sel = `ls -sl -type joint`;
+
+	$root = $sel[0];
+
+
+
+	select -hi $root;
+
+	$skel = `ls -sl -l -type joint`;
+
+	$numJoints = size($skel);
+
+
+
+	$newRoot = `duplicate -rr $root`;
+
+	select -r -hi $newRoot;
+
+	$newSkel = `ls -sl -l -type joint`;
+
+
+
+	for ($i = 0; $i < $numJoints; $i++)
+
+	{
+
+		pointConstraint $newSkel[$i] $skel[$i];
+
+		orientConstraint $newSkel[$i] $skel[$i];
+
+		setAttr ($skel[$i] + ".jointOrientX") 0;
+
+		setAttr ($skel[$i] + ".jointOrientY") 0;
+
+		setAttr ($skel[$i] + ".jointOrientZ") 0;
+
+	}
+
+	delete -constraints;
+
+	delete $newRoot;
+
+
+
+	select -r $root;
+
+	unrotateJoint;
+
+	select -r $skel[0];
+
+	unrotateJoint; 
+
+
+
+	select -hi $root;
+
+	dagPose -rs -bp;
+
+	select -cl;
+
+}
+

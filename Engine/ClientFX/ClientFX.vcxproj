@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C23FCFC6-AE0C-2AD2-D725-187AC3515F60}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ClientFX</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\bin\Debug\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Debug\ClientFX\</IntDir>
+    <TargetName>ClientFX</TargetName>
+    <TargetExt>.fxd</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\bin\Release\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Release\ClientFX\</IntDir>
+    <TargetName>ClientFX</TargetName>
+    <TargetExt>.fxd</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\bin\Final\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Final\ClientFX\</IntDir>
+    <TargetName>ClientFX</TargetName>
+    <TargetExt>.fxd</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;NOPS2;MEMTRACK_CLIENTFX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;src\shared;..\sdk\inc;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>..\..\bin\Debug\ClientFX.lib</ImportLibrary>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;NOPS2;MEMTRACK_CLIENTFX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;src\shared;..\sdk\inc;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>..\..\bin\Release\ClientFX.lib</ImportLibrary>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_FINAL;NOPS2;MEMTRACK_CLIENTFX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;src\shared;..\sdk\inc;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>..\..\bin\Final\ClientFX.lib</ImportLibrary>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CreateFX.h" />
+    <ClInclude Include="src\FlareSpriteFX.h" />
+    <ClInclude Include="src\LTBbouncychunkfx.h" />
+    <ClInclude Include="src\ParticleSystemFX.h" />
+    <ClInclude Include="src\Shared\BankedList.h" />
+    <ClInclude Include="src\Shared\BankedList_impl.h" />
+    <ClInclude Include="src\Shared\BaseFx.h" />
+    <ClInclude Include="src\Shared\DebugNew.h" />
+    <ClInclude Include="src\Shared\DebugNew_impl.h" />
+    <ClInclude Include="src\bouncychunkfx.h" />
+    <ClInclude Include="src\camjitterfx.h" />
+    <ClInclude Include="src\camwobblefx.h" />
+    <ClInclude Include="src\clientfx.h" />
+    <ClInclude Include="src\cycletimer.h" />
+    <ClInclude Include="src\dynalightfx.h" />
+    <ClInclude Include="src\fallingstufffx.h" />
+    <ClInclude Include="src\lightningfx.h" />
+    <ClInclude Include="src\ltbmodelfx.h" />
+    <ClInclude Include="src\memarray.h" />
+    <ClInclude Include="src\nullfx.h" />
+    <ClInclude Include="src\playrandomsoundfx.h" />
+    <ClInclude Include="src\playsoundfx.h" />
+    <ClInclude Include="src\polyfanfx.h" />
+    <ClInclude Include="src\polytubefx.h" />
+    <ClInclude Include="src\resource.h" />
+    <ClInclude Include="src\spritefx.h" />
+    <ClInclude Include="src\spritesystemfx.h" />
+    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\swaplist.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\sdk\inc\ltmodule.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltquatbase.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\BaseFx.cpp" />
+    <ClCompile Include="src\CreateFX.cpp" />
+    <ClCompile Include="src\FlareSpriteFX.cpp" />
+    <ClCompile Include="src\LTBbouncychunkfx.cpp" />
+    <ClCompile Include="src\ParticleSystemFX.cpp" />
+    <ClCompile Include="src\Shared\DebugNew.cpp" />
+    <ClCompile Include="src\bouncychunkfx.cpp" />
+    <ClCompile Include="src\camjitterfx.cpp" />
+    <ClCompile Include="src\camwobblefx.cpp" />
+    <ClCompile Include="src\clientfx.cpp" />
+    <ClCompile Include="src\cycletimer.cpp" />
+    <ClCompile Include="src\dynalightfx.cpp" />
+    <ClCompile Include="src\fallingstufffx.cpp" />
+    <ClCompile Include="src\lightningfx.cpp" />
+    <ClCompile Include="src\ltbmodelfx.cpp" />
+    <ClCompile Include="src\nullfx.cpp" />
+    <ClCompile Include="src\playrandomsoundfx.cpp" />
+    <ClCompile Include="src\playsoundfx.cpp" />
+    <ClCompile Include="src\polyfanfx.cpp" />
+    <ClCompile Include="src\polytubefx.cpp" />
+    <ClCompile Include="src\spritefx.cpp" />
+    <ClCompile Include="src\spritesystemfx.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libs\LIB-MFCStub\LIB-MFCStub.vcxproj">
+      <Project>{9DD31309-0989-8CFE-927D-86D5FE318302}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-STDLith\LIB-STDLith.vcxproj">
+      <Project>{E58BA7F7-5141-20ED-DA35-1AC446EA16F1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

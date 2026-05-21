@@ -1,0 +1,54 @@
+global  proc  saveWeights( )
+
+{
+
+	string $FileName, $skinNodes[],$shape[], $jointNames[], $weightsCommand;
+
+	int $fileID, $i, $j, $k, $numPoints[];
+
+	float $weights[];
+
+	$FileName =  "c:/zzz.lts" ; 
+	$fileID=`fopen $FileName "w"`; 	
+
+	$skinNodes = `ls -typ skinCluster`;
+	fprint $fileID (size($skinNodes) + "\n");
+
+	for($i = 0; $i < size($skinNodes); $i++)
+	{
+
+		$shape = `skinCluster -q -g $skinNodes[$i]`;
+		skinPercent -prw 0.01 $skinNodes[$i] $shape[0];
+		$numPoints = `polyEvaluate -v $shape[0]`;
+		print ($skinNodes[$i] + "\n");
+		$jointNames = `skinPercent -q -t $skinNodes[$i] ($shape[0] + ".vtx[0]")`;
+		fprint $fileID ( $skinNodes[$i] + "\n" + $shape[0] + "\n" + $numPoints[0] + "\n" + (size($jointNames)) + "\n");
+
+
+		for($k = 0; $k < size($jointNames); $k++)
+		{
+			fprint $fileID ($jointNames[$k]+ " ");
+		}	
+		fprint $fileID ("\n");
+		for($j = 0; $j < $numPoints[0]; $j++) 
+		{
+			$weightsCommand = "skinPercent -q -v " + $skinNodes[$i] + " " + $shape[0] + ".vtx[" + $j + "]";
+
+
+			$weights = eval($weightsCommand);
+			for($k = 0; $k < size($jointNames); $k++)
+			{
+				fprint $fileID ($weights[$k] + " " );
+			}		
+			fprint $fileID ("\n");
+		}
+	}
+
+	clear $weights;
+	clear $jointNames;
+	clear $skinNodes;
+	clear $shape;   
+	clear $numPoints;
+	fclose $fileID; 
+	print ("Done.\n");
+}

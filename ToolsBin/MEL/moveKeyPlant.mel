@@ -1,0 +1,33 @@
+global proc moveKeyPlant()
+{
+	float $offset, $oldValue[];
+	string $animCurves[];
+	$sel = `ls -sl`;
+	
+	$animCurves = `keyframe -q -n $sel[0]`;
+	$numCurves = size($animCurves);
+	$time = `currentTime -q`;
+
+	for($i = 0; $i < $numCurves; $i++)
+	{
+		$tmp = `keyframe -q -ev $animCurves[$i]`; 
+		$oldValue[$i] = $tmp[0];
+	}
+	setKeyframe -at translate -at rotate $sel[0];
+
+	for($i = 0; $i < $numCurves; $i++)
+	{
+		$inKey = `findKeyframe -t $time -which previous $animCurves[$i]`;
+		$outKey = `findKeyframe -t $time -which next $animCurves[$i]`;
+
+		$newValue = `keyframe -q -ev $animCurves[$i]`;
+		$offset = $newValue[0] - $oldValue[$i];
+		
+		selectKey -clear;
+		selectKey -add -k -t $inKey -t $outKey $animCurves[$i]; 
+		keyframe -e -iub true -animation keys -r -o over -vc $offset ;
+	
+		cutKey -t $time $animCurves[$i];
+	}
+	
+}

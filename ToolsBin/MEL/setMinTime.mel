@@ -1,0 +1,11 @@
+global proc setMinTime()
+{
+	$curTime = `currentTime -q`;
+	playbackOptions  -min $curTime;
+}
+
+global proc setMaxTime()
+{
+	$curTime = `currentTime -q`;
+	playbackOptions  -max $curTime;
+}

@@ -1,0 +1,1544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..">
+      <UniqueIdentifier>{CC6E590B-3883-81BC-0105-251C6DD87DED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\Libs">
+      <UniqueIdentifier>{8586C881-713E-0ACF-DA45-E32AC61CA5BF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\Libs\LIB-RezMgr">
+      <UniqueIdentifier>{4F5961C4-BBC5-1CBF-84B9-B41CF0E43E27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\Libs\LIB-RezMgr\src">
+      <UniqueIdentifier>{E626175D-52E9-4AE7-9B99-D973079B23C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime">
+      <UniqueIdentifier>{B4E6689E-A09E-AAEB-09A6-8347F57C45DC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\client">
+      <UniqueIdentifier>{6258B1AD-CE6E-AF43-17E6-3A65833B80CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\client\src">
+      <UniqueIdentifier>{7977A65D-E5E3-6158-AED7-F9B51A0384C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\client\src\sys">
+      <UniqueIdentifier>{074BB332-730D-E7BC-BCBD-754928BFBF9A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\client\src\sys\win">
+      <UniqueIdentifier>{8444FBA1-F05C-E2CB-B909-726525E17665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\controlfilemgr">
+      <UniqueIdentifier>{0A7C78FE-763E-AC88-BFEE-3A152BF08466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel">
+      <UniqueIdentifier>{6406E1BF-D01C-DF55-1994-6A7785E9AFDD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\io">
+      <UniqueIdentifier>{CBF1C2C3-B780-4C8D-609F-60884C0D5D33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\io\src">
+      <UniqueIdentifier>{629D48EC-4EC2-976C-770D-7DFC6391968A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\io\src\sys">
+      <UniqueIdentifier>{703D58F0-5CF8-479C-05B0-C0E6F149922C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\io\src\sys\win">
+      <UniqueIdentifier>{6D4335B4-5994-20F6-82F8-0EB86EA8B35F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\mem">
+      <UniqueIdentifier>{523B213C-BEA7-DC36-879B-7494F3C6FE9E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\mem\src">
+      <UniqueIdentifier>{69522E96-D514-6220-1EC5-F0AC8AC63AFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\mem\src\sys">
+      <UniqueIdentifier>{F71D8FD0-6336-76FA-2CE3-059498BA0A94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\mem\src\sys\win">
+      <UniqueIdentifier>{740F679E-E07D-BC1D-2967-771D9514B2B9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\net">
+      <UniqueIdentifier>{9A3F213C-06AC-DC36-CF9F-74943BCBFE9E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\net\src">
+      <UniqueIdentifier>{B13AA7E3-1DFD-DA6D-66AD-69FAD2AEB34B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\net\src\sys">
+      <UniqueIdentifier>{3FEA5285-AB02-3AAF-74AF-C948E086CE48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\net\src\sys\win">
+      <UniqueIdentifier>{BCBF476D-282E-9DEC-7117-58ECDDC49288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\src">
+      <UniqueIdentifier>{7B56213C-E7C2-DC36-B0B6-74941CE2FE9E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\src\sys">
+      <UniqueIdentifier>{09DBA981-759D-DD0B-BE4D-6C982A4FB6E9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\kernel\src\sys\win">
+      <UniqueIdentifier>{8605DEA9-F21D-C5D3-BBCA-546D27A2596D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\lithtemplate">
+      <UniqueIdentifier>{D0A9CBAA-3CE1-1342-45EB-7765B1A13A3B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\model">
+      <UniqueIdentifier>{14978534-0090-A486-29C2-890B151A8492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\model\src">
+      <UniqueIdentifier>{2BBFFE9C-174E-8866-C06C-9C61ACDA980C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\model\src\sys">
+      <UniqueIdentifier>{B91B6C6F-A540-BBEF-CE8B-A07FBA0FBA0D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\model\src\sys\d3d">
+      <UniqueIdentifier>{63C6303B-4F81-20E7-F838-9931E4D26A77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\physics">
+      <UniqueIdentifier>{46F66544-32DA-269A-9B3A-21ED873D111C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\physics\src">
+      <UniqueIdentifier>{5D677F57-4961-A8A9-32CE-3EBA1E670E16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_a">
+      <UniqueIdentifier>{2390FFA7-8FF1-DCB5-185F-236884BF1375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_a\src">
+      <UniqueIdentifier>{BAA7DCBF-26DF-2457-2FE9-887A9B9F4B50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_a\src\sys">
+      <UniqueIdentifier>{C8B31929-34C1-470F-BDA7-43FA29B413C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_a\src\sys\d3d">
+      <UniqueIdentifier>{F2CDF9C2-5EB1-0803-67B4-363FD316CF53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_b">
+      <UniqueIdentifier>{2490FFA7-90F1-DCB5-195F-236885BF1375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_b\src">
+      <UniqueIdentifier>{3BC0EEBF-A7F7-3657-B001-9B7A1CB85D50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_b\src\sys">
+      <UniqueIdentifier>{C924969D-3532-C483-BE18-C06E2A25903A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\render_b\src\sys\d3d">
+      <UniqueIdentifier>{73D75812-DFBA-6752-E8BD-958E54202EA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\server">
+      <UniqueIdentifier>{7A6D8AD2-E683-8868-2FFB-138A9B5059F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\server\src">
+      <UniqueIdentifier>{9158B4C4-FDC4-6FBF-C6B8-071D32E49127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\shared">
+      <UniqueIdentifier>{7A53B7D2-E669-B568-2FE1-408A9B3686F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\shared\src">
+      <UniqueIdentifier>{913EE43C-FDAA-9F37-C69E-379532CAC19F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\shared\src\sys">
+      <UniqueIdentifier>{1FDE2E7B-8BA0-6205-D450-F19140523BE3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\shared\src\sys\win">
+      <UniqueIdentifier>{9CA3BA15-08BC-A13F-D168-31D93D4036D9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\sound">
+      <UniqueIdentifier>{8C73F234-786C-1187-A19E-F60B8DF6F092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\sound\src">
+      <UniqueIdentifier>{A317F588-8FA6-7E52-38C5-924D24338FF8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\ui">
+      <UniqueIdentifier>{A1B1EA63-0D72-669A-D6AC-AF17422CAB76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\ui\src">
+      <UniqueIdentifier>{385858D7-A46E-566D-EDE5-E18E593B27F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\world">
+      <UniqueIdentifier>{8BC83A35-77C1-5987-A0F3-3E0C8C4B3993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\runtime\world\src">
+      <UniqueIdentifier>{22D44D6F-0E63-D738-B781-EB33A3EFE7DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\sdk">
+      <UniqueIdentifier>{32758876-1E17-B34C-07D2-C6A0F3123A9D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\sdk\inc">
+      <UniqueIdentifier>{3B515FC3-2709-A110-9010-7A6C7CE73B01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\sdk\inc\physics">
+      <UniqueIdentifier>{CDF7C5F3-B9DB-8649-223C-819C0E3F71CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\rezfile.h">
+      <Filter>..\..\Libs\LIB-RezMgr\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\rezhash.h">
+      <Filter>..\..\Libs\LIB-RezMgr\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\rezmgr.h">
+      <Filter>..\..\Libs\LIB-RezMgr\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\reztypes.h">
+      <Filter>..\..\Libs\LIB-RezMgr\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\client_filemgr.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\client_formatmgr.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\client_graphmgr.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\client_ticks.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\clientde_impl.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\clientexception.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\clientmgr.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\clientshell.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\cmoveabstract.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\console.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\consolecommands.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\customfontfilemgr.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\debuggraphmgr.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\errorlog.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\linesystem.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\ltbenchmark_impl.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\ltinfo_impl.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\ltmessage_client.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\lttexturestring.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\memorywatch.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\particlesystem.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\polygrid.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\predict.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\setupobject.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\sprite.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\sys\win\winclientde_impl.h">
+      <Filter>..\runtime\client\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\sys\win\winconsole_impl.h">
+      <Filter>..\runtime\client\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\sysclient.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\sysclientde_impl.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\sysconsole_impl.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\texturestring.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\texturestringimage.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\volumeeffect.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\client\src\watermark.h">
+      <Filter>..\runtime\client\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\controlfilemgr\controlfilemgr.h">
+      <Filter>..\runtime\controlfilemgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\io\src\sys\win\de_file.h">
+      <Filter>..\runtime\kernel\io\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\io\src\sysfile.h">
+      <Filter>..\runtime\kernel\io\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\mem\src\de_memory.h">
+      <Filter>..\runtime\kernel\mem\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\net\src\localdriver.h">
+      <Filter>..\runtime\kernel\net\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\net\src\netmgr.h">
+      <Filter>..\runtime\kernel\net\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\net\src\packet.h">
+      <Filter>..\runtime\kernel\net\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\net\src\sys\win\socket.h">
+      <Filter>..\runtime\kernel\net\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\dsys.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\icommandlineargs.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\ithread.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\appresource.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\bindmgr.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\bink.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\binkvideomgrimpl.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\counter.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dshowvideomgrimpl.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dsys_interface.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dutil.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\input.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\interface_helpers.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\load_pcx.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltdirectmusic_impl.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltdirectmusiccontrolfile.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltdirectmusicloader.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\lthread.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltrendermgr_impl.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltthread.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\musicdriver.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\rad.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\render.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\smack.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\streamsim.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\stringmgr.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\systeminfo.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\text_mgr.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\timemgr.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\version_resource.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\videomgr.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sys\win\winbind.h">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\syscounter.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sysdebugging.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sysinput.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\syslibraryloader.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sysstreamsim.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\systhread.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\systimer.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\kernel\src\sysvideo.h">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\lithtemplate\ltt_buffer.h">
+      <Filter>..\runtime\lithtemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\lithtemplate\ltt_list_circular.h">
+      <Filter>..\runtime\lithtemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\model\src\animtracker.h">
+      <Filter>..\runtime\model\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\model\src\ltb.h">
+      <Filter>..\runtime\model\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\model\src\model.h">
+      <Filter>..\runtime\model\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\model\src\model_ops.h">
+      <Filter>..\runtime\model\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\model\src\modelallocations.h">
+      <Filter>..\runtime\model\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\model\src\transformmaker.h">
+      <Filter>..\runtime\model\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\physics\src\lt_collision_mgr.h">
+      <Filter>..\runtime\physics\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\clipline.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\common_draw.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_convar.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_device.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_draw.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstatemgr.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstyle.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_utils.h">
+      <Filter>..\runtime\render_a\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_b\src\gendrawprim.h">
+      <Filter>..\runtime\render_b\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_b\src\sys\d3d\d3ddrawprim.h">
+      <Filter>..\runtime\render_b\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_b\src\sys\d3d\d3dtexinterface.h">
+      <Filter>..\runtime\render_b\src\sys\d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\render_b\src\sysdrawprim.h">
+      <Filter>..\runtime\render_b\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\classmgr.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\game_serialize.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\interlink.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\ltmessage_server.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\s_client.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\s_concommand.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\s_net.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\s_object.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\server_consolestate.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\server_extradata.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\server_filemgr.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\serverde_impl.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\serverevent.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\serverexception.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\servermgr.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\serverobj.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\smoveabstract.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\server\src\soundtrack.h">
+      <Filter>..\runtime\server\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\DebugGeometry.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\RenderObject.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\bdefs.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\build_options.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\classbind.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\clienthack.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\collision.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\colorops.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\compress.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\concommand.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\conparse.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\dhashtable.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\dtxmgr.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\findobj.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ftbase.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ftclient.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ftserv.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\gamemath.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\genericprop_setup.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\genltstream.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\geometry.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\geomroutines.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\impl_common.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\lightmap_compress.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\lightmap_planes.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\lightmapdefs.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ltbbox.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ltmessage.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ltmutex.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\lttimer.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\misctools.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\motion.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\moveobject.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\moveplayer.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\musicmgr.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\nexus.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\objectmgr.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\packetdefs.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\parse_world_info.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\pixelformat.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\ratetracker.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\refobj.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\renderinfostruct.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\shared_iltcommon.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\stacktrace.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\staticfifo.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\stdlterror.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\strtools.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\sys\win\d3dddstructs.h">
+      <Filter>..\runtime\shared\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\sys\win\dstreamopenqueuemgr.h">
+      <Filter>..\runtime\shared\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\sys\win\renderstruct.h">
+      <Filter>..\runtime\shared\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\sys\win\winstdlterror.h">
+      <Filter>..\runtime\shared\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\sys\win\winsync.h">
+      <Filter>..\runtime\shared\src\sys\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\sysddstructs.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\varsetter.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\shared\src\version_info.h">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\iltsound.h">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\soundbuffer.h">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\sounddata.h">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\soundinstance.h">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\soundmgr.h">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\sound\src\wave.h">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\ui\src\cuipolystring_impl.h">
+      <Filter>..\runtime\ui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\de_mainworld.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\de_objects.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\de_sprite.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\de_world.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\fullintersectline.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\intersect_line.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\light_table.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\loadstatus.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_blind_object_data.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_blocker_data.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_blocker_math.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_client.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_client_bsp.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_interface.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_particle_blocker_data.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_server.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_server_bsp.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_shared_bsp.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\world_tree.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\runtime\world\src\worldtreehelper.h">
+      <Filter>..\runtime\world\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cui.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuifont.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuiformattedpolystring.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuimessage.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuipolystring.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\cuitypes.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iaggregate.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iclientshell.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltbaseclass.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltbenchmark.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltclient.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltcommon.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltcsbase.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltcursor.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltdirectmusic.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltdrawprim.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltfontmanager.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltinfo.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltmemory.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltmessage.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltmodel.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltphysics.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltrefcount.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltrenderstyles.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltserver.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltsoundmgr.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltspritecontrol.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltstream.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ilttexinterface.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ilttexturestring.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ilttransform.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltvideomgr.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iltwidgetmanager.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\iservershell.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\lithtech.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltanimtracker.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltassert.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltbasedefs.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltbasetypes.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltcodes.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltengineobjects.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\lterror.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltinteger.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltlink.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltmatrix.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltmodule.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltobjectcreate.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltplane.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltproperty.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltpvalue.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltquatbase.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltrect.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltrenderstyle.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltrotation.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltserverobj.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\ltvector.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\aabb.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\aabb_tree.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\collision_data.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\collision_mgr.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\collision_object.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\coordinate_frame.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\math_phys.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\matrix.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\quaternion.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\rigid_body.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\triangle.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\physics\vector.h">
+      <Filter>..\sdk\inc\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\server_interface.h">
+      <Filter>..\sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\client\src\client_filemgr.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_formatmgr.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_graphmgr.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_iltcommon.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_iltmodel.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_iltphysics.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_iltvideomgr.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_ticks.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\clientde_impl.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\clientmgr.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\clientshell.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\cmoveabstract.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\cnet.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\cobject.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\console.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\consolecommands.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\cutil.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\debuggraphmgr.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\errorlog.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\linesystem.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\ltbenchmark_impl.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\ltinfo_impl.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\ltmessage_client.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\lttexturestring.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\memorywatch.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\particlesystem.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\polygrid.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\predict.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\setupobject.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\shellnet.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\shelltransfer.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\shellutil.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\sprite.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\sys\win\customfontfilemgr.cpp">
+      <Filter>..\runtime\client\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\sys\win\texturestringimage.cpp">
+      <Filter>..\runtime\client\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\sys\win\winclientde_impl.cpp">
+      <Filter>..\runtime\client\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\sys\win\winconsole_impl.cpp">
+      <Filter>..\runtime\client\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\texturestring.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\volumeeffect.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\watermark.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\world_client_bsp.cpp">
+      <Filter>..\runtime\client\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\controlfilemgr\controlfilemgr.cpp">
+      <Filter>..\runtime\controlfilemgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\io\src\sys\win\de_file.cpp">
+      <Filter>..\runtime\kernel\io\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\mem\src\ltmemory.cpp">
+      <Filter>..\runtime\kernel\mem\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\mem\src\sys\win\de_memory.cpp">
+      <Filter>..\runtime\kernel\mem\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\net\src\localdriver.cpp">
+      <Filter>..\runtime\kernel\net\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\net\src\netmgr.cpp">
+      <Filter>..\runtime\kernel\net\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\net\src\packet.cpp">
+      <Filter>..\runtime\kernel\net\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\net\src\sys\win\udpdriver.cpp">
+      <Filter>..\runtime\kernel\net\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\debugging.cpp">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\icommandlineargs.cpp">
+      <Filter>..\runtime\kernel\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\InputSim.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\bindmgr.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\binkvideomgrimpl.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\client.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\counter.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\dshowvideomgrimpl.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\dsys_interface.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\dutil.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\input.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\interface_helpers.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\load_pcx.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\lt_cursor_impl.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltdirectmusic_impl.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltdirectmusiccontrolfile.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltdirectmusicloader.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\lthread.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltlibraryloader.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltrendermgr_impl.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltthread.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\musicdriver.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\render.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\streamsim.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\stringmgr.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\systeminfo.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\text_mgr.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\timemgr.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\version_resource.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\videomgr.cpp">
+      <Filter>..\runtime\kernel\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\model\src\animtracker.cpp">
+      <Filter>..\runtime\model\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\model\src\model.cpp">
+      <Filter>..\runtime\model\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\model\src\model_load.cpp">
+      <Filter>..\runtime\model\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\model\src\modelallocations.cpp">
+      <Filter>..\runtime\model\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\model\src\sys\d3d\d3d_model_load.cpp">
+      <Filter>..\runtime\model\src\sys\d3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\model\src\transformmaker.cpp">
+      <Filter>..\runtime\model\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\render_b\src\sys\d3d\d3ddrawprim.cpp">
+      <Filter>..\runtime\render_b\src\sys\d3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\render_b\src\sys\d3d\d3dtexinterface.cpp">
+      <Filter>..\runtime\render_b\src\sys\d3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\S_Intersect.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\classmgr.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\game_serialize.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\interlink.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\ltmessage_server.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\s_client.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\s_concommand.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\s_net.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\s_object.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_consolestate.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_extradata.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_filemgr.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_iltcommon.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_iltmodel.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_iltphysics.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\server_iltsoundmgr.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\serverde_impl.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\serverevent.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\servermgr.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\smoveabstract.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\soundtrack.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\server\src\world_server_bsp.cpp">
+      <Filter>..\runtime\server\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\bdefs.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\classbind.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\collision.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\compress.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\concommand.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\conparse.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\debuggeometry.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\dhashtable.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\dtxmgr.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\engine_vars.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\findobj.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\ftclient.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\ftserv.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\gamemath.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\genericprop_setup.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\genltstream.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\geometry.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\geomroutines.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\impl_common.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\interface_linkage.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\leech.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\lightmap_compress.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\lightmap_planes.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\ltmessage.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\lttimer.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\modellt_impl.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\motion.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\moveobject.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\moveplayer.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\nexus.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\objectmgr.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\parse_world_info.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\pixelformat.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\ratetracker.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\shared_iltcommon.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\shared_iltphysics.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\spritecontrolimpl.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\stacktrace.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\stdlterror.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\strtools.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\sys\win\dstreamopenqueuemgr.cpp">
+      <Filter>..\runtime\shared\src\sys\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\transformlt_impl.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\version_info.cpp">
+      <Filter>..\runtime\shared\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\soundbuffer.cpp">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\sounddata.cpp">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\soundinstance.cpp">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\soundmgr.cpp">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\sound\src\wave.cpp">
+      <Filter>..\runtime\sound\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\de_mainworld.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\de_nodes.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\de_objects.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\fullintersectline.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\intersect_line.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\intersectsweptsphere.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\light_table.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\world_blind_object_data.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\world_blocker_data.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\world_blocker_math.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\world_particle_blocker_data.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\world_shared_bsp.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\world\src\world_tree.cpp">
+      <Filter>..\runtime\world\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\lterror.cpp">
+      <Filter>..\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltmodule.cpp">
+      <Filter>..\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltobjref.cpp">
+      <Filter>..\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltquatbase.cpp">
+      <Filter>..\sdk\inc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\lithtech.rc">
+      <Filter>src</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

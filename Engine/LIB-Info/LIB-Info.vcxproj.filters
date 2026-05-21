@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="runtime">
+      <UniqueIdentifier>{692D2264-D50C-A1FF-DE24-2CD64A830761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\info">
+      <UniqueIdentifier>{04EC013A-F04E-91DE-99D4-C99485165D61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\info\src">
+      <UniqueIdentifier>{1B0C7C01-0705-9B53-3037-80D81C8F7A5F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\info\src\sys">
+      <UniqueIdentifier>{A960A63A-95EF-2F04-3E0E-44FF2A7C40AA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\info\src\sys\win32">
+      <UniqueIdentifier>{6BC3673D-57D3-130E-C08C-782CACBB02A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk">
+      <UniqueIdentifier>{67A9880B-D3B2-887C-5C2E-9F7CC836947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\inc">
+      <UniqueIdentifier>{F0971889-5C77-9724-658F-22FBD1EDFD85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdk\inc\libltinfo">
+      <UniqueIdentifier>{42DB82C2-AEF1-8058-F768-0C7A63BE51E0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\runtime\info\src\outputredir.h">
+      <Filter>runtime\info\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\libltinfo.h">
+      <Filter>sdk\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sdk\inc\libltinfo\iltoutputredir.h">
+      <Filter>sdk\inc\libltinfo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\info\src\outputredir.cpp">
+      <Filter>runtime\info\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\runtime\info\src\sys\win32\outputredir_win32.cpp">
+      <Filter>runtime\info\src\sys\win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

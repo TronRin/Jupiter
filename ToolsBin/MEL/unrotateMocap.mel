@@ -1,0 +1,108 @@
+proc bakeAnim()
+
+{
+
+  	int $rate = 1; ///`intField -q -v sb_sampleRate`;
+
+ 	optionVar -fv "bakeResultsSampleBy" $rate;
+
+ 	optionVar -fv "bakeSimulationByTime" $rate;
+
+  	BakeSimulation;
+
+  	delete -staticChannels;
+
+}
+
+global proc unrotateMocap()
+
+{
+
+	string $rotNull[];
+
+	$root = `ls -sl`;
+
+	$transNode = `listRelatives $root[0]`;
+
+	$rotNode = `listRelatives $transNode[0]`;
+
+
+
+	$transNull = `spaceLocator`;
+
+	pointConstraint $transNode[0] $transNull;
+
+
+
+	for($i = 0; $i < size($rotNode); $i ++)
+
+	{
+
+		$newNull = `spaceLocator`;
+
+		$rotNull[$i] = $newNull[0];
+
+		pointConstraint $rotNode[$i] $rotNull[$i]; 
+
+		orientConstraint $rotNode[$i] $rotNull[$i]; 
+
+	}
+
+
+
+	select -r $transNull $rotNull;
+
+	bakeAnim;
+
+	delete -constraints;
+
+
+
+	select -r $transNode $rotNode;
+
+	cutKey -clear;
+
+
+
+	pointConstraint $transNull[0] $transNode[0];
+
+	orientConstraint $transNull[0] $transNode[0];
+
+
+
+	for($i = 0; $i < size($rotNode); $i ++)
+
+	{
+
+		pointConstraint $rotNull[$i] $rotNode[$i]; 
+
+		orientConstraint $rotNull[$i] $rotNode[$i]; 
+
+	}
+
+
+
+	setAttr ($root[0] + ".rx") 0;
+
+	setAttr ($root[0] + ".ry") 0;
+
+	setAttr ($root[0] + ".rz") 0;
+
+
+
+	select -r $transNode $rotNode;
+
+	bakeAnim;
+
+	delete -constraints;
+
+
+
+	delete $transNull $rotNull;
+
+	select -r $root[0];
+
+}
+
+
+

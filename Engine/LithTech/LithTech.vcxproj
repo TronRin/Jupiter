@@ -1,0 +1,691 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FA8F0148-E65C-5C53-0F76-4AFBFBA191E1}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LithTech</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\bin\Debug\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Debug\LithTech\</IntDir>
+    <TargetName>LithTech</TargetName>
+    <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>$(DXSDK_DIR)Include;..\..\Vendor;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;..\..\Vendor\directx-8.1\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\bin\Release\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Release\LithTech\</IntDir>
+    <TargetName>LithTech</TargetName>
+    <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>$(DXSDK_DIR)Include;..\..\Vendor;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;..\..\Vendor\directx-8.1\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\bin\Final\</OutDir>
+    <IntDir>$(ProjectDir)..\..\bin-int\Final\LithTech\</IntDir>
+    <TargetName>LithTech</TargetName>
+    <TargetExt>.exe</TargetExt>
+    <ExternalIncludePath>$(DXSDK_DIR)Include;..\..\Vendor;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;..\..\Vendor\directx-8.1\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>bdefs.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;DE_LOCAL_SERVERBIND;DE_CLIENT_COMPILE;DSNDMGR_NO_MFC;DIRECTENGINE_COMPILE;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\sdk\inc\state_mgr;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\physics\src;..\runtime\render_a\src\sys\d3d;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src;..\..\Libs\LIB-DShow\src;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-LTMem\src;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;DE_LOCAL_SERVERBIND;DE_CLIENT_COMPILE;DSNDMGR_NO_MFC;DIRECTENGINE_COMPILE;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\sdk\inc\state_mgr;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\physics\src;..\runtime\render_a\src\sys\d3d;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src;..\..\Libs\LIB-DShow\src;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-LTMem\src;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ddraw.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;winmm.lib;atls.lib;dplayx.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>bdefs.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DE_LOCAL_SERVERBIND;DE_CLIENT_COMPILE;DSNDMGR_NO_MFC;DIRECTENGINE_COMPILE;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\sdk\inc\state_mgr;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\physics\src;..\runtime\render_a\src\sys\d3d;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src;..\..\Libs\LIB-DShow\src;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-LTMem\src;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;DE_LOCAL_SERVERBIND;DE_CLIENT_COMPILE;DSNDMGR_NO_MFC;DIRECTENGINE_COMPILE;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\sdk\inc\state_mgr;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\physics\src;..\runtime\render_a\src\sys\d3d;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src;..\..\Libs\LIB-DShow\src;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-LTMem\src;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ddraw.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;winmm.lib;atls.lib;dplayx.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>bdefs.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_FINAL;DE_LOCAL_SERVERBIND;DE_CLIENT_COMPILE;DSNDMGR_NO_MFC;DIRECTENGINE_COMPILE;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\sdk\inc\state_mgr;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\physics\src;..\runtime\render_a\src\sys\d3d;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src;..\..\Libs\LIB-DShow\src;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-LTMem\src;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_FINAL;DE_LOCAL_SERVERBIND;DE_CLIENT_COMPILE;DSNDMGR_NO_MFC;DIRECTENGINE_COMPILE;__D3D;__D3DREND;MODEL_SUPPORT_ABC;D3D_DEBUG_INFO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\sdk\inc;..\sdk\inc\physics;..\sdk\inc\state_mgr;..\runtime;..\runtime\client\src;..\runtime\controlfilemgr;..\runtime\kernel\src;..\runtime\kernel\io\src;..\runtime\kernel\mem\src;..\runtime\kernel\net\src;..\runtime\kernel\src\sys\win;..\runtime\lithtemplate;..\runtime\model\src;..\runtime\physics\src;..\runtime\render_a\src\sys\d3d;..\runtime\render_b\src;..\runtime\server\src;..\runtime\shared\src;..\runtime\shared\src\sys\win;..\runtime\sound\src;..\runtime\ui\src;..\runtime\world\src;..\..\Libs\LIB-DShow\src;..\..\Libs\LIB-Lith\src;..\..\Libs\LIB-LTMem\src;..\..\Libs\LIB-MFCStub\src;..\..\Libs\LIB-RezMgr\src;..\..\Libs\LIB-STDLith\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ddraw.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;winmm.lib;atls.lib;dplayx.lib;dinput8.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\rezfile.h" />
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\rezhash.h" />
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\rezmgr.h" />
+    <ClInclude Include="..\..\Libs\LIB-RezMgr\src\reztypes.h" />
+    <ClInclude Include="..\runtime\client\src\client_filemgr.h" />
+    <ClInclude Include="..\runtime\client\src\client_formatmgr.h" />
+    <ClInclude Include="..\runtime\client\src\client_graphmgr.h" />
+    <ClInclude Include="..\runtime\client\src\client_ticks.h" />
+    <ClInclude Include="..\runtime\client\src\clientde_impl.h" />
+    <ClInclude Include="..\runtime\client\src\clientexception.h" />
+    <ClInclude Include="..\runtime\client\src\clientmgr.h" />
+    <ClInclude Include="..\runtime\client\src\clientshell.h" />
+    <ClInclude Include="..\runtime\client\src\cmoveabstract.h" />
+    <ClInclude Include="..\runtime\client\src\console.h" />
+    <ClInclude Include="..\runtime\client\src\consolecommands.h" />
+    <ClInclude Include="..\runtime\client\src\customfontfilemgr.h" />
+    <ClInclude Include="..\runtime\client\src\debuggraphmgr.h" />
+    <ClInclude Include="..\runtime\client\src\errorlog.h" />
+    <ClInclude Include="..\runtime\client\src\linesystem.h" />
+    <ClInclude Include="..\runtime\client\src\ltbenchmark_impl.h" />
+    <ClInclude Include="..\runtime\client\src\ltinfo_impl.h" />
+    <ClInclude Include="..\runtime\client\src\ltmessage_client.h" />
+    <ClInclude Include="..\runtime\client\src\lttexturestring.h" />
+    <ClInclude Include="..\runtime\client\src\memorywatch.h" />
+    <ClInclude Include="..\runtime\client\src\particlesystem.h" />
+    <ClInclude Include="..\runtime\client\src\polygrid.h" />
+    <ClInclude Include="..\runtime\client\src\predict.h" />
+    <ClInclude Include="..\runtime\client\src\setupobject.h" />
+    <ClInclude Include="..\runtime\client\src\sprite.h" />
+    <ClInclude Include="..\runtime\client\src\sys\win\winclientde_impl.h" />
+    <ClInclude Include="..\runtime\client\src\sys\win\winconsole_impl.h" />
+    <ClInclude Include="..\runtime\client\src\sysclient.h" />
+    <ClInclude Include="..\runtime\client\src\sysclientde_impl.h" />
+    <ClInclude Include="..\runtime\client\src\sysconsole_impl.h" />
+    <ClInclude Include="..\runtime\client\src\texturestring.h" />
+    <ClInclude Include="..\runtime\client\src\texturestringimage.h" />
+    <ClInclude Include="..\runtime\client\src\volumeeffect.h" />
+    <ClInclude Include="..\runtime\client\src\watermark.h" />
+    <ClInclude Include="..\runtime\controlfilemgr\controlfilemgr.h" />
+    <ClInclude Include="..\runtime\kernel\io\src\sys\win\de_file.h" />
+    <ClInclude Include="..\runtime\kernel\io\src\sysfile.h" />
+    <ClInclude Include="..\runtime\kernel\mem\src\de_memory.h" />
+    <ClInclude Include="..\runtime\kernel\net\src\localdriver.h" />
+    <ClInclude Include="..\runtime\kernel\net\src\netmgr.h" />
+    <ClInclude Include="..\runtime\kernel\net\src\packet.h" />
+    <ClInclude Include="..\runtime\kernel\net\src\sys\win\socket.h" />
+    <ClInclude Include="..\runtime\kernel\src\dsys.h" />
+    <ClInclude Include="..\runtime\kernel\src\icommandlineargs.h" />
+    <ClInclude Include="..\runtime\kernel\src\ithread.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\appresource.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\bindmgr.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\bink.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\binkvideomgrimpl.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\counter.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dshowvideomgrimpl.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dsys_interface.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\dutil.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\input.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\interface_helpers.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\load_pcx.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltdirectmusic_impl.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltdirectmusiccontrolfile.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltdirectmusicloader.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\lthread.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltrendermgr_impl.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\ltthread.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\musicdriver.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\rad.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\render.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\smack.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\streamsim.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\stringmgr.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\systeminfo.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\text_mgr.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\timemgr.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\version_resource.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\videomgr.h" />
+    <ClInclude Include="..\runtime\kernel\src\sys\win\winbind.h" />
+    <ClInclude Include="..\runtime\kernel\src\syscounter.h" />
+    <ClInclude Include="..\runtime\kernel\src\sysdebugging.h" />
+    <ClInclude Include="..\runtime\kernel\src\sysinput.h" />
+    <ClInclude Include="..\runtime\kernel\src\syslibraryloader.h" />
+    <ClInclude Include="..\runtime\kernel\src\sysstreamsim.h" />
+    <ClInclude Include="..\runtime\kernel\src\systhread.h" />
+    <ClInclude Include="..\runtime\kernel\src\systimer.h" />
+    <ClInclude Include="..\runtime\kernel\src\sysvideo.h" />
+    <ClInclude Include="..\runtime\lithtemplate\ltt_buffer.h" />
+    <ClInclude Include="..\runtime\lithtemplate\ltt_list_circular.h" />
+    <ClInclude Include="..\runtime\model\src\animtracker.h" />
+    <ClInclude Include="..\runtime\model\src\ltb.h" />
+    <ClInclude Include="..\runtime\model\src\model.h" />
+    <ClInclude Include="..\runtime\model\src\model_ops.h" />
+    <ClInclude Include="..\runtime\model\src\modelallocations.h" />
+    <ClInclude Include="..\runtime\model\src\transformmaker.h" />
+    <ClInclude Include="..\runtime\physics\src\lt_collision_mgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\clipline.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\common_draw.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_convar.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_device.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_draw.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstatemgr.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_renderstyle.h" />
+    <ClInclude Include="..\runtime\render_a\src\sys\d3d\d3d_utils.h" />
+    <ClInclude Include="..\runtime\render_b\src\gendrawprim.h" />
+    <ClInclude Include="..\runtime\render_b\src\sys\d3d\d3ddrawprim.h" />
+    <ClInclude Include="..\runtime\render_b\src\sys\d3d\d3dtexinterface.h" />
+    <ClInclude Include="..\runtime\render_b\src\sysdrawprim.h" />
+    <ClInclude Include="..\runtime\server\src\classmgr.h" />
+    <ClInclude Include="..\runtime\server\src\game_serialize.h" />
+    <ClInclude Include="..\runtime\server\src\interlink.h" />
+    <ClInclude Include="..\runtime\server\src\ltmessage_server.h" />
+    <ClInclude Include="..\runtime\server\src\s_client.h" />
+    <ClInclude Include="..\runtime\server\src\s_concommand.h" />
+    <ClInclude Include="..\runtime\server\src\s_net.h" />
+    <ClInclude Include="..\runtime\server\src\s_object.h" />
+    <ClInclude Include="..\runtime\server\src\server_consolestate.h" />
+    <ClInclude Include="..\runtime\server\src\server_extradata.h" />
+    <ClInclude Include="..\runtime\server\src\server_filemgr.h" />
+    <ClInclude Include="..\runtime\server\src\serverde_impl.h" />
+    <ClInclude Include="..\runtime\server\src\serverevent.h" />
+    <ClInclude Include="..\runtime\server\src\serverexception.h" />
+    <ClInclude Include="..\runtime\server\src\servermgr.h" />
+    <ClInclude Include="..\runtime\server\src\serverobj.h" />
+    <ClInclude Include="..\runtime\server\src\smoveabstract.h" />
+    <ClInclude Include="..\runtime\server\src\soundtrack.h" />
+    <ClInclude Include="..\runtime\shared\src\DebugGeometry.h" />
+    <ClInclude Include="..\runtime\shared\src\RenderObject.h" />
+    <ClInclude Include="..\runtime\shared\src\bdefs.h" />
+    <ClInclude Include="..\runtime\shared\src\build_options.h" />
+    <ClInclude Include="..\runtime\shared\src\classbind.h" />
+    <ClInclude Include="..\runtime\shared\src\clienthack.h" />
+    <ClInclude Include="..\runtime\shared\src\collision.h" />
+    <ClInclude Include="..\runtime\shared\src\colorops.h" />
+    <ClInclude Include="..\runtime\shared\src\compress.h" />
+    <ClInclude Include="..\runtime\shared\src\concommand.h" />
+    <ClInclude Include="..\runtime\shared\src\conparse.h" />
+    <ClInclude Include="..\runtime\shared\src\dhashtable.h" />
+    <ClInclude Include="..\runtime\shared\src\dtxmgr.h" />
+    <ClInclude Include="..\runtime\shared\src\findobj.h" />
+    <ClInclude Include="..\runtime\shared\src\ftbase.h" />
+    <ClInclude Include="..\runtime\shared\src\ftclient.h" />
+    <ClInclude Include="..\runtime\shared\src\ftserv.h" />
+    <ClInclude Include="..\runtime\shared\src\gamemath.h" />
+    <ClInclude Include="..\runtime\shared\src\genericprop_setup.h" />
+    <ClInclude Include="..\runtime\shared\src\genltstream.h" />
+    <ClInclude Include="..\runtime\shared\src\geometry.h" />
+    <ClInclude Include="..\runtime\shared\src\geomroutines.h" />
+    <ClInclude Include="..\runtime\shared\src\impl_common.h" />
+    <ClInclude Include="..\runtime\shared\src\lightmap_compress.h" />
+    <ClInclude Include="..\runtime\shared\src\lightmap_planes.h" />
+    <ClInclude Include="..\runtime\shared\src\lightmapdefs.h" />
+    <ClInclude Include="..\runtime\shared\src\ltbbox.h" />
+    <ClInclude Include="..\runtime\shared\src\ltmessage.h" />
+    <ClInclude Include="..\runtime\shared\src\ltmutex.h" />
+    <ClInclude Include="..\runtime\shared\src\lttimer.h" />
+    <ClInclude Include="..\runtime\shared\src\misctools.h" />
+    <ClInclude Include="..\runtime\shared\src\motion.h" />
+    <ClInclude Include="..\runtime\shared\src\moveobject.h" />
+    <ClInclude Include="..\runtime\shared\src\moveplayer.h" />
+    <ClInclude Include="..\runtime\shared\src\musicmgr.h" />
+    <ClInclude Include="..\runtime\shared\src\nexus.h" />
+    <ClInclude Include="..\runtime\shared\src\objectmgr.h" />
+    <ClInclude Include="..\runtime\shared\src\packetdefs.h" />
+    <ClInclude Include="..\runtime\shared\src\parse_world_info.h" />
+    <ClInclude Include="..\runtime\shared\src\pixelformat.h" />
+    <ClInclude Include="..\runtime\shared\src\ratetracker.h" />
+    <ClInclude Include="..\runtime\shared\src\refobj.h" />
+    <ClInclude Include="..\runtime\shared\src\renderinfostruct.h" />
+    <ClInclude Include="..\runtime\shared\src\shared_iltcommon.h" />
+    <ClInclude Include="..\runtime\shared\src\stacktrace.h" />
+    <ClInclude Include="..\runtime\shared\src\staticfifo.h" />
+    <ClInclude Include="..\runtime\shared\src\stdlterror.h" />
+    <ClInclude Include="..\runtime\shared\src\strtools.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\d3dddstructs.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\dstreamopenqueuemgr.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\renderstruct.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\winstdlterror.h" />
+    <ClInclude Include="..\runtime\shared\src\sys\win\winsync.h" />
+    <ClInclude Include="..\runtime\shared\src\sysddstructs.h" />
+    <ClInclude Include="..\runtime\shared\src\varsetter.h" />
+    <ClInclude Include="..\runtime\shared\src\version_info.h" />
+    <ClInclude Include="..\runtime\sound\src\iltsound.h" />
+    <ClInclude Include="..\runtime\sound\src\soundbuffer.h" />
+    <ClInclude Include="..\runtime\sound\src\sounddata.h" />
+    <ClInclude Include="..\runtime\sound\src\soundinstance.h" />
+    <ClInclude Include="..\runtime\sound\src\soundmgr.h" />
+    <ClInclude Include="..\runtime\sound\src\wave.h" />
+    <ClInclude Include="..\runtime\ui\src\cuipolystring_impl.h" />
+    <ClInclude Include="..\runtime\world\src\de_mainworld.h" />
+    <ClInclude Include="..\runtime\world\src\de_objects.h" />
+    <ClInclude Include="..\runtime\world\src\de_sprite.h" />
+    <ClInclude Include="..\runtime\world\src\de_world.h" />
+    <ClInclude Include="..\runtime\world\src\fullintersectline.h" />
+    <ClInclude Include="..\runtime\world\src\intersect_line.h" />
+    <ClInclude Include="..\runtime\world\src\light_table.h" />
+    <ClInclude Include="..\runtime\world\src\loadstatus.h" />
+    <ClInclude Include="..\runtime\world\src\world_blind_object_data.h" />
+    <ClInclude Include="..\runtime\world\src\world_blocker_data.h" />
+    <ClInclude Include="..\runtime\world\src\world_blocker_math.h" />
+    <ClInclude Include="..\runtime\world\src\world_client.h" />
+    <ClInclude Include="..\runtime\world\src\world_client_bsp.h" />
+    <ClInclude Include="..\runtime\world\src\world_interface.h" />
+    <ClInclude Include="..\runtime\world\src\world_particle_blocker_data.h" />
+    <ClInclude Include="..\runtime\world\src\world_server.h" />
+    <ClInclude Include="..\runtime\world\src\world_server_bsp.h" />
+    <ClInclude Include="..\runtime\world\src\world_shared_bsp.h" />
+    <ClInclude Include="..\runtime\world\src\world_tree.h" />
+    <ClInclude Include="..\runtime\world\src\worldtreehelper.h" />
+    <ClInclude Include="..\sdk\inc\cui.h" />
+    <ClInclude Include="..\sdk\inc\cuifont.h" />
+    <ClInclude Include="..\sdk\inc\cuiformattedpolystring.h" />
+    <ClInclude Include="..\sdk\inc\cuimessage.h" />
+    <ClInclude Include="..\sdk\inc\cuipolystring.h" />
+    <ClInclude Include="..\sdk\inc\cuitypes.h" />
+    <ClInclude Include="..\sdk\inc\iaggregate.h" />
+    <ClInclude Include="..\sdk\inc\iclientshell.h" />
+    <ClInclude Include="..\sdk\inc\iltbaseclass.h" />
+    <ClInclude Include="..\sdk\inc\iltbenchmark.h" />
+    <ClInclude Include="..\sdk\inc\iltclient.h" />
+    <ClInclude Include="..\sdk\inc\iltcommon.h" />
+    <ClInclude Include="..\sdk\inc\iltcsbase.h" />
+    <ClInclude Include="..\sdk\inc\iltcursor.h" />
+    <ClInclude Include="..\sdk\inc\iltdirectmusic.h" />
+    <ClInclude Include="..\sdk\inc\iltdrawprim.h" />
+    <ClInclude Include="..\sdk\inc\iltfontmanager.h" />
+    <ClInclude Include="..\sdk\inc\iltinfo.h" />
+    <ClInclude Include="..\sdk\inc\iltmemory.h" />
+    <ClInclude Include="..\sdk\inc\iltmessage.h" />
+    <ClInclude Include="..\sdk\inc\iltmodel.h" />
+    <ClInclude Include="..\sdk\inc\iltphysics.h" />
+    <ClInclude Include="..\sdk\inc\iltrefcount.h" />
+    <ClInclude Include="..\sdk\inc\iltrenderstyles.h" />
+    <ClInclude Include="..\sdk\inc\iltserver.h" />
+    <ClInclude Include="..\sdk\inc\iltsoundmgr.h" />
+    <ClInclude Include="..\sdk\inc\iltspritecontrol.h" />
+    <ClInclude Include="..\sdk\inc\iltstream.h" />
+    <ClInclude Include="..\sdk\inc\ilttexinterface.h" />
+    <ClInclude Include="..\sdk\inc\ilttexturestring.h" />
+    <ClInclude Include="..\sdk\inc\ilttransform.h" />
+    <ClInclude Include="..\sdk\inc\iltvideomgr.h" />
+    <ClInclude Include="..\sdk\inc\iltwidgetmanager.h" />
+    <ClInclude Include="..\sdk\inc\iservershell.h" />
+    <ClInclude Include="..\sdk\inc\lithtech.h" />
+    <ClInclude Include="..\sdk\inc\ltanimtracker.h" />
+    <ClInclude Include="..\sdk\inc\ltassert.h" />
+    <ClInclude Include="..\sdk\inc\ltbasedefs.h" />
+    <ClInclude Include="..\sdk\inc\ltbasetypes.h" />
+    <ClInclude Include="..\sdk\inc\ltcodes.h" />
+    <ClInclude Include="..\sdk\inc\ltengineobjects.h" />
+    <ClInclude Include="..\sdk\inc\lterror.h" />
+    <ClInclude Include="..\sdk\inc\ltinteger.h" />
+    <ClInclude Include="..\sdk\inc\ltlink.h" />
+    <ClInclude Include="..\sdk\inc\ltmatrix.h" />
+    <ClInclude Include="..\sdk\inc\ltmodule.h" />
+    <ClInclude Include="..\sdk\inc\ltobjectcreate.h" />
+    <ClInclude Include="..\sdk\inc\ltplane.h" />
+    <ClInclude Include="..\sdk\inc\ltproperty.h" />
+    <ClInclude Include="..\sdk\inc\ltpvalue.h" />
+    <ClInclude Include="..\sdk\inc\ltquatbase.h" />
+    <ClInclude Include="..\sdk\inc\ltrect.h" />
+    <ClInclude Include="..\sdk\inc\ltrenderstyle.h" />
+    <ClInclude Include="..\sdk\inc\ltrotation.h" />
+    <ClInclude Include="..\sdk\inc\ltserverobj.h" />
+    <ClInclude Include="..\sdk\inc\ltvector.h" />
+    <ClInclude Include="..\sdk\inc\physics\aabb.h" />
+    <ClInclude Include="..\sdk\inc\physics\aabb_tree.h" />
+    <ClInclude Include="..\sdk\inc\physics\collision_data.h" />
+    <ClInclude Include="..\sdk\inc\physics\collision_mgr.h" />
+    <ClInclude Include="..\sdk\inc\physics\collision_object.h" />
+    <ClInclude Include="..\sdk\inc\physics\coordinate_frame.h" />
+    <ClInclude Include="..\sdk\inc\physics\math_phys.h" />
+    <ClInclude Include="..\sdk\inc\physics\matrix.h" />
+    <ClInclude Include="..\sdk\inc\physics\quaternion.h" />
+    <ClInclude Include="..\sdk\inc\physics\rigid_body.h" />
+    <ClInclude Include="..\sdk\inc\physics\triangle.h" />
+    <ClInclude Include="..\sdk\inc\physics\vector.h" />
+    <ClInclude Include="..\sdk\inc\server_interface.h" />
+    <ClInclude Include="src\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\runtime\client\src\client_filemgr.cpp" />
+    <ClCompile Include="..\runtime\client\src\client_formatmgr.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\client_graphmgr.cpp" />
+    <ClCompile Include="..\runtime\client\src\client_iltcommon.cpp" />
+    <ClCompile Include="..\runtime\client\src\client_iltmodel.cpp" />
+    <ClCompile Include="..\runtime\client\src\client_iltphysics.cpp" />
+    <ClCompile Include="..\runtime\client\src\client_iltvideomgr.cpp" />
+    <ClCompile Include="..\runtime\client\src\client_ticks.cpp" />
+    <ClCompile Include="..\runtime\client\src\clientde_impl.cpp" />
+    <ClCompile Include="..\runtime\client\src\clientmgr.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\client\src\clientshell.cpp" />
+    <ClCompile Include="..\runtime\client\src\cmoveabstract.cpp" />
+    <ClCompile Include="..\runtime\client\src\cnet.cpp" />
+    <ClCompile Include="..\runtime\client\src\cobject.cpp" />
+    <ClCompile Include="..\runtime\client\src\console.cpp" />
+    <ClCompile Include="..\runtime\client\src\consolecommands.cpp" />
+    <ClCompile Include="..\runtime\client\src\cutil.cpp" />
+    <ClCompile Include="..\runtime\client\src\debuggraphmgr.cpp" />
+    <ClCompile Include="..\runtime\client\src\errorlog.cpp" />
+    <ClCompile Include="..\runtime\client\src\linesystem.cpp" />
+    <ClCompile Include="..\runtime\client\src\ltbenchmark_impl.cpp" />
+    <ClCompile Include="..\runtime\client\src\ltinfo_impl.cpp" />
+    <ClCompile Include="..\runtime\client\src\ltmessage_client.cpp" />
+    <ClCompile Include="..\runtime\client\src\lttexturestring.cpp" />
+    <ClCompile Include="..\runtime\client\src\memorywatch.cpp" />
+    <ClCompile Include="..\runtime\client\src\particlesystem.cpp" />
+    <ClCompile Include="..\runtime\client\src\polygrid.cpp" />
+    <ClCompile Include="..\runtime\client\src\predict.cpp" />
+    <ClCompile Include="..\runtime\client\src\setupobject.cpp" />
+    <ClCompile Include="..\runtime\client\src\shellnet.cpp" />
+    <ClCompile Include="..\runtime\client\src\shelltransfer.cpp" />
+    <ClCompile Include="..\runtime\client\src\shellutil.cpp" />
+    <ClCompile Include="..\runtime\client\src\sprite.cpp" />
+    <ClCompile Include="..\runtime\client\src\sys\win\customfontfilemgr.cpp" />
+    <ClCompile Include="..\runtime\client\src\sys\win\texturestringimage.cpp" />
+    <ClCompile Include="..\runtime\client\src\sys\win\winclientde_impl.cpp" />
+    <ClCompile Include="..\runtime\client\src\sys\win\winconsole_impl.cpp" />
+    <ClCompile Include="..\runtime\client\src\texturestring.cpp" />
+    <ClCompile Include="..\runtime\client\src\volumeeffect.cpp" />
+    <ClCompile Include="..\runtime\client\src\watermark.cpp" />
+    <ClCompile Include="..\runtime\client\src\world_client_bsp.cpp" />
+    <ClCompile Include="..\runtime\controlfilemgr\controlfilemgr.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\io\src\sys\win\de_file.cpp" />
+    <ClCompile Include="..\runtime\kernel\mem\src\ltmemory.cpp" />
+    <ClCompile Include="..\runtime\kernel\mem\src\sys\win\de_memory.cpp" />
+    <ClCompile Include="..\runtime\kernel\net\src\localdriver.cpp" />
+    <ClCompile Include="..\runtime\kernel\net\src\netmgr.cpp" />
+    <ClCompile Include="..\runtime\kernel\net\src\packet.cpp" />
+    <ClCompile Include="..\runtime\kernel\net\src\sys\win\udpdriver.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\debugging.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\icommandlineargs.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\InputSim.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\bindmgr.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\binkvideomgrimpl.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\client.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\counter.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\kernel\src\sys\win\dshowvideomgrimpl.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\dsys_interface.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\dutil.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\input.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\interface_helpers.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\load_pcx.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\lt_cursor_impl.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltdirectmusic_impl.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltdirectmusiccontrolfile.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltdirectmusicloader.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\lthread.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltlibraryloader.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltrendermgr_impl.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\ltthread.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\musicdriver.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\render.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\streamsim.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\stringmgr.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\systeminfo.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\text_mgr.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\timemgr.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\version_resource.cpp" />
+    <ClCompile Include="..\runtime\kernel\src\sys\win\videomgr.cpp" />
+    <ClCompile Include="..\runtime\model\src\animtracker.cpp" />
+    <ClCompile Include="..\runtime\model\src\model.cpp" />
+    <ClCompile Include="..\runtime\model\src\model_load.cpp" />
+    <ClCompile Include="..\runtime\model\src\modelallocations.cpp" />
+    <ClCompile Include="..\runtime\model\src\sys\d3d\d3d_model_load.cpp" />
+    <ClCompile Include="..\runtime\model\src\transformmaker.cpp" />
+    <ClCompile Include="..\runtime\render_b\src\sys\d3d\d3ddrawprim.cpp" />
+    <ClCompile Include="..\runtime\render_b\src\sys\d3d\d3dtexinterface.cpp" />
+    <ClCompile Include="..\runtime\server\src\S_Intersect.cpp" />
+    <ClCompile Include="..\runtime\server\src\classmgr.cpp" />
+    <ClCompile Include="..\runtime\server\src\game_serialize.cpp" />
+    <ClCompile Include="..\runtime\server\src\interlink.cpp" />
+    <ClCompile Include="..\runtime\server\src\ltmessage_server.cpp" />
+    <ClCompile Include="..\runtime\server\src\s_client.cpp" />
+    <ClCompile Include="..\runtime\server\src\s_concommand.cpp" />
+    <ClCompile Include="..\runtime\server\src\s_net.cpp" />
+    <ClCompile Include="..\runtime\server\src\s_object.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_consolestate.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_extradata.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_filemgr.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_iltcommon.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_iltmodel.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_iltphysics.cpp" />
+    <ClCompile Include="..\runtime\server\src\server_iltsoundmgr.cpp" />
+    <ClCompile Include="..\runtime\server\src\serverde_impl.cpp" />
+    <ClCompile Include="..\runtime\server\src\serverevent.cpp" />
+    <ClCompile Include="..\runtime\server\src\servermgr.cpp" />
+    <ClCompile Include="..\runtime\server\src\smoveabstract.cpp" />
+    <ClCompile Include="..\runtime\server\src\soundtrack.cpp" />
+    <ClCompile Include="..\runtime\server\src\world_server_bsp.cpp" />
+    <ClCompile Include="..\runtime\shared\src\bdefs.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\classbind.cpp" />
+    <ClCompile Include="..\runtime\shared\src\collision.cpp" />
+    <ClCompile Include="..\runtime\shared\src\compress.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\concommand.cpp" />
+    <ClCompile Include="..\runtime\shared\src\conparse.cpp" />
+    <ClCompile Include="..\runtime\shared\src\debuggeometry.cpp" />
+    <ClCompile Include="..\runtime\shared\src\dhashtable.cpp" />
+    <ClCompile Include="..\runtime\shared\src\dtxmgr.cpp" />
+    <ClCompile Include="..\runtime\shared\src\engine_vars.cpp" />
+    <ClCompile Include="..\runtime\shared\src\findobj.cpp" />
+    <ClCompile Include="..\runtime\shared\src\ftclient.cpp" />
+    <ClCompile Include="..\runtime\shared\src\ftserv.cpp" />
+    <ClCompile Include="..\runtime\shared\src\gamemath.cpp" />
+    <ClCompile Include="..\runtime\shared\src\genericprop_setup.cpp" />
+    <ClCompile Include="..\runtime\shared\src\genltstream.cpp" />
+    <ClCompile Include="..\runtime\shared\src\geometry.cpp" />
+    <ClCompile Include="..\runtime\shared\src\geomroutines.cpp" />
+    <ClCompile Include="..\runtime\shared\src\impl_common.cpp" />
+    <ClCompile Include="..\runtime\shared\src\interface_linkage.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\leech.cpp" />
+    <ClCompile Include="..\runtime\shared\src\lightmap_compress.cpp" />
+    <ClCompile Include="..\runtime\shared\src\lightmap_planes.cpp" />
+    <ClCompile Include="..\runtime\shared\src\ltmessage.cpp" />
+    <ClCompile Include="..\runtime\shared\src\lttimer.cpp" />
+    <ClCompile Include="..\runtime\shared\src\modellt_impl.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\runtime\shared\src\motion.cpp" />
+    <ClCompile Include="..\runtime\shared\src\moveobject.cpp" />
+    <ClCompile Include="..\runtime\shared\src\moveplayer.cpp" />
+    <ClCompile Include="..\runtime\shared\src\nexus.cpp" />
+    <ClCompile Include="..\runtime\shared\src\objectmgr.cpp" />
+    <ClCompile Include="..\runtime\shared\src\parse_world_info.cpp" />
+    <ClCompile Include="..\runtime\shared\src\pixelformat.cpp" />
+    <ClCompile Include="..\runtime\shared\src\ratetracker.cpp" />
+    <ClCompile Include="..\runtime\shared\src\shared_iltcommon.cpp" />
+    <ClCompile Include="..\runtime\shared\src\shared_iltphysics.cpp" />
+    <ClCompile Include="..\runtime\shared\src\spritecontrolimpl.cpp" />
+    <ClCompile Include="..\runtime\shared\src\stacktrace.cpp" />
+    <ClCompile Include="..\runtime\shared\src\stdlterror.cpp" />
+    <ClCompile Include="..\runtime\shared\src\strtools.cpp" />
+    <ClCompile Include="..\runtime\shared\src\sys\win\dstreamopenqueuemgr.cpp" />
+    <ClCompile Include="..\runtime\shared\src\transformlt_impl.cpp" />
+    <ClCompile Include="..\runtime\shared\src\version_info.cpp" />
+    <ClCompile Include="..\runtime\sound\src\soundbuffer.cpp" />
+    <ClCompile Include="..\runtime\sound\src\sounddata.cpp" />
+    <ClCompile Include="..\runtime\sound\src\soundinstance.cpp" />
+    <ClCompile Include="..\runtime\sound\src\soundmgr.cpp" />
+    <ClCompile Include="..\runtime\sound\src\wave.cpp" />
+    <ClCompile Include="..\runtime\world\src\de_mainworld.cpp" />
+    <ClCompile Include="..\runtime\world\src\de_nodes.cpp" />
+    <ClCompile Include="..\runtime\world\src\de_objects.cpp" />
+    <ClCompile Include="..\runtime\world\src\fullintersectline.cpp" />
+    <ClCompile Include="..\runtime\world\src\intersect_line.cpp" />
+    <ClCompile Include="..\runtime\world\src\intersectsweptsphere.cpp" />
+    <ClCompile Include="..\runtime\world\src\light_table.cpp" />
+    <ClCompile Include="..\runtime\world\src\world_blind_object_data.cpp" />
+    <ClCompile Include="..\runtime\world\src\world_blocker_data.cpp" />
+    <ClCompile Include="..\runtime\world\src\world_blocker_math.cpp" />
+    <ClCompile Include="..\runtime\world\src\world_particle_blocker_data.cpp" />
+    <ClCompile Include="..\runtime\world\src\world_shared_bsp.cpp" />
+    <ClCompile Include="..\runtime\world\src\world_tree.cpp" />
+    <ClCompile Include="..\sdk\inc\lterror.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltmodule.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltobjref.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\sdk\inc\ltquatbase.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\lithtech.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LIB-Info\LIB-Info.vcxproj">
+      <Project>{3581E62F-214E-413B-4A67-2FE3369376C9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LIB-Render\LIB-Render.vcxproj">
+      <Project>{4975EBD7-352D-2D25-9E34-06818A0BC815}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LIB-Sound\LIB-Sound.vcxproj">
+      <Project>{52696C2D-BED3-20A4-0712-D24973BBFEF8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LIB-UI\LIB-UI.vcxproj">
+      <Project>{070D75BE-F3AE-9F94-DC69-B3E8C8AA26E5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-DShow\LIB-DShow.vcxproj">
+      <Project>{0E684D2C-7AD2-01A3-C310-B3482FBADFF7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-Lith\LIB-Lith.vcxproj">
+      <Project>{DA12E82F-C6DF-423B-EFF8-30E3DB2478C9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-LTMem\LIB-LTMem.vcxproj">
+      <Project>{4844DE2C-B4AE-92A3-FDEC-4349699670F8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-MFCStub\LIB-MFCStub.vcxproj">
+      <Project>{9DD31309-0989-8CFE-927D-86D5FE318302}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-RezMgr\LIB-RezMgr.vcxproj">
+      <Project>{40A8F1D7-2C60-3325-9567-0C81813ECE15}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LIB-STDLith\LIB-STDLith.vcxproj">
+      <Project>{E58BA7F7-5141-20ED-DA35-1AC446EA16F1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

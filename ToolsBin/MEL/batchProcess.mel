@@ -1,0 +1,184 @@
+global proc batchProcess()
+{
+	source ltExport.mel;
+
+	if(`window -ex BatchProcessUI`)
+ 		deleteUI BatchProcessUI; 
+
+	if(!`optionVar -ex st_batchSourcePath`)
+		optionVar -sv st_batchSourcePath "//Cluge/D/Softimage/Motion_Capture/NOLF2/";
+	if(!`optionVar -ex st_batchDestPath`)
+		optionVar -sv st_batchDestPath "C:/MocapArchive/NOLF2/";
+	if(!`optionVar -ex st_batchCommand`)
+		optionVar -sv st_batchCommand "";
+
+	window
+ 		-menuBar false 
+ 		-maximizeButton false 
+		-sizeable 1 
+		-w 5//$ui_Width 
+		-h 5//$ui_Height
+ 		-rtf 1 
+		-title "ScottTech2000"
+ 		BatchProcessUI;
+
+	columnLayout;
+ 		frameLayout
+ 			-label "Batch Process"
+ 			-w (420)
+ 			-h (100);
+			columnLayout;	
+ 				textFieldButtonGrp 
+ 					-cw 1 60 
+ 					-cw 2 300 
+ 					-label "In Path:"
+  					-fi `optionVar -q st_batchSourcePath`
+					-cc 	"optionVar -sv st_batchSourcePath (`textFieldGrp -q -text st_batchSourcePath`)"
+ 					-buttonLabel "Browse..."
+  					st_batchSourcePath;
+  				textFieldButtonGrp
+					-cw 1 60
+					-cw 2 300
+					-label "Out Path:"
+					-fi `optionVar -q st_batchDestPath`
+					-cc 	"optionVar -sv st_batchDestPath (`textFieldGrp -q -text st_batchDestPath`)"
+  					-buttonLabel "Browse..."
+					st_batchDestPath;
+  				textFieldGrp
+					-cw 1 60
+					-cw 2 300
+					-label "Command:"
+					-fi `optionVar -q st_batchCommand`
+					-cc 	"optionVar -sv st_batchCommand (`textFieldGrp -q -text st_batchCommand`)"
+					st_batchCommand;
+			setParent ..;
+		setParent ..;
+		rowLayout
+ 			-numberOfColumns 2
+ 			-rat 1 "top" 2
+ 			-rat 2 "top" 2
+ 			-columnWidth 1 200;
+ 			button  -label "Process" -w 150 -h 30 -c "doBatchProcess";
+ 			button  -label "Close"  -w 150 -h 30 -c "deleteUI BatchProcessUI";
+ 		setParent ..;
+ 	setParent ..;
+	showWindow BatchProcessUI;
+}
+global proc doBatchProcess()
+{
+	int $i, $numFrames;
+	string $filename, $buffer[];
+	string $inPath = `textFieldGrp -q -text st_batchSourcePath`;
+	string $outPath = `textFieldGrp -q -text st_batchDestPath`;
+	string $cmd = `textFieldGrp -q -text st_batchCommand`;
+
+	tokenize($outPath, "\\", $buffer);
+	$destPath = $buffer[0] + "/";
+	for($i = 1; $i < size($buffer); $i++) 
+		$destPath = $destPath + $buffer[$i] + "/";
+
+//	string $fileList[] = `getFileList -folder $inPath -fs "*.mb"`;
+	string $fileList[] = `getFileListByDate  $inPath`;  // $buffer[1] == ".mb\n"
+	for($i = 0; $i < size($fileList); $i++)
+	{
+		tokenize($fileList[$i], ".", $buffer);
+		$filename = $buffer[0];
+//print ($destPath + $filename + ".mb" + " " + $buffer[1]+ "\n");
+		if( (!`file -q -ex ($destPath + $filename + ".mb")`) && ($buffer[1] == "mb\n"))  // && ($buffer[1] == "mb\n")
+		{
+			
+			file -f -open ($inPath + $filename + ".mb");
+
+
+			eval $cmd;
+	
+//			exportLTA $destPath $filename;
+
+			file -rename ($destPath + $filename + ".mb");
+			file -f -save -options "v=0" -type "mayaBinary";
+			file -new;
+		}
+	}
+	if(`window -ex BatchPRocessUI`)
+		deleteUI BatchProcessUI;	
+}
+
+
+
+////			exportMocapLTA $destPath $filename $ltaNumber;
+
+global proc exportLTA(string $path, string $animName)
+{
+	string $buffer[];
+	$savedAnimName = `optionVar -q lt_defaultAnimName`;
+	$savedTimeRangeStatus = `optionVar -q lt_defaultTimeRangeStatus`;
+	$savedAppendStatus = `optionVar -q lt_defaultAppendStatus`;
+
+	optionVar -sv lt_defaultAnimName $animName;
+	optionVar -iv lt_defaultTimeRangeStatus 0;
+	optionVar -iv lt_defaultAppendStatus 1;
+
+//	tokenize($path,"/",$buffer);
+//	$file = $buffer[size($buffer)-1];
+	$filename = $path + "NewHARM.ltc";
+
+	if(`file -q -ex $filename`)
+		ltaExportNoAppend $filename 1;
+	else if(!(`file -q -ex $filename`))
+		ltaExportNoAppend $filename 0;
+
+	optionVar -sv lt_defaultAnimName $savedAnimName;
+	optionVar -iv lt_defaultTimeRangeStatus $savedTimeRangeStatus;
+	optionVar -iv lt_defaultAppendStatus $savedAppendStatus;
+}
+
+global proc addJoint()
+{
+	$skel = `ls -dag -type joint`;
+
+	select -r $skel[0];
+
+	joint -p 0 0 0 -n "movement";
+}
+
+
+// DIR /OD /B > crap.txt
+
+
+
+
+global proc string[] getFileListByDate(string $path)
+{
+	string $buffer[], $cmd, $fileList[];
+
+	tokenize($path, "\\/", $buffer);
+	string $sysPath = $buffer[0];
+	for($i=1; $i<size($buffer); $i++)
+		$sysPath = $sysPath + "\\" + $buffer[$i];  
+	
+
+	$cmd = "dir " + $sysPath + " /OD /B > crapTmp.txt";
+	system $cmd;	
+	print $cmd;
+//	system("dir C:\\NOFL2\\TO2_Animations\\inScenes /OD /B > crapTmp.txt");
+	
+
+	int $fileId = `fopen "crapTmp.txt" "r"`;
+
+	int $i = 0;
+	string $nextLine = `fgetline $fileId`;
+
+	while ( size( $nextLine ) > 0 ) 
+	{
+ 		$fileList[$i] = $nextLine;
+		$i++;
+
+    		$nextLine = `fgetline $fileId`;
+	}
+	
+	fclose $fileId;
+	deleteFile "crapTmp.txt";
+
+	return $fileList;
+}
+

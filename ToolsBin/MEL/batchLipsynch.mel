@@ -1,0 +1,265 @@
+global proc batchLipsynch()
+{
+	source ltExport;
+//	source performVoiceWorks;
+	source makeLipSynchFile;
+	string $buffer[];
+	string $file, $filepath = "C:/NOLF2/Game/Voice/text/";
+	string $wavPath = "C:/NOLF2/Game/Voice/";
+	string $charList[];
+	int $match, $numChars = 0;
+
+	string $fileList[] = `getFileList -folder $filepath -fs "*.txt"`;
+
+	
+	for($file in $fileList)
+	{
+		$newChar = `substring $file 1 ((size($file))-9)`;
+		for($i = 0; $i < $numChars; $i++)
+		{
+			if($charList[$i] == $newChar)
+			{
+				$match = 1;
+				break;
+			}
+		}
+		if(!$match)
+		{
+			$charList[$numChars] = $newChar;
+			$numChars++;
+		}
+		else $match = 0;
+	}
+
+
+	if(`window -ex BatchLipSynchUI`)
+		deleteUI BatchLipSynchUI;
+
+	window
+		-w 10
+		-h 10
+		-rtf 1
+		-title "ScottTech2000"
+		BatchLipSynchUI;
+		columnLayout;
+//			text -label $root lt_lipSynchRoot;
+			paneLayout
+				-w 260
+				-h 400;
+				textScrollList 
+					-w 260
+					-nr 30
+					-allowMultiSelection 1
+					lt_charList;
+				for($i = 0; $i< (size($charList)); $i++)
+					textScrollList -e -append $charList[$i] lt_charList;	
+			setParent ..;
+			rowLayout 
+				-numberOfColumns 2
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-cw 1 95
+				-cw 2 95; 
+				button -label "Get Dialogue" -w 90 -h 25 -c "$exportChars = `textScrollList -q -si lt_charList`;
+										getDialogueUI $exportChars;";
+				button -label "Close" -w 90 -h 25 -c "deleteUI BatchLipSynchUI";
+			setParent ..;
+
+		setParent ..;
+
+	showWindow BatchLipSynchUI;
+
+
+}
+
+
+
+global proc getDialogueUI(string $chars[])
+{
+	string $wav, $batchCmd, $file;
+	string $filepath = "C:/NOLF2/Game/Voice/text/";
+	string $wavpath = "C:/NOLF2/Game/Voice/VWVoices/";
+	string $fileList[] = `getFileList -folder $filepath -fs "*.txt"`;
+	string $dialogue, $dialogueLabel, $buttonLabel;
+
+	$batchCmd = "doBatchLipsynch { \"" + $chars[0] + "\"" ;
+	for ($i = 1; $i < size($chars); $i++)
+	{
+		$batchCmd = $batchCmd + ", \"" + $chars[$i] + "\"";
+	}
+	$batchCmd = $batchCmd + " };";
+	print($batchCmd + "\n");
+ 
+
+
+	if(`window -ex BatchLipSynchUI`)
+		deleteUI BatchLipSynchUI;
+
+	window
+		-w 10
+		-h 10
+		-rtf 1
+		-title "ScottTech2000"
+		BatchLipSynchUI;
+		columnLayout;
+			paneLayout
+				-w 260
+				-h 400;
+				scrollLayout
+					-w 260
+					-h 400;
+					columnLayout;
+						for($file in $fileList)
+						{
+							for($char in $chars)
+							{
+								if(`gmatch $file ("*" + $char + "*")`  )
+								{
+									$wav = `substitute "txt" $file "wav"`;
+									print($wavpath + $wav + "\n");
+									if(`file -q -ex ($wavpath + $wav)`)
+									{
+										int $fileId = `fopen ($filepath + $file) "r"`;
+										$dialogue = `fgetline $fileId`;
+										fclose $fileId;
+
+										
+										if(size($dialogue) > 35) 
+										{
+											$dialogueLabel = `substring $dialogue 1 30`;
+											$dialogueLabel = $dialogueLabel + "...";									
+										}
+										else
+											$dialogueLabel = $dialogue;
+
+
+										
+										button 
+											-w 240
+											-h 30
+											-l $dialogueLabel
+											-ann ($file + ":" + $dialogue)
+											-c ("getVoiceWorksAnim \"" + $wav + "\"");
+									}
+									break;
+								}
+							}
+						}
+					setParent ..;
+				setParent ..;
+			setParent ..;
+			rowLayout 
+				-numberOfColumns 3
+				-rat 1 "top" 2
+				-rat 2 "top" 2
+				-rat 3 "top" 2
+				-cw 1 95
+				-cw 2 95
+				-cw 3 55; 
+				button -label "Batch Export" -w 90 -h 25 -c $batchCmd;
+				button -label "Export Current" -w 90 -h 25 -c "makeLipSynchFile";
+
+				button -label "Close" -w 55 -h 25 -c "deleteUI BatchLipSynchUI";
+			setParent ..;
+
+		setParent ..;
+
+	showWindow BatchLipSynchUI;
+
+}
+
+
+
+
+
+
+
+
+global proc doBatchLipsynch(string $chars[])
+{
+	source ltExport;
+//	source performVoiceWorks;
+	source makeLipSynchFile;
+	string $buffer[];
+	string $file, $filepath = "C:/NOLF2/Game/Voice/text/";
+	string $wavPath = "C:/NOLF2/Game/Voice/";
+	string $tmpWavFile, $wavFile, $txtFile, $outFile;
+	string $tmpOutFile;
+	int $match =0;
+
+	string $fileList[] = `getFileList -folder $filepath -fs "*.txt"`;
+	for($file in $fileList)
+	{
+		for($char in $chars)
+		{
+			if(`gmatch $file ("*"+$char+"*")`)
+			{
+				$match = 1;
+				break;
+			}
+		}
+
+		if($match)
+		{
+			$match = 0;
+			tokenize($file, ".", $buffer);
+			$txtFile = $filepath + $file;
+			$tmpOutFile = $wavPath + "VWVoices/" + $file; //"tmp.txt";
+			$wavName = `substring $buffer[0] ((size($buffer[0])) - 4) (size($buffer[0]))`;
+			$outFile = $wavPath + $wavName + ".txt";
+			$wav = `substitute "txt" $file "wav"`;
+			if(`file -q -ex ($wavPath + $wavName + ".wav")`)
+			{
+			print($wavPath + $wavName + ".wav\n");
+				getVoiceWorksAnim $wav;
+
+	//normal
+	//			exportLipSynch "Head" { "Face_Jaw", "Face_LowerLip", "Face_LCorner", "Face_RCorner", "Face_UpperLip" } ;
+
+	//Cate, hawkins, volkov
+				exportLipSynch "Head" { "Face_Jaw", "Face_LowerLip", "Face_LCorner", "Face_RCorner", "Face_LLower", "Face_RLower", "Face_UpperLip" } ;
+
+	//Pierre scarf
+	//			exportLipSynch "Head" { "Face_Jaw" } ;
+				print ($tmpOutFile + "\n");
+				print ($outFile + "\n");
+				copyFile $tmpOutFile $outFile;
+				deleteFile $tmpOutFile;	
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+global proc getVoiceWorksAnim(string $wav)
+{
+	cutKey FacePoser2000;
+	string $filepath = "C:/NOLF2/Game/Voice/text/";
+	string $wavPath = "C:/NOLF2/Game/Voice/VWVoices/";
+	string $txtFile = `substitute "wav" $wav "txt"`;
+	string $cmd = "voiceWorks \n\t-s \"" + $wavPath + $wav + "\"" + 
+			"\n\t-d \"C:/PuppetWorks/VoiceWorksV2.0/plug-ins/Dicteng.txt\"" +
+			"\n\t-an 0" + 
+			"\n\t-t \"" + $filepath + $txtFile + "\"" + 
+			"\n\t-v 0  -vi \"aAcCeHiIW^!\" FacePoser2000.AAA -vi \"Ey\" FacePoser2000.EEE -vi \"Fv\" FacePoser2000.FFV -vi \"oOwuU\" FacePoser2000.OOO -vi \"dGknN\" FacePoser2000.GNK -vi \"bmp\" FacePoser2000.BMP -vi \"JDrjRSZ\" FacePoser2000.SHH -vi \"lstTz\" FacePoser2000.SZZ -as \"c\" 0.5 1  -as \"a\" 0.5 1  -as \"^\" 0.5 1  -as \"C\" 0.5 1  -as \"W\" 0.5 1  -as \"!\" 0.5 1  -as \"I\" 0.5 1  -as \"b\" 0.2624 1  -as \"J\" 0.5 1  -as \"d\" 0.5 1  -as \"D\" 0.5 1  -as \"e\" 0.5 1  -as \"r\" 0.5 1  -as \"A\" 0.5 1  -as \"F\" 0.5816 3.0687  -as \"G\" 0.5 1  -as \"H\" 0.5 1  -as \"i\" 0.5 1  -as \"E\" 0.5 1  -as \"j\" 0.5 1  -as \"k\" 0.5 1  -as \"l\" 0.5 1  -as \"m\" 0.5 1  -as \"n\" 0.5 1  -as \"N\" 0.5 1  -as \"O\" 0.4184 1  -as \"o\" 0.5 1  -as \"p\" 0.2128 1  -as \"R\" 0.5 1  -as \"s\" 0.5 1  -as \"S\" 0.5 1  -as \"t\" 0.5 1  -as \"T\" 0.5 1  -as \"u\" 0.7376 1  -as \"U\" 0.3901 1  -as \"v\" 0.5 1  -as \"w\" 0.5 1  -as \"y\" 0.5 1  -as \"z\" 0.5 1  -as \"Z\" 0.5 1  -as \"x\" 0.5 1  -as \"X\" 0.5 1 ;" + 
+			"fwLoadAudioFile \"" + $wavPath + $wav + "\""; 
+	eval $cmd;
+
+	int $newi;
+	for($i = 0; $i <= 99999; $i++)
+	{
+		$newi = `findKeyframe -t $i -which next FacePoser2000`;
+		if($newi == $i) break;
+	}
+	$maxTime = $newi;
+	playbackOptions -max $maxTime;
+
+}

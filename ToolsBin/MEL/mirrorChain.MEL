@@ -1,0 +1,94 @@
+//
+
+//
+
+//	This is a very simplified joint chain mirroring script that I use a lot.  It 
+
+//	works best with simple chains, such as an arm or leg, as opposed to full skeletons.  
+
+//	I hope to have time to make it more general if I have time.
+
+//
+
+//	This is set up to mirror across the YZ plane. One limitation is (due to the quick 
+
+//	and dirty way I put it together) depending on the orientation of the root of the 
+
+//	chain the mirroring may occur across a different plane than YZ.  When this happens, 
+
+//	the rotations are still mirrored and the chain just has be rotated into place.
+
+//
+
+//	To use, select the top node of a joint chain and run the script.  If you select
+
+// 	more than joint, only the first one in the selection set will be mirrored.
+
+//
+
+//
+
+global proc mirrorChain()
+
+{
+
+	string $selection[], $chain[], $root, $newChain[];
+
+	string $null[];
+
+	$selection = `ls -sl`;
+
+	$root = $selection[0];
+
+	select -hi $root;
+
+	$chain = `ls -typ joint -sl`;
+
+	duplicate -rr;
+
+	delete -constraints;
+
+	$newChain = `ls -type joint -sl`;
+
+	int $numJoints = size($newChain);
+
+
+
+	for($i = 0; $i<$numJoints; $i++)
+
+	{
+
+		
+
+		$rot = `getAttr ($chain[$i] + ".rotate")`;
+
+		$rotX = $rot[0];
+
+		$rotY = $rot[1];
+
+		$rotZ = $rot[2];
+
+
+
+			setAttr ($newChain[$i] + ".rotateX") (-1*($rotX));
+
+			setAttr ($newChain[$i] + ".rotateY") (-1*($rotY));
+
+			setAttr ($newChain[$i] + ".rotateZ") ($rotZ);
+
+	}
+
+	
+
+	select -r $newChain[size($newChain)-1];
+
+}
+
+
+
+
+
+
+
+
+

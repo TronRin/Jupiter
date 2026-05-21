@@ -1,0 +1,355 @@
+// Copyright (C) 1998 Alias|Wavefront, a division of Silicon Graphics Limited.
+//              and Motion Analysis Corporation
+//
+// The information in this file is provided for the exclusive use of the licensees of
+// Alias|Wavefront and Motion Analysis.  Such users have the right to use, modify,
+// and incorporate this code into other products for purposes authorized
+// by the Alias|Wavefront license agreement, without fee.  
+// 
+// This script was written by Alias|Wavefront and modified and supported by Motion Analysis.
+//
+// ALIAS|WAVEFRONT DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+// INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
+// EVENT SHALL ALIAS|WAVEFRONT BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+// CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS 
+// OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE 
+// OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+
+/*
+	Maya readHTR  MEL Script File
+	MODIFY AT YOUR OWN RISK
+
+	$Revision: 1.5 $ 
+	$Author: hamilton (A|W) and hill (MAC) $
+	$Date: 1998/09/07 $	
+
+	Description:
+		Read a Motion Analysis HTR file containing the description 
+		and optical motion capture data for a hierarchical skeleton  
+
+	Procedure Name:
+		readHTR
+
+	Input Arguments:
+		fileName - full path for HTR file
+
+	Return Value:
+		0 - success
+        		1 - failure
+		
+	Maya version:
+		Maya cut 9801231655 ( Maya V1.0 )
+
+	Usage:
+		readHTR(<fileName>) - with "fileName" in quotes
+
+		or
+	
+		readHTR("") - with no file name will prompt user with file selector
+
+	source "./maya/scripts/readTRC.mel"
+	readTRC("/usr/people/hamilton/user_data/MotionAnalysis/misc_data/dance1.trc");
+
+*/
+
+////////////////////////////////////////////////////////////////////////////
+// 
+// Big procedure for pasing te .htr file, building the hierarchical 
+// skeleton, and keyframing the motion data
+// 
+////////////////////////////////////////////////////////////////////////////
+
+global proc int readHTR(string $fileName)
+{
+
+	// fileName = name of the htr file with path 
+	// if the name is blank the fileDialog will pop up
+	if ( $fileName == "" )
+		$fileName = `fileDialog -directoryMask "~/*.htr"`;
+
+	// Check if file selected and/or user didn't cancel
+
+
+	if ( $fileName == "" )
+	{
+		print "No file selected";
+		return 1;
+	}
+
+	// Open the file for reading	
+
+	int $fileID = fopen($fileName, "r");
+	if ( $fileID == 0 )
+	{
+		print ("Error opening file: "+$fileID+"\n");	
+		return 1;
+	}
+
+////////////////////////////////////////////////////////////////////////////
+// 
+// Read the .htr file header
+//
+////////////////////////////////////////////////////////////////////////////
+
+	print("Reading file: " + $fileName + "\n");
+
+	// Get information from the HTR  header such as the number of segments
+ 	// and number of frames, skip many variables which are not used
+
+	string $line = "", $buffer[];
+	int $count = 0;
+
+	// Get the number of segments
+
+	while ( ! `feof $fileID`  && match("NumSegments", $line) == "" )
+	{
+		$line = fgetline($fileID);
+		$count++;	
+	}
+				
+	tokenize($line, $buffer);
+	int $numSegs = (int) $buffer[1];
+	print ("Number of Segments = "+$numSegs+"\n");
+
+	// Get the number of frames 
+
+	while ( ! `feof $fileID`  && match("NumFrames", $line) == "" )
+	{
+		$line = fgetline($fileID);
+		$count++;
+	}
+
+	tokenize($line, $buffer);
+	int $numFrames = (int) $buffer[1];
+	print("Number of frames = " + $numFrames + "\n");
+
+	// Get the capture frame rate
+
+	while ( ! `feof $fileID`  && match("DataFrameRate", $line) == "" )
+	{
+		$line = fgetline($fileID);
+		$count++;
+	}
+
+	tokenize($line, $buffer);
+	float $frameRate = (float) $buffer[1];
+		
+	// Get the HTR calibration units and convert to Maya units
+	// Modify this section if you want to change the scale or units
+
+	while ( ! `feof $fileID`  && match("CalibrationUnits", $line) == "" )
+	{
+		$line = fgetline($fileID);
+		$count++;
+	}
+
+	tokenize($line, $buffer);
+	string $htrUnits =  $buffer[1];
+	string $mayaUnits = `currentUnit -query -linear`;
+	float $transScale = 0.589*(float(`convertUnit -fromUnit $htrUnits -toUnit $mayaUnits "1"`));
+	print("HTR file Units = " + $htrUnits + "\n");
+	print("Maya Units = " + $mayaUnits + " (" + $transScale + ")\n");
+
+
+////////////////////////////////////////////////////////////////////////////
+// 
+// Build the hierarchical skeleton
+// 
+////////////////////////////////////////////////////////////////////////////
+
+	// Get the skeleton hierarchy and all segment names
+
+	while ( ! `feof $fileID`  && match("SegmentNames&Hierarchy", $line) == "" )
+	{
+		$line = fgetline($fileID);
+		$count++;	
+	}
+	fgetline($fileID);	  // Skip comment
+	
+	string $child[], $parent[], $global;	
+	float $xOffset=0, $yOffset=0, $zOffset=0;
+	
+	// Get the hierarchy
+	for ( $i = 0; $i < $numSegs; $i++ )
+	{
+		$line = fgetline($fileID);
+		tokenize($line, $buffer);
+		$child[$i] = (string) $buffer[0];
+		$parent[$i] = (string) $buffer[1];
+	}
+	
+	// Create the joints
+
+	for ( $i = 0; $i < $numSegs; $i++ )
+	{
+		joint -n $child[$i];
+		select -cl;
+	}
+	
+	// Create the hierarchy
+
+	for ( $i = 0; $i < $numSegs; $i++ )
+	{
+		if ( $parent[$i] != "GLOBAL")
+		{
+			parent $child[$i] $parent[$i];
+		}
+		else
+		{
+			// store the global segment for later use
+			$global = $child[$i];
+		}
+	}
+
+	// Get the skeleton's base position information and set the joint positions and orientations	
+	
+	while ( ! `feof $fileID`  && match("BasePosition", $line) == "" )
+	{
+		$line = fgetline($fileID);
+		$count++;
+	}
+	
+	fgetline($fileID); // Get comment
+	
+	int $i;
+	string $name, $needChild[];
+	float $tx, $ty, $tz, $rx, $ry, $rz, $l, $px, $py, $pz;
+
+	for ( $i = 1; $i <= $numSegs; $i++ )
+	{
+		// get translation, rotation, and scale data
+
+		$line = fgetline($fileID);
+		tokenize($line, $buffer);
+		$name = (string) $buffer[0];
+	  	$tx = (float) $buffer[1];
+		$ty = (float) $buffer[2];
+		$tz = (float) $buffer[3];
+		$rx = (float) $buffer[4];
+		$ry = (float) $buffer[5];
+		$rz = (float) $buffer[6];
+		$l = (float) $buffer[7];
+	
+		// set joint position and orientation
+
+		$px = $tx*$transScale;
+		$py = $ty*$transScale; 
+		$pz = $tz*$transScale;
+
+		if ($parent[$i-1] == "GLOBAL")
+		{
+		    $xOffset = $px;
+		    $yOffset = $py;
+		    $zOffset = $pz;
+		}
+
+		select $name;
+		joint -e -r -o $rx $ry $rz -p $px $py $pz; 
+
+		// if end segment such as hand, add end joint
+
+		$needChild = `listRelatives $name`;
+		$lx = $l*$transScale;
+		if($needChild[0] == "")     //needs end joint
+		{
+			$endName = ($name + "endJoint");
+			joint -n $endName;
+			xform -os -t 0 $lx 0;     // bone axis is y
+		}
+		
+		$count++;	
+	}
+
+////////////////////////////////////////////////////////////////////////////
+// 
+// Keyframe the motion data
+// Key ranslation on the root segment and rotation on all segments
+// 
+////////////////////////////////////////////////////////////////////////////
+	
+	//  Get the motion data for each skeleton segment and keyframe the data	 
+
+	int $float, $len, $f;
+	float $scaleFactor, $currentTime, $frame;
+	string $currentName;
+
+	print("Processing animation for:\n");
+	
+	// Get first line of data section
+	$line = fgetline($fileID);
+	
+	for ( $i = 1; $i <= $numSegs; $i++ )
+	{
+		// Get segment name 
+		// If first line of data, skip over Beginning of Data comment 
+
+		if ($i != 1) 
+		{
+		   	$line = fgetline($fileID);
+		}
+		else  if (match("#*", $line) != "")  
+		{ 
+			$line = fgetline($fileID);
+		}
+		
+		tokenize($line, $buffer);
+		$len = size($buffer[0]);
+		$currentName = `substring $buffer[0] 2 ($len - 1)`;
+		print($currentName + "\n");
+
+		fgetline($fileID);	// get the next comment
+
+		for ( $f = 1; $f <= $numFrames; $f++ )
+		{
+			// get segment's local translation, rotation, and 
+			// bone length data for each frame
+
+			$line = fgetline($fileID);
+			tokenize($line, $buffer);
+			$frame = (float) $buffer[0];
+	  		$tx = (float) $buffer[1];
+			$ty = (float) $buffer[2];
+			$tz = (float) $buffer[3];
+			$rx = (float) $buffer[4];
+			$ry = (float) $buffer[5];
+			$rz = (float) $buffer[6];
+			$scaleFactor = (float) $buffer[7];
+			$currentTime = (float) ($frame / $frameRate);
+			$timeString = ($currentTime + "sec");
+
+			// keyframe rotation data 
+				
+			setKeyframe -attribute "rotateX" -time $timeString -value $rx $currentName;
+			setKeyframe -attribute "rotateY" -time $timeString -value $ry $currentName;
+			setKeyframe -attribute "rotateZ" -time $timeString -value $rz $currentName;
+
+			// keyframe the translation for the global segment only
+
+			if ( $currentName == $global )
+			{
+				setKeyframe -attribute "translateX" -time $timeString -value ($xOffset+$tx*$transScale) $currentName;
+
+				setKeyframe -attribute "translateY" -time $timeString -value ($yOffset+$ty*$transScale) $currentName;
+
+				setKeyframe -attribute "translateZ" -time $timeString -value ($zOffset+$tz*$transScale) $currentName;
+
+			}
+		}	
+	
+	}	
+
+	select -cl;
+	fclose($fileID);
+
+	playbackOptions -min 0 -max $numFrames;
+	if($numSegs > 20)	//if($flag == $sword)
+		xBone "sword";
+	else
+		xBone "";
+
+	print("\nreadHTR completed.\n");
+	return $numFrames;
+
+}

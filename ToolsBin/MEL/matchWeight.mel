@@ -1,0 +1,29 @@
+global proc matchWeight()
+
+{
+
+	string $vert, $sel[], $buffer[];
+
+	$sel = `ls -sl`;
+
+
+
+	for($vert in $sel)
+
+	{
+
+		tokenize($vert, ".", $buffer);
+
+		$piece = $buffer[0];
+
+		$shape = `listRelatives -s -f $piece`;
+
+		print($shape[0] + "\n");
+
+ 		$cluster = `listConnections -type skinCluster $shape[0]`;
+
+		print($cluster[0] + "\n");
+
+	}
+
+}

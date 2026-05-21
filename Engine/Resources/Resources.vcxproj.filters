@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lang">
+      <UniqueIdentifier>{A7F3997C-932A-9B0D-3C17-8110282D170F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lang\en">
+      <UniqueIdentifier>{A97B9567-155B-1403-1E73-9FD98AD17A64}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Init.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\lang\en\ltmsg.rc">
+      <Filter>lang\en</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

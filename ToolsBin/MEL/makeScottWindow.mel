@@ -1,0 +1,229 @@
+/*
+	This creates the ScottBox2000.
+*/
+
+global proc makeScottWindow()
+{
+	int $ui_Width = 150;
+	int $ui_Height = 300;
+	int $ui_ButtonWidth = 45;
+
+	if ((`window -exists ScottWindow`)==true)
+		deleteUI ScottWindow;
+
+	window
+		-menuBar false
+		-maximizeButton false
+		-title "ScottBox2000"
+		-w 10
+		-h 10
+		-rtf 1
+		ScottWindow;
+		scrollLayout
+			-hst 5
+			-vst 5;
+		columnLayout ;
+			frameLayout
+				-label "Windows..."
+				-lw $ui_Width
+				-cll true
+				-cl false
+				-mh 5
+				-borderStyle "etchedIn"
+				sb_windowBox;
+				gridLayout
+					-numberOfColumns 2
+					-cellWidthHeight 78 24;
+					button -label "Texture View" -command "TextureViewWindow"; 
+					button -label "Graph Editor" -command "GraphEditor";
+					button -label "HyperShade" -command "HypershadeWindow";
+					button -label "Multilister" -command "Multilister"; 
+					button -label "HyperGraph" -command "HypergraphWindow";
+					button -label "Component Ed" -command "ComponentEditor";
+					button -label "Expression Ed" -command "ExpressionEditor";
+					button -label "Trax Editor" -command "CharacterAnimationEditor"; 
+					button -label "Render View" -command "RenderViewWindow";
+					button -label "Outliner" -command "OutlinerWindow";
+				setParent ..;
+			setParent ..;
+			frameLayout
+				-label "Delete..."
+				-lw $ui_Width
+				-cll true
+				-mh 5
+				-borderStyle "etchedIn"
+				sb_deleteButtonBox;
+				columnLayout;
+					rowLayout
+						-numberOfColumns 2
+						-columnWidth 1 70;
+						button -label "Keys" -w 70 -command "DeleteKeys";
+						button -label "Static Channels"  -command "delete -staticChannels";
+					setParent ..;
+					rowLayout
+						-numberOfColumns 2
+						-columnWidth 1 70;
+						button -label "Constraints" -w 70 -command "delete -constraints";
+						button -label "History"  -w 84 -command "delete -ch";
+					setParent ..;	
+				setParent ..;					
+			setParent ..;
+			frameLayout
+				-label "Constraints & Bake..."
+				-lw $ui_Width
+				-cll true
+				-mh 5
+				-borderStyle "etchedIn"
+				sb_constraintBox;
+				columnLayout;
+					rowLayout
+						-numberOfColumns 3
+						-columnWidth 1 50
+						-columnWidth 2 60;
+						button -label "Point" -w 50 -command "pointConstraint -weight 1";
+						button -label "Orient" -w 60 -command "orientConstraint -weight 1";
+						button -label "Aim" -w 44 
+							-command "aimConstraint -weight 1 -aimVector 0 0 1 -upVector 0 1 0 -worldUpType \"vector\" -worldUpVector 0 1 0";
+					setParent ..;
+					text " ";
+					rowLayout
+						-numberOfColumns 3
+						-columnWidth 1 75
+						-columnWidth 2 55
+						-columnWidth 3 30;
+						button -label "Bake Curves" -c "sb_bake";
+						text "Sample By ";
+						intField 
+							-w 25
+							-value (`optionVar -q "bakeSimulationByTime"`)
+							sb_sampleRate;
+					setParent ..;
+				setParent ..;
+			setParent ..;
+/*   			frameLayout
+				-label "Toggles..."
+				-lw $ui_Width
+				-cll true
+				-cl true
+				-mh 5
+				-borderStyle "etchedIn"
+				sb_toggleBox;
+				gridLayout
+					-numberOfColumns 2
+					-cellWidthHeight 78 24;
+					button -label "BackFace Cull"; 
+					button -label "Shading Mode";
+					button -label "Hard Edges" -command "sb_toggleSoftEdge";
+					button -label "Hide/Show" -command "toggleHidden"; 
+					button -label "UV Topology" -command "sb_toggleUVTopology";
+					button -label "Reset BindPose" -command "dagPose -reset -n bindPose1";
+				setParent ..;
+			setParent ..;
+*/
+			frameLayout
+				-label "Other Options"
+				-cll true
+				-lw 100
+				-w 160
+				-mh 5
+				sb_options;
+				columnLayout;
+					frameLayout
+						-label "Move Context"
+						-lw 100
+						-w 156
+						-mh 5
+						sb_moveCtxBox;
+						columnLayout;
+							radioButtonGrp
+								-nrb 4
+								-columnWidth 1 40
+								-columnWidth 2 40
+								-columnWidth 3 40
+								-select ((`manipMoveContext -q -mode Move`) + 1)
+								-l1 "L"
+								-l2 "W"
+								-l3 "N"
+								-l4 "O"
+								-on1 "manipMoveContext -e -mode 1 Move"
+								-on2 "manipMoveContext -e -mode 2 Move"
+								-on3 "manipMoveContext -e -mode 3 Move"								
+
+								-on4 "manipMoveContext -e -mode 0 Move"
+								sb_moveCtx;
+						setParent ..;
+					setParent ..;
+					frameLayout
+						-label "Rotate Context"
+						-lw 100
+						-w 156
+						-mh 5
+						sb_rotateCtxBox;
+						columnLayout;
+							radioButtonGrp
+								-nrb 3
+								-columnWidth 1 50
+								-columnWidth 2 50
+								-select ((`manipRotateContext -q -mode Rotate`) + 1)
+								-l1 "L"
+								-l2 "W"
+								-l3 "Gimbal"
+								-on1 "manipRotateContext -e -mode 0 Rotate"
+								-on2 "manipRotateContext -e -mode 1 Rotate"
+								-on3 "manipRotateContext -e -mode 2 Rotate"
+								sb_rotateCtx;
+						setParent ..;
+					setParent ..;
+				setParent ..;
+			setParent ..;
+		setParent ..;
+
+	showWindow ScottWindow;
+}  
+
+global proc sb_toggleSoftEdge()
+{
+	$selection = `ls -sl`;
+	selectType -polymeshEdge 1;
+}
+
+global proc sb_toggleUVTopology()
+{
+	int $toggle[] = `polyOptions -q -gl -uvt`;
+	if ($toggle[1]==1 || $toggle[0]==1) polyOptions -gl -uvt 0 -duv 0;
+	else polyOptions -gl -duv 1 -uvt 1;
+}
+
+global proc sb_bake() 
+{
+	int $vis[];
+	$sceneShapes = `ls -ni -type mesh`;
+	for($i = 0; $i < size($sceneShapes); $i ++)
+	{
+		$obj = `listRelatives -f -p $sceneShapes[$i]`;
+		$sceneShapes[$i] = $obj[0];
+		$vis[$i] = `getAttr ($sceneShapes[$i] + ".visibility")`;
+		setAttr ($sceneShapes[$i] + ".visibility") 0;
+	}
+	
+ 	int $rate = `intField -q -v sb_sampleRate`; 	
+	optionVar -fv "bakeSimulationByTime" $rate; 	
+	BakeSimulation; 	
+	delete -staticChannels; 
+
+	for($i = 0; $i < size($sceneShapes); $i ++)
+		setAttr ($sceneShapes[$i] + ".visibility") $vis[$i];
+
+	$selection = `ls -sl`;
+	string $cmd = "filterCurve ";
+	for($i = 0; $i < size($selection); $i++)
+	{
+		if(`objExists ($selection[$i] + ".rotateX")`)
+			$cmd = $cmd+ $selection[$i] + ".rotateX ";
+		if(`objExists ($selection[$i] + ".rotateY")`)
+			$cmd = $cmd+ $selection[$i] + ".rotateY ";
+		if(`objExists ($selection[$i] + ".rotateZ")`)
+			$cmd = $cmd+ $selection[$i] + ".rotateZ ";
+	}
+	eval($cmd);
+}

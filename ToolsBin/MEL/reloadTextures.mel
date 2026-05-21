@@ -1,0 +1,22 @@
+global proc reloadTextures()
+
+{
+
+	$textures = `ls -typ file`;
+
+	for($texture in $textures)
+
+	{
+
+		$texture = $texture + ".fileTextureName";
+
+		$filename = `getAttr $texture`;
+
+		if($filename != "")
+
+			setAttr $texture -type "string" $filename;
+
+	}
+
+}
+

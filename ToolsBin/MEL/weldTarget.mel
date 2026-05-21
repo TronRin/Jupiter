@@ -1,0 +1,247 @@
+global proc weldTarget()
+{	
+	string $buffer[], $curSelection[], $newSelection[], $shapeSelection, $uvSelection[], $newPoint;
+	float $avePos[], $uvPos[];
+	int $i, $j, $moved, $match;
+
+
+//
+//
+//
+//	
+//	If UVs, average multiple UVs or snap to single UV
+//
+//
+//
+	
+	$curSelection = `filterExpand -ex true -sm 35`; 	
+	if(size($curSelection) != 0) 	
+	{	
+		if(size($curSelection) == 1)
+		{	print "imhere\n";
+			float $pos[] = `polyEditUV -q -u $curSelection[0]`; 
+			int $jobNum = `scriptJob -ro 1 -e "SelectionChanged" ("doUvSnap " + $pos[0] + " " + $pos[1])`;
+		}
+		else
+		{
+			int $multiplePoints = 0;
+			float $pos[], $testPos[];
+			$pos = `polyEditUV -q -u $curSelection[0]`;
+		
+			for($point in $curSelection)
+			{
+				$testPos = `polyEditUV -q -u $point`; 
+				if((abs($testPos[0] - $pos[0]) > 0.001) || (abs($testPos[1] - $pos[1]) > 0.001))
+				{
+					$multiplePoints = 1;
+					break;
+				}
+			}
+
+			if($multiplePoints)
+			{
+				float $uTotal = 0;
+				float $vTotal = 0;
+				for($point in $curSelection)
+				{
+					float $pos[] =  `polyEditUV -q -u $point`;
+					$uTotal += $pos[0];
+					$vTotal += $pos[1];
+				}
+				$u = $uTotal / (size($curSelection));
+				$v = $vTotal / (size($curSelection));
+
+				for($point in $curSelection)
+					polyEditUV -r 0 -u $u -v $v $point;
+			}
+			else
+			{
+			//$pos[] = `polyEditUV -q -u $curSelection[0]`; 
+			int $jobNum = `scriptJob -ro 1 -e "SelectionChanged" ("doUvSnap " + $pos[0] + " " + $pos[1])`;
+				
+			}
+		}
+	}
+	
+//
+//
+//
+//	
+//	If edges, collapse
+//
+//
+//
+	
+	$curSelection = `filterExpand -ex true -sm 32`; 
+	if(size($curSelection) != 0) 
+	{
+		polyCollapseEdge -ch 0;
+		return;
+	}
+	
+//
+//
+//
+//	
+//	If faces, collapse
+//
+//
+//	
+	
+	$curSelection = `filterExpand -ex true -sm 34`;
+	if(size($curSelection) != 0) 
+	{
+		polyCollapseFacet -ch 0;
+		return;
+	}
+	
+//
+//
+//
+//	
+//	If vertices...
+//
+//
+//	
+	
+	$curSelection = `filterExpand -ex true -sm 31`;
+	int $numVerts = size($curSelection);
+	tokenize($curSelection[0], ".[]", $buffer);
+	$shapeSelection = $buffer[0];
+
+	if($numVerts == 0) return;
+	else if($numVerts == 1)
+	{
+		$moved = `zeroDist $curSelection[0]`;
+		if($moved == -1) return;
+		else
+		{
+			$newSelection = `filterExpand -ex true -sm 31`;
+			if($newSelection[0] == $curSelection[0])
+				$newPoint = $newSelection[1];
+			else
+				$newPoint = $newSelection[0];
+
+			$uvSelection = `polyListComponentConversion -fv -tuv $newPoint`;
+			$uvPos = `polyEditUV -q $uvSelection[0]`;
+
+			polyMergeVertex -ch 0 -d 1 $newSelection;
+			$newPoint = $shapeSelection + ".vtx[" + $moved + "]";
+
+			$uvSelection = `polyListComponentConversion -fv -tuv $newPoint`;
+
+			polyEditUV -r 0 -u $uvPos[0] -v $uvPos[1] $uvSelection[0];
+
+			select -r $newPoint;
+			return;
+		}
+	}
+
+	else
+	{
+		$moved = `zeroDist $curSelection[0]`;
+		if($moved == -1)
+		{
+			selectType -polymeshEdge 1;
+			select -r (`polyListComponentConversion -in -fv -te`);
+			polyCollapseEdge -ch 0;
+			selectType -polymeshVertex 1;
+			return;
+		}
+		else
+		{
+			$newSelection = `filterExpand -ex true -sm 31`;
+			for($i = 0; $i < size($newSelection); $i++)
+			{	for($k = 0; $k < size($curSelection); $k++)
+				{
+					if($newSelection[$i] == $curSelection[$k])
+						$match = 1;
+				}
+				if(!$match) $newPoint = $newSelection[$i];
+				$match = 0;
+			}
+
+			print($newPoint + "\n");
+
+			$uvSelection = `polyListComponentConversion -fv -tuv $newPoint`;
+			$uvPos = `polyEditUV -q $uvSelection[0]`;
+
+			polyMergeVertex -ch 0 -d 1 $newSelection;
+			$newPoint = $shapeSelection + ".vtx[" + $moved + "]";
+
+			$uvSelection = `polyListComponentConversion -fv -tuv $newPoint`;
+
+			polyEditUV -r 0 -u $uvPos[0] -v $uvPos[1] $uvSelection[0];
+
+			select -r $newPoint;
+			return;	
+		}
+	}
+
+}
+
+
+
+
+global proc doUvSnap(float $u, float $v)
+{
+	string $sel[] = `ls -sl -fl`;
+	for($point in $sel)
+		if(!`gmatch $point "*map\\\[*"`)
+			return; ///error "Select only UVs";
+
+	for($i = 0; $i < size($sel); $i++)
+	{
+		polyEditUV -r 0 -u $u -v $v $sel[$i];
+	}	
+}
+
+
+
+global proc int getMinVertexNumber(string $verts[])
+{
+	string $buffer[];
+	int $i, $curNumber, $minVert = 999999;
+
+	for($i = 0; $i < size($verts); $i++)
+	{
+		tokenize($verts[$i], "[]", $buffer);
+		$curNumber = $buffer[1];
+		$minVert = `min $minVert $curNumber`;
+	}
+	return $minVert;
+}
+
+global proc int zeroDist(string $vert)
+{
+	string $buffer[], $curVert;
+	float $position[], $testPosition[], $dist[];
+	int $i, $numVerts[]; 
+	int $sharePosition = 0;
+	int $minVert = 999999;
+	
+	tokenize($vert,".[]",$buffer);
+	$shape = $buffer[0];
+	$numVerts = `polyEvaluate -v $shape`;
+	$position = `pointPosition $vert`;
+
+	for($i = 0; $i < $numVerts[0]; $i++)
+	{
+		$curVert = $shape + ".vtx[" + $i + "]";
+		$testPosition = `pointPosition $curVert`;
+		
+		$dist[0] = (abs($testPosition[0] - $position[0]) < 0.0001);
+		$dist[1] = (abs($testPosition[1] - $position[1]) < 0.0001);
+		$dist[2] = (abs($testPosition[2] - $position[2]) < 0.0001);
+		if($dist[0] && $dist[1] && $dist[2]) 
+		{
+			select -add $curVert;
+			$minVert = `min $minVert $i`;
+			if($curVert != $vert) $sharePosition = 1;
+		}
+	}
+	if(!$sharePosition) return -1;
+	else return $minVert;
+}
+
+

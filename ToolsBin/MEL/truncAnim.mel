@@ -1,0 +1,50 @@
+global proc truncAnim()
+{
+	int $minTime = `playbackOptions -q -min`;
+	int $maxTime = `playbackOptions -q -max`;
+	string $curve;
+	string $curves[] = `ls -type animCurveTA -type animCurveTL`;
+	
+	selectKey -clear;
+
+	for($curve in $curves)
+	{
+		selectKey -add -k -t ("0:" + ($minTime-1)) $curve;
+		selectKey -add -k -t (($maxTime + 1) + ":") $curve;
+	}
+
+	cutKey -animation keys -clear;
+
+	for($curve in $curves)
+		selectKey -add -k $curve;		
+	int $endTime = (($maxTime -$minTime)/50) * 50 + 50; 
+	
+	keyframe -e -iub true -animation keys -r -o over -tc (-$minTime) -fc (-$minTime);
+	playbackOptions -min 0 -max ($maxTime - $minTime) -aet $endTime;
+	selectKey -clear;
+
+}
+
+global proc loopAnim()
+{
+	int $minTime = `playbackOptions -q -min`;
+	int $maxTime = `playbackOptions -q -max`;
+	int $curTime = `currentTime -q`;
+
+	string $curve;
+	string $curves[] = `ls -type animCurveTA -type animCurveTL`;
+
+	selectKey -clear;
+
+	for($curve in $curves)
+		selectKey -add -k -t ($minTime + ":" + ($curTime - 1)) $curve;
+
+	keyframe -e -iub true -animation keys -r -o over -tc ($maxTime - $minTime + 1) -fc ($maxTime - $minTime + 1);
+
+	for($curve in $curves)
+		selectKey -add -k $curve;		
+
+	keyframe -e -iub true -animation keys -r -o over -tc (-$curTime) -fc (-$curTime);
+	selectKey -clear;
+
+}

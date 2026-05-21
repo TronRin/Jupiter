@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..">
+      <UniqueIdentifier>{CC6E590B-3883-81BC-0105-251C6DD87DED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..">
+      <UniqueIdentifier>{57597B35-4326-D640-6C3F-C4E8586B0BCF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..">
+      <UniqueIdentifier>{023C99B8-6EF1-11AE-F7E5-0B85639A08B2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..\Engine">
+      <UniqueIdentifier>{4750C703-3334-8859-9C94-82AC889772DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..\Engine\clientfx">
+      <UniqueIdentifier>{73E51ED6-DFF2-4CBC-68D9-48A7D4E51873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..\Engine\clientfx\src">
+      <UniqueIdentifier>{0A2546ED-7608-552D-7F0B-8369EB6D1B7E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..\Engine\clientfx\src\shared">
+      <UniqueIdentifier>{1055A076-FCA6-7766-E5C5-B476D1B6904F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..\Engine\sdk">
+      <UniqueIdentifier>{18D80F3C-04D2-388E-ED3E-CF9ED9D79EFA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\..\..\..\Engine\sdk\inc">
+      <UniqueIdentifier>{21B709F2-0DC7-B5C2-7680-1AE162AFA45B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\shared">
+      <UniqueIdentifier>{8798108A-F302-C500-3C41-76A6A8EAA255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\shared\src">
+      <UniqueIdentifier>{1E4243DA-8A02-BF10-533D-088EBFBC03ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Engine\clientfx\src\shared\ClientFXDB.h">
+      <Filter>..\..\..\..\Engine\clientfx\src\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Engine\clientfx\src\shared\ClientFXMgr.h">
+      <Filter>..\..\..\..\Engine\clientfx\src\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\src\helper.h">
+      <Filter>..\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shared\src\msgids.h">
+      <Filter>..\shared\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameBase.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PolyGrid.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PolyGridModifier.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RotateWorldmodel.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ServerSpecialFX.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Worldmodel.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamelight.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gamestartpoint.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ltservershell.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\playersrvr.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\prop.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serverinterfaces.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serverutilities.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\worldproperties.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Engine\clientfx\src\shared\CommonUtilities.cpp">
+      <Filter>..\..\..\..\Engine\clientfx\src\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\clientfx\src\shared\ParsedMsg.cpp">
+      <Filter>..\..\..\..\Engine\clientfx\src\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\clientfx\src\shared\WinUtil.cpp">
+      <Filter>..\..\..\..\Engine\clientfx\src\shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\iltbaseclass.cpp">
+      <Filter>..\..\..\..\Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltengineobjects.cpp">
+      <Filter>..\..\..\..\Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltmodule.cpp">
+      <Filter>..\..\..\..\Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltobjref.cpp">
+      <Filter>..\..\..\..\Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Engine\sdk\inc\ltquatbase.cpp">
+      <Filter>..\..\..\..\Engine\sdk\inc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameBase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PolyGrid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PolyGridModifier.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RotateWorldmodel.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerSpecialFX.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Worldmodel.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamelight.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gamestartpoint.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ltservershell.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playersrvr.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\prop.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serverinterfaces.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serverutilities.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\worldproperties.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

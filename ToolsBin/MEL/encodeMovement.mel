@@ -1,0 +1,101 @@
+global proc encodeMovement()
+{
+	int $minTime = `playbackOptions -q -min`;
+	int $maxTime = `playbackOptions -q -max`;
+	currentTime $minTime;
+
+	$selection = `ls -sl`;
+	if(size($selection) != 2) error "Select a movement node and a skeleton.";
+	
+	$movement = $selection[0];
+	$skeleton = $selection[1];
+	string $source1[] = `listRelatives -c -f $skeleton`;
+
+	$tmpSkel = `duplicate -un $skeleton`;
+	string $source2[] = `listRelatives -c -f $tmpSkel[0]`;
+
+	cutKey $source1[0];
+	pointConstraint $source2[0] $source1[0];
+	orientConstraint $source2[0] $source1[0];
+	
+	parent $skeleton $movement;
+	int $len = size($source1[0]);
+	$source1[0] = `substring $source1[0] 2 $len`;
+	select -r $source1[0];
+
+	bufferCurve -an "keys"; 
+	eval("bakeResults -t \"" + $minTime + ":" + $maxTime + "\" -pok 1");
+	
+	delete -constraints -sc;
+	delete $tmpSkel[0];
+
+	parent -w $skeleton;
+	parent $movement $skeleton;
+
+	$nodeList = `ls -as`;
+	for($i = 0; $i <size($nodeList); $i++)
+	{
+		if($nodeList[$i] == $skeleton)
+			break;
+	}
+	reorder -r (-$i) $skeleton;
+}
+
+global proc decodeMovement()
+{
+	int $minTime = `playbackOptions -q -min`;
+	int $maxTime = `playbackOptions -q -max`;
+	currentTime $minTime;
+
+	$selection = `ls -sl`;
+	if(size($selection)!= 1) error("only works with one skeleton");
+
+	$skeleton = $selection[0];
+	$children = `listRelatives -c $skeleton`;
+	if(size($children)!= 2) error("this skeleton is not movement encoded");
+
+	$movement = $children[1];
+	parent -w $movement;
+	$selection = `ls -sl`;
+	$movement = $selection[0];
+
+	$tmpSkel = `duplicate -un $skeleton`;
+	parent $skeleton $movement;
+	
+	$selection = `ls -sl`;
+	$newSkeleton = $selection[0];
+	
+	string $source1[] = `listRelatives -c -f $newSkeleton`;
+	string $source2[] = `listRelatives -c -f $tmpSkel[0]`;
+
+	cutKey $source2[0];
+	pointConstraint $source1[0] $source2[0];
+	orientConstraint $source1[0] $source2[0];
+
+	select -r $source2[0];
+	bufferCurve -an "keys"; 
+	eval("bakeResults -t \"" + $minTime + ":" + $maxTime + "\" -pok 1");
+	delete -constraints -sc;
+
+	parent -w $newSkeleton;
+	$source1 = `listRelatives -c -f $skeleton`;	
+
+	cutKey $source1[0];	
+	pointConstraint $source2[0] $source1[0];
+	orientConstraint $source2[0] $source1[0];
+
+	select -r $source1[0];
+	bufferCurve -an "keys"; 
+	eval("bakeResults -t \"" + $minTime + ":" + $maxTime + "\" -pok 1");
+	delete -constraints -sc;
+	delete $tmpSkel[0];	
+
+	$nodeList = `ls -as`;
+	for($i = 0; $i <size($nodeList); $i++)
+	{
+		if($nodeList[$i] == $skeleton)
+			break;
+	}
+	reorder -r (-$i) $skeleton;
+
+}

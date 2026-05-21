@@ -1,0 +1,25 @@
+global proc deleteKeyBlock()
+{
+	$selectedCurves = `keyframe -q -n`;
+	for($curve in $selectedCurves)
+	{
+		$selectedKeys = `keyframe -q -sl $curve`;
+		$minKey = $selectedKeys[0];
+		$maxKey = $selectedKeys[(size($selectedKeys))-1];
+		$cmd = "selectKey -add -k -t \"" + $minKey + ":" + $maxKey + "\" " + $curve;
+		eval $cmd;
+
+		$inKey = `findKeyframe -t $minKey -which previous`;
+		$inTangent = `keyTangent -t $inKey -q -ox -q -oy $curve`;
+
+		
+		$outKey = `findKeyframe -t $maxKey -which next`;
+		$outKeyTangent = `keyTangent -t $outKey -q -ix -q -iy $curve`;
+
+		$cmd = "cutKey  -t \"" + $minKey + ":" + $maxKey + "\" " + $curve;
+		eval $cmd;
+		
+		keyTangent -t $inKey -e -ox $inTangent[0] -e -oy $inTangent[1] -l 1 $curve;
+		keyTangent -t $outKey -e -ix $outKeyTangent[0] -e -iy $outKeyTangent[1] -l 1 $curve;
+	}
+}
