@@ -1669,15 +1669,15 @@ static LTRESULT cis_GetEngineHook(const char *pName, void **pData)
 		*pData = g_ClientGlob.m_hMainWnd;
 		return LT_OK;
 	}
-	else if(stricmp(pName, "cres_hinstance")==0)
+	else if(stricmp(pName, "CRes_hinstance")==0)
 	{
 		return bm_GetInstanceHandle(g_pClientMgr->m_hClientResourceModule, pData);
 	}
-	else if(stricmp(pName, "cresl_hinstance")==0)
+	else if(stricmp(pName, "CResl_hinstance")==0)
 	{
 		return bm_GetInstanceHandle(g_pClientMgr->m_hLocalizedClientResourceModule, pData);
 	}
-	else if(stricmp(pName, "cshell_hinstance")==0)
+	else if(stricmp(pName, "CShell_hinstance")==0)
 	{
 		return bm_GetInstanceHandle(g_pClientMgr->m_hShellModule, pData);
 	}

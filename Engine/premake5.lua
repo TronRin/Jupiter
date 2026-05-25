@@ -25,7 +25,7 @@ workspace "Jupiter-Engine"
 
 	filter {}
 
-	flags { "MultiProcessorCompile" }
+	flags { "multiprocessorcompile" }
 
 	group "External Libs"
 		includeexternal "Libs/LIB-ButeMgr"

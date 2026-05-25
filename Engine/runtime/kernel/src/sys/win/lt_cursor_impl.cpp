@@ -54,7 +54,7 @@ public:
     // Since we can't detect this, just return LT_YES for now.
     virtual LTRESULT IsCursorModeAvailable(CursorMode cMode);
 
-    // Set the current hardware cursor bitmap.  The bitmap comes from cshell.dll.
+    // Set the current hardware cursor bitmap.  The bitmap comes from CShell.dll.
     virtual LTRESULT LoadCursorBitmapResource(const char *pName, HLTCURSOR &hCursor);
 
     // Free a cursor.
@@ -194,7 +194,7 @@ LTRESULT CLTCursor::LoadCursorBitmapResource(const char *pName, HLTCURSOR &hCurs
     HCURSOR hWinCursor;
     HLTCURSOR hNew;
 
-    if ((dRes = ilt_client->GetEngineHook("cres_hinstance",(void **)&hInst)) != LT_OK)
+    if ((dRes = ilt_client->GetEngineHook("CRes_hinstance",(void **)&hInst)) != LT_OK)
         return dRes;
 
     hWinCursor = (HCURSOR)(::LoadImage(hInst, pName, IMAGE_CURSOR, 0, 0, LR_DEFAULTCOLOR));

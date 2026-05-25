@@ -17,6 +17,9 @@ toldir = "%{_PREMAKE_DIR}/Tools"
 -- Vendor directory
 vendir = "%{_PREMAKE_DIR}/Vendor"
 
+-- SevensPredator directory
+gamedir = "%{_PREMAKE_DIR}/SevensPredator"
+
 bindir = "%{_PREMAKE_DIR}/bin/%{cfg.buildcfg}"
 intdir = "%{_PREMAKE_DIR}/bin-int/%{cfg.buildcfg}"
 
@@ -25,6 +28,9 @@ workspace "Jupiter-Engine"
 
 workspace "Jupiter-Libs"
 	include "Libs"
+
+-- Generate SevensCore - Predator - --
+include "SevensPredator"
 	
 -- Generate samples in separate folders
 include "Samples"

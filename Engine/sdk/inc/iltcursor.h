@@ -109,7 +109,7 @@ Used for: Input.
 \return Should return \b LT_OK \b if the bitmap file could be opened,
 \b LT_NOTINITIALIZED \b if the engine has not been initialised.
 
-Set the current hardware cursor bitmap.  The bitmap comes from cshell.dll.
+Set the current hardware cursor bitmap.  The bitmap comes from CShell.dll.
 Used for: Input.
 */
     virtual LTRESULT LoadCursorBitmapResource(const char *pName, 

@@ -1,0 +1,1 @@
+.\bin\debug\lithtech.exe -rez .\engine\sdk\rez\engine.rez -rez .\SevensPredatorr\rez -rez .\SevensPredator\bin\debug

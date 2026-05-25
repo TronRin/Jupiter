@@ -9,3 +9,5 @@ ipch/
 *.vcxproj.user
 Development/
 .old/
+bin-int/
+bin/

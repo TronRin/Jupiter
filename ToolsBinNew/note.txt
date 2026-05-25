@@ -1,0 +1,18 @@
+cfltc.exe : kéo file .ltc đã unblock vào đây sẽ được chuyển thành file .lta
+
+cft_tools.exe, cft_tools_unicode.exe : đây là tool chỉnh sửa CFT cũ (không nên sài)
+
+FixCompression_x64.exe: công cụ này để giải mã file ltb, dtx .... bị mã hóa (Unlock file), công cụ này rất mượt - dùng để giải nén cả một thư mục nên sử dụng thay thế cho The Demons File Unlocker v1.0.7
+
+LTB_SMD_GN.exe: công cụ này dùng để chuyển đổi định dạng LTB sang SMD giữ được xương
+
+LTCCCCCCCCCC.au3: công cụ này dùng để đóng gói file lta sang ltc. (Nhớ cài ngôn ngữ lập trình Autoit để chạy)
+
+win_cft.exe: dùng để chỉnh sửa file CFT (kéo file CFT vào để chuyển sang CSV, sau khi chỉnh sửa xong thì kéo vào lần nữa để chuyển về định dạng CFT)
+
+cfrezexplorer.zip: cái này dùng để giải nén file REZ, hoặc xem trực tiếp file rez mà không cần giải nén.
+
+The Demons File Unlocker v1.0.7.exe: dùng để mở khóa file (nên sài cái FixCompression_x64.exe vì nó nhanh hơn)
+
+
+www.bugallcf.com

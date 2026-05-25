@@ -1,0 +1,13 @@
+cd "C:\Program Files\Buena Vista Interactive\Tron 2.0\tools"
+lithrez x "c:\program files\buena vista interactive\tron 2.0\game2.rez" "c:\program files\buena vista interactive\tron 2.0\game"
+cd "C:\Program Files\Buena Vista Interactive\Tron 2.0\tools"
+lithrez x "c:\program files\buena vista interactive\tron 2.0\game.rez" "c:\program files\buena vista interactive\tron 2.0\game"
+cd "C:\Program Files\Buena Vista Interactive\Tron 2.0\tools"
+lithrez x "c:\program files\buena vista interactive\tron 2.0\gamep.rez" "c:\program files\buena vista interactive\tron 2.0\game"
+cd "C:\Program Files\Buena Vista Interactive\Tron 2.0\tools"
+lithrez x "c:\program files\buena vista interactive\tron 2.0\sound.rez" "c:\program files\buena vista interactive\tron 2.0\game"
+cd "C:\Program Files\Buena Vista Interactive\Tron 2.0\tools"
+lithrez x "c:\program files\buena vista interactive\tron 2.0\gamep3.rez" "c:\program files\buena vista interactive\tron 2.0\game"
+cd "C:\Program Files\Buena Vista Interactive\Tron 2.0\tools"
+lithrez x "c:\program files\buena vista interactive\tron 2.0\gamep4.rez" "c:\program files\buena vista interactive\tron 2.0\game"
+

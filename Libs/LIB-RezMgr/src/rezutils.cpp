@@ -805,9 +805,9 @@ BOOL CheckLithHeader(CRezMgr* pMgr)
     CRezDir* pDir = pMgr->GetRootDir();
 
 	// if the header check failed then check for special shogo & blood2 files
-	if (pDir->GetRezFromDosPath("cshell.dll") != NULL) return TRUE;
-	if (pDir->GetRezFromDosPath("cres.dll") != NULL) return TRUE;
-	if (pDir->GetRezFromDosPath("sres.dll") != NULL) return TRUE;
+	if (pDir->GetRezFromDosPath("CShell.dll") != NULL) return TRUE;
+	if (pDir->GetRezFromDosPath("CRes.dll") != NULL) return TRUE;
+	if (pDir->GetRezFromDosPath("SRes.dll") != NULL) return TRUE;
 	if (pDir->GetRezFromDosPath("object.lto") != NULL) return TRUE;
 	if (pDir->GetRezFromDosPath("patch.txt") != NULL) return TRUE;
 	if (pDir->GetRezFromDosPath("sounds\\dirtypesounds.") != NULL) return TRUE;

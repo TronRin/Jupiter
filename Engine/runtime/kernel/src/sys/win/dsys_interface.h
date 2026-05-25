@@ -120,7 +120,7 @@ LTRESULT dsi_GetRenderMode(RMode *pMode);
 LTRESULT dsi_SetRenderMode(RMode *pMode);
 LTRESULT dsi_ShutdownRender(uint32 flags);
 
-// Initializes the cshell and cres DLLs (copies them into a temp directory).    
+// Initializes the CShell and CRes DLLs (copies them into a temp directory).    
 LTRESULT dsi_InitClientShellDE();
 LTRESULT dsi_LoadServerObjects(CClassMgr *pInfo);
 

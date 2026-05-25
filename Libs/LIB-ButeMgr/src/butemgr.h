@@ -21,8 +21,8 @@
 #include <map>
 #include <set>
 #include <functional>
-#include <hash_set>
-#include <hash_map>
+#include <unordered_set>
+#include <unordered_map>
 #if _MSC_VER >= 1300
 #	include <iosfwd>
 #	include <strstream>
@@ -33,6 +33,7 @@
 #	include "strstrea.h"
 #endif // VC7
 #include <fstream>
+#include <unordered_set>
 
 
 #if _MSC_VER >= 1300
@@ -341,33 +342,33 @@ private:
 #if _MSC_VER == 1300 // NET 2002
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
-	typedef std::hash_set< CString, ButeMgrHashCompare > StringHolder;
+	typedef std::unordered_set< CString, ButeMgrHashCompare > StringHolder;
 
 	// Used to define map of strings to CSymTabItems.
-	typedef std::hash_map< char const*, CSymTabItem*, ButeMgrHashCompare > TableOfItems;
+	typedef std::unordered_map< char const*, CSymTabItem*, ButeMgrHashCompare > TableOfItems;
 
 	// Used to define map of strings to TableOfItems.
-	typedef std::hash_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
+	typedef std::unordered_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
 #elif _MSC_VER > 1300  // NET 2003
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
-	typedef stdext::hash_set< CString, ButeMgrHashCompare > StringHolder;
+	typedef std::unordered_set< CString, ButeMgrHashCompare > StringHolder;
 
 	// Used to define map of strings to CSymTabItems.
-	typedef stdext::hash_map< char const*, CSymTabItem*, ButeMgrHashCompare > TableOfItems;
+	typedef std::unordered_map< char const*, CSymTabItem*, ButeMgrHashCompare > TableOfItems;
 
 	// Used to define map of strings to TableOfItems.
-	typedef stdext::hash_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
+	typedef std::unordered_map< char const*, TableOfItems*, ButeMgrHashCompare > TableOfTags;
 #else
 	// Used to define dictionary of strings.
 	// This must be case sensitive!
-	typedef std::hash_set< CString, std::hash< char const* >, equal_str > StringHolder;
+	typedef std::unordered_set< CString, std::hash< char const* >, equal_str > StringHolder;
 
 	// Used to define map of strings to CSymTabItems.
-	typedef std::hash_map< char const*, CSymTabItem*, hash_str_nocase, equal_str_nocase > TableOfItems;
+	typedef std::unordered_map< char const*, CSymTabItem*, hash_str_nocase, equal_str_nocase > TableOfItems;
 
 	// Used to define map of strings to TableOfItems.
-	typedef std::hash_map< char const*, TableOfItems*, hash_str_nocase, equal_str_nocase > TableOfTags;
+	typedef std::unordered_map< char const*, TableOfItems*, hash_str_nocase, equal_str_nocase > TableOfTags;
 #endif // .NET 2002
 
 

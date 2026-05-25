@@ -90,6 +90,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\bin\Debug\RenderStyles;..\..\..\..\bin\Debug\RenderStyles\Extras;..\..\..\..\bin\Debug\RenderStyles\Textures;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug\CShell.lib</ImportLibrary>
     </Link>
     <ProjectReference>
@@ -115,6 +116,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\bin\Release\Custom;..\..\..\..\bin\Release\RenderStyles;..\..\..\..\bin\Release\SevensPredator;..\..\..\..\bin\Release\RenderStyles\Extras;..\..\..\..\bin\Release\RenderStyles\Textures;..\..\..\..\bin\Release\SevensPredator\ClassIcons;..\..\..\..\bin\Release\SevensPredator\Models;..\..\..\..\bin\Release\SevensPredator\ModelTextures;..\..\..\..\bin\Release\SevensPredator\Tex;..\..\..\..\bin\Release\SevensPredator\Worlds;..\..\..\..\bin\Release\SevensPredator\Models\CHR;..\..\..\..\bin\Release\SevensPredator\Tex\detailtex;..\..\..\..\bin\Release\SevensPredator\Tex\envmap;..\..\..\..\bin\Release\SevensPredator\Tex\shiny;..\..\..\..\bin\Release\SevensPredator\Tex\stone;..\..\..\..\bin\Release\SevensPredator\Tex\wood;..\..\..\..\bin\Release\SevensPredator\Tex\shiny\shst01;..\..\..\..\bin\Release\SevensPredator\Tex\stone\st04;..\..\..\..\bin\Release\SevensPredator\Tex\stone\st06;..\..\..\..\bin\Release\SevensPredator\Tex\stone\st10;..\..\..\..\bin\Release\SevensPredator\Tex\stone\st14;..\..\..\..\bin\Release\SevensPredator\Tex\stone\st17;..\..\..\..\bin\Release\SevensPredator\Tex\wood\wd02;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release\CShell.lib</ImportLibrary>
     </Link>
     <ProjectReference>
