@@ -32,6 +32,7 @@ public:
 	LTRGB	GetBackgroundColor();
 	void	UnpackWorldProps(ILTMessage_Read *pMsgProps);
 	void	Update();
+    void    InitBackgroundMusic();
 	
 private:
 	

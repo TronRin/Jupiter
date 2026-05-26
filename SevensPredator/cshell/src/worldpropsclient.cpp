@@ -25,6 +25,9 @@
 
 //--Other includes--
 
+// for Music et al
+#include <iltsoundmgr.h>
+
 // for sprintf
 #include <stdio.h>
 
@@ -87,64 +90,63 @@ void CWorldPropsClnt::UnpackWorldProps(ILTMessage_Read *pMsgProps)
 //------------------------------------------------------------------------------
 void CWorldPropsClnt::ApplyWorldProps()
 {
-	
-	// Set worldprop console variables.
-	char buffer[255];
-	
-	sprintf(buffer, "FarZ %d", m_nFarZ);
-	g_pLTClient->RunConsoleString(buffer);
-	//		g_pLTClient->CPrint(buffer);
-	
-	sprintf(buffer, "BackgroundColor %d %d %d", (uint8)m_vBackgroundColor.x, 
-		(uint8)m_vBackgroundColor.y, (uint8)m_vBackgroundColor.z);
-	g_pLTClient->RunConsoleString(buffer);
-	//		g_pLTClient->CPrint(buffer);
-	
-	sprintf(buffer, "FogEnable %d", m_bFogEnable ? 1 : 0);
-	g_pLTClient->RunConsoleString(buffer);
-	//		g_pLTClient->CPrint(buffer);
-	
-	if (m_bFogEnable)
-	{
-		// Set fog rgb colors
-		sprintf(buffer, "FogR %d", (uint8)m_vFogColor.x);
-		g_pLTClient->RunConsoleString(buffer);
-		sprintf(buffer, "FogG %d", (uint8)m_vFogColor.y);
-		g_pLTClient->RunConsoleString(buffer);
-		sprintf(buffer, "FogB %d", (uint8)m_vFogColor.z);
-		g_pLTClient->RunConsoleString(buffer);
-		
-		sprintf(buffer, "FogNearZ %d; FogFarZ %d", 
-			m_nFogNearZ, m_nFogFarZ);
-		g_pLTClient->RunConsoleString(buffer);
-		//			g_pLTClient->CPrint(buffer);
-	}
-	
-	sprintf(buffer, "SkyFogEnable %d", m_bSkyFogEnable ? 1 : 0);
-	g_pLTClient->RunConsoleString(buffer);
-	//		g_pLTClient->CPrint(buffer);
-	if (m_bSkyFogEnable)
-	{
-		sprintf(buffer, "SkyFogNearZ %d; SkyFogFarZ %d", 
-			m_nSkyFogNearZ, m_nSkyFogFarZ);
-		g_pLTClient->RunConsoleString(buffer);
-		//			g_pLTClient->CPrint(buffer);
-	}
-	
-	sprintf(buffer, "SkyScale %f", m_fSkyScale);
-	g_pLTClient->RunConsoleString(buffer);
-	
+
+    // Set worldprop console variables.
+    char buffer[255];
+
+    sprintf(buffer, "FarZ %d", m_nFarZ);
+    g_pLTClient->RunConsoleString(buffer);
+    //		g_pLTClient->CPrint(buffer);
+
+    sprintf(buffer, "BackgroundColor %d %d %d", (uint8)m_vBackgroundColor.x,
+        (uint8)m_vBackgroundColor.y, (uint8)m_vBackgroundColor.z);
+    g_pLTClient->RunConsoleString(buffer);
+    //		g_pLTClient->CPrint(buffer);
+
+    sprintf(buffer, "FogEnable %d", m_bFogEnable ? 1 : 0);
+    g_pLTClient->RunConsoleString(buffer);
+    //		g_pLTClient->CPrint(buffer);
+
+    if (m_bFogEnable)
+    {
+        // Set fog rgb colors
+        sprintf(buffer, "FogR %d", (uint8)m_vFogColor.x);
+        g_pLTClient->RunConsoleString(buffer);
+        sprintf(buffer, "FogG %d", (uint8)m_vFogColor.y);
+        g_pLTClient->RunConsoleString(buffer);
+        sprintf(buffer, "FogB %d", (uint8)m_vFogColor.z);
+        g_pLTClient->RunConsoleString(buffer);
+
+        sprintf(buffer, "FogNearZ %d; FogFarZ %d",
+            m_nFogNearZ, m_nFogFarZ);
+        g_pLTClient->RunConsoleString(buffer);
+        //			g_pLTClient->CPrint(buffer);
+    }
+
+    sprintf(buffer, "SkyFogEnable %d", m_bSkyFogEnable ? 1 : 0);
+    g_pLTClient->RunConsoleString(buffer);
+    //		g_pLTClient->CPrint(buffer);
+    if (m_bSkyFogEnable)
+    {
+        sprintf(buffer, "SkyFogNearZ %d; SkyFogFarZ %d",
+            m_nSkyFogNearZ, m_nSkyFogFarZ);
+        g_pLTClient->RunConsoleString(buffer);
+        //			g_pLTClient->CPrint(buffer);
+    }
+
+    sprintf(buffer, "SkyScale %f", m_fSkyScale);
+    g_pLTClient->RunConsoleString(buffer);
+
 }
-
-
 //------------------------------------------------------------------------------
 //	CWorldPropsClnt::Update()
 //
 //------------------------------------------------------------------------------
 void CWorldPropsClnt::Update()
 {
+    // Set worldprop console variables.
+    char buffer[255];
 }
-
 
 //------------------------------------------------------------------------------
 //	CWorldPropsClnt::GetBackgroundColor()
@@ -172,6 +174,33 @@ LTRGB CWorldPropsClnt::GetBackgroundColor()
 	rgbColor.a = 255;
 	
 	return rgbColor;
+}
+
+// CWorldPropsClnt.cpp
+void CWorldPropsClnt::InitBackgroundMusic()
+{
+    if (!g_pLTCSoundMgr) return;
+
+    PlaySoundInfo snd;
+    PLAYSOUNDINFO_INIT(snd); // 1️⃣ MUST be first to zero-initialize the struct
+
+    snd.m_dwFlags = PLAYSOUND_CLIENT | PLAYSOUND_LOOP;
+    strncpy(snd.m_szSoundName, "Music/BGM1.wav", sizeof(snd.m_szSoundName) - 1);
+    snd.m_szSoundName[sizeof(snd.m_szSoundName) - 1] = '\0'; // Ensure null termination
+
+    //snd.m_fVolume = 1.0f;
+    //snd.m_fPitch = 1.0f;
+
+    HLTSOUND hSound = LTNULL;
+    LTRESULT result = g_pLTCSoundMgr->PlaySound(&snd, hSound);
+    if (result != LT_OK)
+    {
+        g_pLTClient->CPrint("Failed to play BGM: %s", snd.m_szSoundName);
+    }
+    else
+    {
+        g_pLTClient->CPrint("Playing background music: Music/BGM1.wav");
+    }
 }
 
 

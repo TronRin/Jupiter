@@ -25,10 +25,10 @@ project "LIB-DShow"
 		"src"
 	}
 
-	-- DX8 library
+	-- DX9 library
 	syslibdirs
 	{
-		vendir .. "/directx-8.1/lib"
+		vendir .. "/directx-9x/lib"
 	}
 
 	links

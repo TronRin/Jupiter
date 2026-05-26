@@ -243,14 +243,18 @@ LTRESULT CLTClientShell::InitRenderer(RMode *pMode)
 //---------------------------------------------------------------------------
 LTRESULT CLTClientShell::InitSound()
 {
-	//	g_pLTClient->CPrint("CLTClientShell::InitSound");
-	
-	InitSoundInfo sndInfo;
-	
-	sndInfo.Init();
-	
-    // Initialize sound with defaults.
-	return g_pLTCSoundMgr->InitSound(&sndInfo);
+    InitSoundInfo sndInfo;
+    sndInfo.Init();
+
+    LTRESULT result = g_pLTCSoundMgr->InitSound(&sndInfo);
+    if (result != LT_OK) return result;
+
+    // 2️D Sound manager is now ready. Get the existing WorldProps object from the engine.
+    CWorldPropsClnt pWorldProps;
+    pWorldProps.InitBackgroundMusic();
+    g_pLTClient->CPrint("Warning: CWorldPropsClnt not found in object manager.");
+
+    return LT_OK; // 3️D Return AFTER all initialization is complete
 }
 
 //---------------------------------------------------------------------------
@@ -373,7 +377,6 @@ void CLTClientShell::OnEnterWorld()
     }
 
     m_bInWorld = true;
-
 }
 
 

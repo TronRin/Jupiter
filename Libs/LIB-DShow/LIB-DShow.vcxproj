@@ -57,21 +57,21 @@
     <IntDir>$(ProjectDir)..\..\bin-int\Debug\LIB-DShow\</IntDir>
     <TargetName>LIB-DShow</TargetName>
     <TargetExt>.lib</TargetExt>
-    <LibraryPath>..\..\Vendor\directx-8.1\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\Vendor\directx-9x\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\..\bin\Release\</OutDir>
     <IntDir>$(ProjectDir)..\..\bin-int\Release\LIB-DShow\</IntDir>
     <TargetName>LIB-DShow</TargetName>
     <TargetExt>.lib</TargetExt>
-    <LibraryPath>..\..\Vendor\directx-8.1\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\Vendor\directx-9x\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
     <OutDir>$(ProjectDir)..\..\bin\Final\</OutDir>
     <IntDir>$(ProjectDir)..\..\bin-int\Final\LIB-DShow\</IntDir>
     <TargetName>LIB-DShow</TargetName>
     <TargetExt>.lib</TargetExt>
-    <LibraryPath>..\..\Vendor\directx-8.1\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\..\Vendor\directx-9x\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
