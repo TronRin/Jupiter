@@ -31,11 +31,10 @@ public:
 	
 	LTRGB	GetBackgroundColor();
 	void	UnpackWorldProps(ILTMessage_Read *pMsgProps);
-	void	Update();
-    void    InitBackgroundMusic();
+    void	Update();
 	
 private:
-	
+    void    InitBackgroundMusic();
 	void ApplyWorldProps();
 	
 	// Members
