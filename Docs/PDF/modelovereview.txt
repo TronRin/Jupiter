@@ -1,0 +1,105 @@
+Title: Model Overview
+Author: David Koenig
+Initial Date: 11/02/2002
+
+Models are generally used for things such as characters or detailed props in a given level or world. This document provides information on how the model system is set up, and what can be done with it. Forward any questions you may have to support@lithtech.com
+
+
+LTB (Model Database)
+
+The binary runtime format for models is the LTB format. ModelEdit is responsible for processing the .LTA model file into the runtime ready LTB file.
+
+The model’s LTB file is referred to as the model database. When a model is loaded, it gets stored in a list of model databases and is then referenced by any instances of the model in the game. Because of this, model instances save memory by referencing geometry and animation data instead of allocating addition memory for it. Model instances only need to store node transforms and current animation step information.
+
+The LTB stores the following information:
+
+Render Objects – packed format for fast rendering
+Verts
+Normals
+UV coords
+Animations: 16 bit compressed
+Modifiers
+LOD – Level of Detail
+Animations Dims (set in ModelEdit)
+Command String (enabling shadows)
+Sockets (attachments)
+Child Models
+Used to store animations
+Must have same skeleton as parent model
+Model String Keys
+
+
+The following are tracked on a per/piece and per/model instance basis:
+
+1. RenderStyles - Material properties/render states
+2. Textures – Textures
+
+
+Models have engine objects associated with them. The OT_MODEL engine object type is responsible for managing the current state of the model. 
+
+The OT_MODEL object type manages the following things:
+
+Animations
+Time
+Rate
+Node Control
+Child Models
+LOD
+Rendering
+
+The engine calculates a new skeleton (node transforms) each frame based on the current animation.
+
+
+Animations
+
+Animation Transitioning (one animation)
+ILTCSBase::SetModelAnimation(HOBJECT hObj, HMODELANIM hAnim)
+
+Animation Blending (many animations)
+Animation Trackers 
+MAIN_TRACKER
+User defined trackers
+ILTModel::SetCurAnim(HOBJECT hModel, ANIMTRACKERID TrackerID, HMODELANIM hAnim)
+ILTModel::SetLooping(HOBJECT hModel, ANIMTRACKERID TrackerID, bool bLooping)
+Weight Sets
+Defined by ModelEdit
+Referenced by string name, in game code. ILTModel::FindWeightSet()                       ILTModel::SetWeightSet()
+
+Node control is a method for directly manipulating the transform applied to the node.
+
+This allows developers to insert a function to be called each frame to control the position and rotation of the node.
+This is how the head tracking motion and lip-syncing is done in NOLF2.
+
+
+Child Models
+
+Child models allow for the developer to keep common model media separate from each specific model. An example of this is to have a common set of animations stored in one model LTB that several models reference. NOLF2 does this for death animations and other common events. One very important note is that child models MUST have the same skeleton as the parent.
+
+You can assign child models in one of two ways:
+ModelEdit
+Programmatically
+ObjectCreateStruct.m_Filenames[n]
+
+
+LOD – Level of Detail
+
+Level of detail settings are created and modified in ModelEdit. 
+They consist of a distance and a render object.
+
+Example:
+{distance, RO}, {distance, RO}, {distance, RO}
+
+You could have NULL render objects for certain items as well. 
+{distance, RO}, {distance, NULL}, {distance, NULL}
+
+The reason that you might want to have a NULL render object at certain distances, is to turn off high detail pieces to improve performance.
+
+
+Attachments
+
+Attachments are objects that follow the transforms of a models socket. You would use this for items such as a gun in a player’s hand. There is an Attachments sample in the Jupiter SDK which demonstrates this.
+
+g_pLTServer->CreateAttachment(m_hObject, hChildObject, sSocket, &vOffset,  &rOffset,       &hAttachment);
+g_pLTServer ->RemoveAttachment(hAttachment);
+
+Copyright 2002,2003 LithTech Inc.
